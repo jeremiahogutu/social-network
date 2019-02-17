@@ -11,7 +11,6 @@ exports.getPosts = (req, res) => {
 
 exports.createPost = (req, res) => {
     const post = new Post(req.body);
-    // console.log('CREATING POST: ', req.body)
     post.save((err, result) => {
         if (err) {
             return res.status(400).json({

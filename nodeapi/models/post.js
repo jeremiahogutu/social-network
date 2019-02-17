@@ -7,9 +7,9 @@ const postSchema = new mongoose.Schema({
         minlength: 4,
         maxlength: 150
     },
-    body: {
+    description: {
         type: String,
-        required: "Body is required",
+        required: "Description is required",
         minlength: 4,
         maxlength: 2000
     }

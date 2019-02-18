@@ -2,3 +2,4 @@
 \.idea/
 nodeapi/node_modules/
 nodeapi/package-lock.json
+nodeapi/.env

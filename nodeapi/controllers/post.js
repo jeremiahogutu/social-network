@@ -3,7 +3,9 @@ const formidable = require('formidable');
 const fs = require('fs');
 
 exports.getPosts = (req, res) => {
-   const posts = Post.find().select("_id title description")
+   const posts = Post.find()
+       .populate('postedBy', '_id name')
+       .select("_id title description")
        .then(posts => {
            res.json({
                posts

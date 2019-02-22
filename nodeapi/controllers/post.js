@@ -43,8 +43,8 @@ exports.createPost = (req, res) => {
 };
 
 exports.postByUser = (req, res) => {
-    Post.find({postedBy: req.profile._id}
-        .populate('postedBy', '_id name'))
+    Post.find({postedBy: req.profile._id})
+        .populate('postedBy', '_id name')
         .sort('_created')
         .exec((err, posts) => {
             if (err) {

@@ -13,7 +13,7 @@ router.post(
     createPostValidator
 );
 
-router.get('/posts/by/:userId', requireSignin, postByUser );
+router.get('/posts/:userId', requireSignin, postByUser );
 
 // any route containing :userId, our app will first execute userById() method
 router.param("userId", userById);

@@ -2,16 +2,30 @@ const Post = require('../models/post');
 const formidable = require('formidable');
 const fs = require('fs');
 
+exports.postById = (req, res, next, id) => {
+    Post.findById(id)
+        .populate('postedBy', '_id name')
+        .exec((err, post) => {
+            if (err || !post) {
+                return res.status(400).json({
+                    error: err
+                })
+            }
+            req.post = post;
+            next()
+        })
+};
+
 exports.getPosts = (req, res) => {
-   const posts = Post.find()
-       .populate('postedBy', '_id name')
-       .select("_id title description")
-       .then(posts => {
-           res.json({
-               posts
-           })
-       })
-       .catch(err => console.log(err))
+    const posts = Post.find()
+        .populate('postedBy', '_id name')
+        .select("_id title description")
+        .then(posts => {
+            res.json({
+                posts
+            })
+        })
+        .catch(err => console.log(err))
 };
 
 exports.createPost = (req, res) => {

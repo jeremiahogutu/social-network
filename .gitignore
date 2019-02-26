@@ -7,3 +7,7 @@ nodeapi/.env
 /es6-test.html
 /es6-this-and-arrow.js
 /es6-destructuring.js
+/es6-array-destructuring.js
+/es6-restructuring.js
+/es6-spread-operator.js
+/class-constructer-super.js

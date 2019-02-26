@@ -3,3 +3,7 @@
 nodeapi/node_modules/
 nodeapi/package-lock.json
 nodeapi/.env
+/es6-default-parameters.js
+/es6-test.html
+/es6-this-and-arrow.js
+/es6-destructuring.js

@@ -2,34 +2,69 @@ import React, {Component} from 'react';
 
 class Signup extends Component {
     constructor() {
-        super()
+        super();
         this.state = {
-            name: '',
             email: '',
             password: '',
             error: ''
         }
     }
+
+    // higher order function: A function that returns another function
+    handleChange = userInput => event => {
+        // we use array syntax to change values dynamically
+        this.setState({[userInput]: event.target.value})
+    };
+
+    // handle submit
+    onSubmit = event => {
+        event.preventDefault();
+        const { email, password } = this.state;
+        const user = {
+            email,
+            password
+        };
+        fetch("http://localhost:3005/signup", {
+            method: "Post",
+            headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(user)
+        })
+            .then(response => {
+                return response.json()
+            })
+            .catch(err => console.log(err))
+    };
+
     render() {
+        const  {email, password } = this.state;
         return (
             <div className='ui container'>
-                <h2 className='ui header'>Signup</h2>
+                <h2 className='ui center aligned header'>Signup</h2>
                 <form className="ui form">
                     <div className="field">
-                        <label>First Name</label>
-                        <input type="text" name="first-name" placeholder="First Name"/>
+                        <label>Email</label>
+                        <input
+                            onChange={this.handleChange("email")}
+                            type="email"
+                            name="email"
+                            placeholder="Email"
+                            value={email}
+                        />
                     </div>
                     <div className="field">
-                        <label>Last Name</label>
-                        <input type="text" name="last-name" placeholder="Last Name"/>
+                        <label>Password</label>
+                        <input
+                            onChange={this.handleChange("password")}
+                            type="text"
+                            name="password"
+                            placeholder="password"
+                            value={password}
+                        />
                     </div>
-                    <div className="field">
-                        <div className="ui checkbox">
-                            <input type="checkbox" tabIndex="0" className="hidden"/>
-                                <label>I agree to the Terms and Conditions</label>
-                        </div>
-                    </div>
-                    <button className="ui button" type="submit">Submit</button>
+                    <button onClick={this.onSubmit} className="ui button" type="submit">Submit</button>
                 </form>
             </div>
         );

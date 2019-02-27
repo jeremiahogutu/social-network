@@ -26,8 +26,6 @@ exports.createPostValidator = (req, res, next) => {
 
 
 exports.userSignupValidator = (req, res, next) => {
-    // name is not null and between 4-10 characters
-    req.check('name', 'Name is required').notEmpty();
     // email is not null, valid and normalized
     req.check('email', 'Email must be between 3 to 32 characters')
         .matches(/.+@.+\..+/)
@@ -37,7 +35,6 @@ exports.userSignupValidator = (req, res, next) => {
             max: 2000
         });
     // check for password
-    req.check('name', 'Name is required').notEmpty();
     req.check('password')
         .isLength({min: 8})
         .withMessage('Password must contain at least 8 characters')

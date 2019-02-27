@@ -19,13 +19,26 @@ class Signup extends Component {
     // handle submit
     onSubmit = event => {
         event.preventDefault();
-        const { email, password } = this.state;
+        const {email, password} = this.state;
         const user = {
             email,
             password
         };
-        fetch("http://localhost:3005/signup", {
-            method: "Post",
+        this.signup(user).then(data => {
+            if (data.error) this.setState({error: data.error})
+            else
+                this.setState({
+                    error: "",
+                    name: "",
+                    email: "",
+                    password: ""
+                })
+        })
+    };
+
+    signup = user => {
+        return fetch("http://localhost:3005/signup", {
+            method: "POST",
             headers: {
                 Accept: "application/json",
                 "Content-Type": "application/json"
@@ -39,7 +52,7 @@ class Signup extends Component {
     };
 
     render() {
-        const  {email, password } = this.state;
+        const {email, password} = this.state;
         return (
             <div className='ui container'>
                 <h2 className='ui center aligned header'>Signup</h2>

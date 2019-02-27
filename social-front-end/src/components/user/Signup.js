@@ -6,12 +6,15 @@ class Signup extends Component {
         this.state = {
             email: '',
             password: '',
-            error: ''
+            error: '',
+            signUpSuccess: false
         }
     }
 
     // higher order function: A function that returns another function
     handleChange = userInput => event => {
+        // clear old errors
+        this.setState({error: ""});
         // we use array syntax to change values dynamically
         this.setState({[userInput]: event.target.value})
     };
@@ -25,13 +28,14 @@ class Signup extends Component {
             password
         };
         this.signup(user).then(data => {
-            if (data.error) this.setState({error: data.error})
+            if (data.error) this.setState({error: data.error});
             else
                 this.setState({
                     error: "",
                     name: "",
                     email: "",
-                    password: ""
+                    password: "",
+                    signUpSuccess: true
                 })
         })
     };
@@ -52,10 +56,12 @@ class Signup extends Component {
     };
 
     render() {
-        const {email, password} = this.state;
+        const {email, password, error, signUpSuccess} = this.state;
         return (
             <div className='ui container'>
                 <h2 className='ui center aligned header'>Signup</h2>
+                <div className="ui error message" style={{display: error ? "" : "none"}}>{error}</div>
+                <div className="ui positive message" style={{display: signUpSuccess ? "" : "none"}}>New account is successfully created. Please sign in</div>
                 <form className="ui form">
                     <div className="field">
                         <label>Email</label>

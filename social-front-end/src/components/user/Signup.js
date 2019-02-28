@@ -55,6 +55,32 @@ class Signup extends Component {
             .catch(err => console.log(err))
     };
 
+    signUpForm = (email, password) => (
+        <form className="ui form">
+            <div className="field">
+                <label>Email</label>
+                <input
+                    onChange={this.handleChange("email")}
+                    type="email"
+                    name="email"
+                    placeholder="Email"
+                    value={email}
+                />
+            </div>
+            <div className="field">
+                <label>Password</label>
+                <input
+                    onChange={this.handleChange("password")}
+                    type="text"
+                    name="password"
+                    placeholder="password"
+                    value={password}
+                />
+            </div>
+            <button onClick={this.onSubmit} className="ui button" type="submit">Submit</button>
+        </form>
+    )
+
     render() {
         const {email, password, error, signUpSuccess} = this.state;
         return (
@@ -62,29 +88,7 @@ class Signup extends Component {
                 <h2 className='ui center aligned header'>Signup</h2>
                 <div className="ui error message" style={{display: error ? "" : "none"}}>{error}</div>
                 <div className="ui positive message" style={{display: signUpSuccess ? "" : "none"}}>New account is successfully created. Please sign in</div>
-                <form className="ui form">
-                    <div className="field">
-                        <label>Email</label>
-                        <input
-                            onChange={this.handleChange("email")}
-                            type="email"
-                            name="email"
-                            placeholder="Email"
-                            value={email}
-                        />
-                    </div>
-                    <div className="field">
-                        <label>Password</label>
-                        <input
-                            onChange={this.handleChange("password")}
-                            type="text"
-                            name="password"
-                            placeholder="password"
-                            value={password}
-                        />
-                    </div>
-                    <button onClick={this.onSubmit} className="ui button" type="submit">Submit</button>
-                </form>
+                {this.signUpForm(email, password)}
             </div>
         );
     }

@@ -1,13 +1,15 @@
 import React, {Component} from 'react';
+import {Redirect} from "react-router-dom";
 
-class Signup extends Component {
+class Signin extends Component {
     constructor() {
         super();
         this.state = {
             email: '',
             password: '',
             error: '',
-            signUpSuccess: false
+            redirectToReferer: false,
+            loading: false
         }
     }
 
@@ -19,29 +21,36 @@ class Signup extends Component {
         this.setState({[userInput]: event.target.value})
     };
 
+    authenticate = (jwt, next) => {
+        if (typeof window !== "undefined") {
+            localStorage.setItem("jwt", JSON.stringify(jwt));
+            next()
+        }
+    };
+
     // handle submit
     onSubmit = event => {
         event.preventDefault();
+        this.setState({loading: true});
         const {email, password} = this.state;
         const user = {
             email,
             password
         };
-        this.signup(user).then(data => {
-            if (data.error) this.setState({error: data.error});
-            else
-                this.setState({
-                    error: "",
-                    name: "",
-                    email: "",
-                    password: "",
-                    signUpSuccess: true
+        this.signin(user).then(data => {
+            if (data.error) this.setState({error: data.error, loading: false});
+            else {
+                // authenticate
+                this.authenticate(data, () => {
+                    this.setState({redirectToReferer: true})
                 })
+
+            }
         })
     };
 
-    signup = user => {
-        return fetch("http://localhost:3005/signup", {
+    signin = user => {
+        return fetch("http://localhost:3005/signin", {
             method: "POST",
             headers: {
                 Accept: "application/json",
@@ -55,7 +64,7 @@ class Signup extends Component {
             .catch(err => console.log(err))
     };
 
-    signUpForm = (email, password) => (
+    signInForm = (email, password) => (
         <form className="ui form">
             <div className="field">
                 <label>Email</label>
@@ -79,19 +88,30 @@ class Signup extends Component {
             </div>
             <button onClick={this.onSubmit} className="ui button" type="submit">Submit</button>
         </form>
-    )
+    );
 
     render() {
-        const {email, password, error, signUpSuccess} = this.state;
+        const {email, password, error, redirectToReferer, loading} = this.state;
+
+        if (redirectToReferer) {
+            return <Redirect to="/"/>
+        }
         return (
             <div className='ui container'>
-                <h2 className='ui center aligned header'>Signup</h2>
+                <h2 className='ui center aligned header'>SignIn</h2>
                 <div className="ui error message" style={{display: error ? "" : "none"}}>{error}</div>
-                <div className="ui positive message" style={{display: signUpSuccess ? "" : "none"}}>New account is successfully created. Please sign in</div>
-                {this.signUpForm(email, password)}
+                {this.signInForm(email, password)}
+                {
+                    loading ? (
+                        <div className="ui message">
+                            <h2>loading...</h2>
+                        </div>) : (""
+                    )
+                }
             </div>
-        );
+    )
+        ;
     }
 }
 
-export default Signup;
+export default Signin;

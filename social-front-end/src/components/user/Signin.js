@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import {Redirect} from "react-router-dom";
 
 class Signin extends Component {
     constructor() {
@@ -19,6 +20,13 @@ class Signin extends Component {
         this.setState({[userInput]: event.target.value})
     };
 
+    authenticate = (jwt, next) => {
+        if (typeof window !== "undefined") {
+            localStorage.setItem("jwt", JSON.stringify(jwt));
+            next()
+        }
+    };
+
     // handle submit
     onSubmit = event => {
         event.preventDefault();
@@ -30,7 +38,10 @@ class Signin extends Component {
         this.signin(user).then(data => {
             if (data.error) this.setState({error: data.error});
             else {
-                // authenticate and redirect
+                // authenticate
+                this.authenticate(data, () => {
+                    this.setState({redirectToReferer: true})
+                })
 
             }
         })
@@ -67,7 +78,7 @@ class Signin extends Component {
                 <label>Password</label>
                 <input
                     onChange={this.handleChange("password")}
-                    type="text"
+                    type="password"
                     name="password"
                     placeholder="password"
                     value={password}
@@ -78,7 +89,11 @@ class Signin extends Component {
     );
 
     render() {
-        const {email, password, error} = this.state;
+        const {email, password, error, redirectToReferer} = this.state;
+
+        if (redirectToReferer) {
+            return <Redirect to="/"/>
+        }
         return (
             <div className='ui container'>
                 <h2 className='ui center aligned header'>SignIn</h2>

@@ -8,8 +8,7 @@ class Signin extends Component {
             email: '',
             password: '',
             error: '',
-            redirectToReferer: false,
-            loading: false
+            redirectToReferer: false
         }
     }
 
@@ -64,14 +63,13 @@ class Signin extends Component {
             .catch(err => console.log(err))
     };
 
-    signInForm = (email, password) => (
-        <div className="mdl-grid">
-            <div className="mdl-card mdl-shadow--16dp util-center util-spacing-h--40px">
-                <div className="mdl-card__title mdl-color--orange-800">
+    signInForm = (email, password, error) => (
+            <div className="mdl-card mdl-shadow--16dp util-center util-spacing-h--40px" style={{margin: "0 auto"}}>
+                <div className="mdl-card__title mdl-color--blue-900">
                     <h2 className="mdl-card__title-text mdl-color-text--white">User Login</h2>
                 </div>
                 <div className="mdl-card__supporting-text mdl-grid">
-                    <b className="mdl-color-text--accent">Error message goes here</b>
+                    <b className="mdl-color-text--accent" style={{display: error ? "" : "none"}}>{error}</b>
                     <form>
                         <div
                             className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--12-col">
@@ -113,26 +111,17 @@ class Signin extends Component {
                     </form>
                 </div>
             </div>
-        </div>
     );
 
     render() {
-        const {email, password, error, redirectToReferer, loading} = this.state;
+        const {email, password, error, redirectToReferer} = this.state;
 
         if (redirectToReferer) {
             return <Redirect to="/"/>
         }
         return (
-            <div className='ui container'>
-                <h2 className='ui center aligned header'>SignIn</h2>
-                <div className="ui error message" style={{display: error ? "" : "none"}}>{error}</div>
-                {this.signInForm(email, password)}
-                {
-                    loading ? (
-                        <div className="ui message">
-                            <h2>loading...</h2>
-                        </div>) : ("")
-                }
+            <div className='mdl-grid'>
+                {this.signInForm(email, password, error)}
             </div>
     );
     }

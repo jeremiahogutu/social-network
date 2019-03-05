@@ -64,7 +64,7 @@ class Signup extends Component {
                 <b className="mdl-color-text--accent" style={{display: error ? "" : "none"}}>{error}</b>
                 <form>
                     <div
-                        className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--12-col">
+                        className="mdl-textfield mdl-js-textfield mdl-textfield mdl-cell mdl-cell--12-col">
                         <label className="mdl-textfield__label mdl-color-text--grey"
                                htmlFor="textfield_username">Email</label>
                         <input
@@ -73,12 +73,11 @@ class Signup extends Component {
                             type="email"
                             id="textfield_username"
                             name="email"
-                            placeholder="Email"
                             value={email}
                         />
                     </div>
                     <div
-                        className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--12-col">
+                        className="mdl-textfield mdl-js-textfield mdl-textfield mdl-cell mdl-cell--12-col">
                         <label className="mdl-textfield__label mdl-color-text--grey"
                                htmlFor="textfield_password">Password</label>
                         <input
@@ -87,7 +86,6 @@ class Signup extends Component {
                             type="password"
                             id="textfield_password"
                             name="password"
-                            placeholder="password"
                             value={password}
                         />
                     </div>
@@ -97,7 +95,7 @@ class Signup extends Component {
                             type="submit"
                             className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--colored mdl-color--primary"
                         >
-                            Submit
+                            Sign Up
                         </button>
                     </div>
                 </form>
@@ -108,7 +106,7 @@ class Signup extends Component {
     render() {
         const {email, password, error, signUpSuccess} = this.state;
         return (
-            <div className='ui container'>
+            <div className='mdl-grid'>
                 <div className="ui positive message" style={{display: signUpSuccess ? "" : "none"}}>New account is successfully created. Please sign in</div>
                 {this.signUpForm(email, password, error)}
             </div>

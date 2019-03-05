@@ -7,7 +7,7 @@ const App = () => (
         <header className="mdl-layout__header">
             <div className="mdl-layout__header-row">
                 {/*Title*/}
-                <span className="mdl-layout-title">Title</span>
+                <span className="mdl-layout-title">Social Network</span>
                 {/*Add spacer, to align navigation to the right */}
                 <div className="mdl-layout-spacer"/>
                 {/*Navigation. We hide it in small screens.*/}

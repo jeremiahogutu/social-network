@@ -3,7 +3,7 @@ import {BrowserRouter} from "react-router-dom";
 import MainRouter from "./MainRouter";
 
 const App = () => (
-    <div style={{paddingTop: '50px'}}>
+    <div>
         <BrowserRouter>
             <MainRouter/>
         </BrowserRouter>

@@ -115,7 +115,7 @@ class Signin extends Component {
         const {email, password, error, redirectToReferer} = this.state;
 
         if (redirectToReferer) {
-            return <Redirect to="/"/>
+            return <Redirect to="/home"/>
         }
         return (
             <div className='mdl-grid'>

@@ -21,7 +21,7 @@ const App = () => (
             </div>
         </header>
         <div className="mdl-layout__drawer">
-            <span className="mdl-layout-title">Title</span>
+            <span className="mdl-layout-title">Social Network</span>
             <nav className="mdl-navigation">
                 <Link className="mdl-navigation__link" to="/">Home</Link>
                 <Link className="mdl-navigation__link" to="/signin">Sign In</Link>

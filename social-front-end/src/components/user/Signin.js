@@ -65,7 +65,7 @@ class Signin extends Component {
 
     signInForm = (email, password, error) => (
             <div className="mdl-card mdl-shadow--16dp util-center util-spacing-h--40px" style={{margin: "0 auto"}}>
-                <div className="mdl-card__title mdl-color--blue-900">
+                <div className="mdl-card__title mdl-layout__header">
                     <h2 className="mdl-card__title-text mdl-color-text--white">Login</h2>
                 </div>
                 <div className="mdl-card__supporting-text mdl-grid">

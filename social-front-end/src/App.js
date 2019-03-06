@@ -1,5 +1,5 @@
 import React from 'react';
-import {NavLink, withRouter} from "react-router-dom";
+import {NavLink} from "react-router-dom";
 import MainRouter from "./MainRouter";
 
 export const signout = (next) => {
@@ -13,7 +13,9 @@ export const signout = (next) => {
     }).catch(err => console.log(err))
 };
 
-const App = (props) => (
+
+
+const App = () => (
     <div className="mdl-layout mdl-js-layout mdl-layout--fixed-header">
         <header className="mdl-layout__header">
             <div className="mdl-layout__header-row">
@@ -51,4 +53,4 @@ const App = (props) => (
     </div>
 );
 
-export default withRouter(App);
+export default App;

@@ -7,9 +7,9 @@ import Signin from "./components/user/Signin";
 const MainRouter = () => (
     <div>
         <Switch>
-            <Route exact path="/home" component={Home} />
-            <Route exact path="/signup" component={Signup}/>
-            <Route exact path="/signin" component={Signin}/>
+            <Route exact={true} path="/" component={Home} />
+            <Route path="/signup" component={Signup}/>
+            <Route path="/signin" component={Signin}/>
         </Switch>
     </div>
 );

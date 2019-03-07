@@ -1,6 +1,19 @@
 import React from 'react';
-import {Link} from "react-router-dom";
+import {NavLink} from "react-router-dom";
 import MainRouter from "./MainRouter";
+
+export const signout = (next) => {
+    if (typeof window !== "undefined") localStorage.removeItem("jwt");
+    next();
+    return fetch("http://localhost:3005/signout", {
+        method: "GET"
+    }).then(response => {
+        console.log('signout', response);
+        return response.json()
+    }).catch(err => console.log(err))
+};
+
+
 
 const App = () => (
     <div className="mdl-layout mdl-js-layout mdl-layout--fixed-header">
@@ -12,21 +25,26 @@ const App = () => (
                 <div className="mdl-layout-spacer"/>
                 {/*Navigation. We hide it in small screens.*/}
                 <nav className="mdl-navigation mdl-layout--large-screen-only">
-                    <Link className="mdl-navigation__link" to="/">Home</Link>
-                    <Link className="mdl-navigation__link" to="/signin">Sign In</Link>
-                    <Link className="mdl-navigation__link" to="/signup">Sign Up</Link>
-                    {/*<a className="mdl-navigation__link" href="">Link</a>*/}
-                    {/*<a className="mdl-navigation__link" href="">Link</a>*/}
+                    <NavLink className="mdl-navigation__link" to="/home" activeStyle={{fontWeight: "bold", color: "red"}}>Home</NavLink>
+                    <NavLink className="mdl-navigation__link" to="/signin" activeStyle={{fontWeight: "bold", color: "red"}}>Sign In</NavLink>
+                    <NavLink className="mdl-navigation__link" to="/signup" activeStyle={{fontWeight: "bold", color: "red"}}>Sign Up</NavLink>
+                    <button
+                        className="mdl-navigation__link"
+                        style={{cursor: "pointer", color: "#fff", background: "transparent", border: "none"}}
+                    onClick={() => signout(() => window.location.href = "http://localhost:3000/home")}>Sign Out</button>
                 </nav>
             </div>
         </header>
         <div className="mdl-layout__drawer">
             <span className="mdl-layout-title">Social Network</span>
             <nav className="mdl-navigation">
-                <Link className="mdl-navigation__link" to="/">Home</Link>
-                <Link className="mdl-navigation__link" to="/signin">Sign In</Link>
-                <Link className="mdl-navigation__link" to="/signup">Sign Up</Link>
-                {/*<a className="mdl-navigation__link" href="">Link</a>*/}
+                <NavLink className="mdl-navigation__link" to="/home" activeStyle={{fontWeight: "bold", color: "red"}}>Home</NavLink>
+                <NavLink className="mdl-navigation__link" to="/signin" activeStyle={{fontWeight: "bold", color: "red"}}>Sign In</NavLink>
+                <NavLink className="mdl-navigation__link" to="/signup" activeStyle={{fontWeight: "bold", color: "red"}}>Sign Up</NavLink>
+                <button
+                    className="mdl-navigation__link"
+                    style={{cursor: "pointer", color: "#757575", background: "transparent", border: "none", textAlign: "left"}}
+                    onClick={() => signout(() => window.location.href = "http://localhost:3000/home")}>Sign Out</button>
             </nav>
         </div>
         <main className="mdl-layout__content">

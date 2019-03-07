@@ -65,7 +65,7 @@ class Signin extends Component {
 
     signInForm = (email, password, error) => (
             <div className="mdl-card mdl-shadow--16dp util-center util-spacing-h--40px" style={{margin: "0 auto"}}>
-                <div className="mdl-card__title mdl-layout__header">
+                <div className="mdl-card__title mdl-color--indigo">
                     <h2 className="mdl-card__title-text mdl-color-text--white">Login</h2>
                 </div>
                 <div className="mdl-card__supporting-text mdl-grid">
@@ -115,7 +115,7 @@ class Signin extends Component {
         const {email, password, error, redirectToReferer} = this.state;
 
         if (redirectToReferer) {
-            return <Redirect to="/"/>
+            return <Redirect to="/home"/>
         }
         return (
             <div className='mdl-grid'>

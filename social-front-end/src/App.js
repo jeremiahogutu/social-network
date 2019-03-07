@@ -56,12 +56,18 @@ const App = () => (
             <span className="mdl-layout-title">Social Network</span>
             <nav className="mdl-navigation">
                 <NavLink className="mdl-navigation__link" to="/" activeStyle={{fontWeight: "bold", color: "red"}} exact={true}>Home</NavLink>
-                <NavLink className="mdl-navigation__link" to="/signin" activeStyle={{fontWeight: "bold", color: "red"}}>Sign In</NavLink>
-                <NavLink className="mdl-navigation__link" to="/signup" activeStyle={{fontWeight: "bold", color: "red"}}>Sign Up</NavLink>
-                <button
-                    className="mdl-navigation__link"
-                    style={{cursor: "pointer", color: "#757575", background: "transparent", border: "none", textAlign: "left"}}
-                    onClick={() => signout(() => window.location.href = "http://localhost:3000/")}>Sign Out</button>
+                {!isAuthenticated() &&(
+                    <>
+                        <NavLink className="mdl-navigation__link" to="/signin" activeStyle={{fontWeight: "bold", color: "red"}}>Sign In</NavLink>
+                        <NavLink className="mdl-navigation__link" to="/signup" activeStyle={{fontWeight: "bold", color: "red"}}>Sign Up</NavLink>
+                    </>
+                )}
+                {isAuthenticated() && (
+                    <button
+                        className="mdl-navigation__link"
+                        style={{cursor: "pointer", color: "#757575", background: "transparent", border: "none", textAlign: "left"}}
+                        onClick={() => signout(() => window.location.href = "http://localhost:3000/")}>Sign Out</button>
+                )}
             </nav>
         </div>
         <main className="mdl-layout__content">

@@ -4,6 +4,7 @@ class Signup extends Component {
     constructor() {
         super();
         this.state = {
+            name: '',
             email: '',
             password: '',
             error: '',
@@ -22,8 +23,9 @@ class Signup extends Component {
     // handle submit
     onSubmit = event => {
         event.preventDefault();
-        const {email, password} = this.state;
+        const {name, email, password} = this.state;
         const user = {
+            name,
             email,
             password
         };
@@ -55,7 +57,7 @@ class Signup extends Component {
             .catch(err => console.log(err))
     };
 
-    signUpForm = (email, password, error) => (
+    signUpForm = (name, email, password, error) => (
         <div className="mdl-card mdl-shadow--16dp util-center util-spacing-h--40px" style={{margin: "0 auto"}}>
             <div className="mdl-card__title mdl-color--indigo">
                 <h2 className="mdl-card__title-text mdl-color-text--white">SignUp</h2>
@@ -66,12 +68,25 @@ class Signup extends Component {
                     <div
                         className="mdl-textfield mdl-js-textfield mdl-textfield mdl-cell mdl-cell--12-col">
                         <label className="mdl-textfield__label mdl-color-text--grey"
+                               htmlFor="textfield_username">Name</label>
+                        <input
+                            onChange={this.handleChange("name")}
+                            className="mdl-textfield__input"
+                            type="text"
+                            id="textfield_name"
+                            name="name"
+                            value={name}
+                        />
+                    </div>
+                    <div
+                        className="mdl-textfield mdl-js-textfield mdl-textfield mdl-cell mdl-cell--12-col">
+                        <label className="mdl-textfield__label mdl-color-text--grey"
                                htmlFor="textfield_username">Email</label>
                         <input
                             onChange={this.handleChange("email")}
                             className="mdl-textfield__input"
                             type="email"
-                            id="textfield_username"
+                            id="textfield_email"
                             name="email"
                             value={email}
                         />
@@ -104,11 +119,11 @@ class Signup extends Component {
     );
 
     render() {
-        const {email, password, error, signUpSuccess} = this.state;
+        const {name, email, password, error, signUpSuccess} = this.state;
         return (
             <div className='mdl-grid'>
                 <div className="ui positive message" style={{display: signUpSuccess ? "" : "none"}}>New account is successfully created. Please sign in</div>
-                {this.signUpForm(email, password, error)}
+                {this.signUpForm(name, email, password, error)}
             </div>
         );
     }

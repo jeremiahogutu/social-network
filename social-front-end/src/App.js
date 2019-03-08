@@ -30,7 +30,7 @@ const App = () => (
         <header className="mdl-layout__header">
             <div className="mdl-layout__header-row">
                 {/*Title*/}
-                <span className="mdl-layout-title">{isAuthenticated() ? isAuthenticated().user.name : "Social Network"}</span>
+                <span className="mdl-layout-title">{isAuthenticated() ? `${isAuthenticated().user.name}'s profile` : "Social Network"}</span>
                 {/*Add spacer, to align navigation to the right */}
                 <div className="mdl-layout-spacer"/>
                 {/*Navigation. We hide it in small screens.*/}

@@ -65,9 +65,8 @@ class Signup extends Component {
             <div className="mdl-card__supporting-text mdl-grid">
                 <b className="mdl-color-text--accent" style={{display: error ? "" : "none"}}>{error}</b>
                 <form>
-                    <div
-                        className="mdl-textfield mdl-js-textfield mdl-textfield mdl-cell mdl-cell--12-col">
-                        <label className="mdl-textfield__label mdl-color-text--grey"
+                    <div className="mdl-textfield mdl-js-textfield mdl-textfield">
+                        <label
                                htmlFor="textfield_username">Name</label>
                         <input
                             onChange={this.handleChange("name")}
@@ -78,10 +77,8 @@ class Signup extends Component {
                             value={name}
                         />
                     </div>
-                    <div
-                        className="mdl-textfield mdl-js-textfield mdl-textfield mdl-cell mdl-cell--12-col">
-                        <label className="mdl-textfield__label mdl-color-text--grey"
-                               htmlFor="textfield_username">Email</label>
+                    <div className="mdl-textfield mdl-js-textfield mdl-textfield">
+                        <label htmlFor="textfield_username">Email</label>
                         <input
                             onChange={this.handleChange("email")}
                             className="mdl-textfield__input"
@@ -91,10 +88,8 @@ class Signup extends Component {
                             value={email}
                         />
                     </div>
-                    <div
-                        className="mdl-textfield mdl-js-textfield mdl-textfield mdl-cell mdl-cell--12-col">
-                        <label className="mdl-textfield__label mdl-color-text--grey"
-                               htmlFor="textfield_password">Password</label>
+                    <div className="mdl-textfield mdl-js-textfield mdl-textfield">
+                        <label htmlFor="textfield_password">Password</label>
                         <input
                             className="mdl-textfield__input"
                             onChange={this.handleChange("password")}

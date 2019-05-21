@@ -72,8 +72,8 @@ class Signin extends Component {
                     <b className="mdl-color-text--accent" style={{display: error ? "" : "none"}}>{error}</b>
                     <form>
                         <div
-                            className="mdl-textfield mdl-js-textfield mdl-textfield mdl-cell mdl-cell--12-col">
-                            <label className="mdl-textfield__label mdl-color-text--grey"
+                            className="mdl-textfield mdl-js-textfield mdl-textfield">
+                            <label className=""
                                    htmlFor="textfield_username">Email</label>
                             <input
                                 onChange={this.handleChange("email")}
@@ -85,8 +85,8 @@ class Signin extends Component {
                             />
                         </div>
                         <div
-                            className="mdl-textfield mdl-js-textfield mdl-textfield mdl-cell mdl-cell--12-col">
-                            <label className="mdl-textfield__label mdl-color-text--grey"
+                            className="mdl-textfield mdl-js-textfield mdl-textfield">
+                            <label
                                    htmlFor="textfield_password">Password</label>
                             <input
                                 className="mdl-textfield__input"

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {isAuthenticated} from "../../App";
+import {isAuthenticated} from "../auth";
 
 class Profile extends Component {
     constructor() {

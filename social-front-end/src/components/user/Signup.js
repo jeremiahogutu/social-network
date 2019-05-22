@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import {signup} from "../auth";
 
 class Signup extends Component {
     constructor() {
@@ -29,7 +30,7 @@ class Signup extends Component {
             email,
             password
         };
-        this.signup(user).then(data => {
+        signup(user).then(data => {
             if (data.error) this.setState({error: data.error});
             else
                 this.setState({
@@ -42,20 +43,7 @@ class Signup extends Component {
         })
     };
 
-    signup = user => {
-        return fetch("http://localhost:3005/signup", {
-            method: "POST",
-            headers: {
-                Accept: "application/json",
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(user)
-        })
-            .then(response => {
-                return response.json()
-            })
-            .catch(err => console.log(err))
-    };
+
 
     signUpForm = (name, email, password, error) => (
         <div className="mdl-card mdl-shadow--16dp util-center util-spacing-h--40px" style={{margin: "0 auto"}}>

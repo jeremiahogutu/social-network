@@ -1,36 +1,16 @@
 import React from 'react';
 import {NavLink} from "react-router-dom";
 import MainRouter from "./MainRouter";
-
-export const signout = (next) => {
-    if (typeof window !== "undefined") localStorage.removeItem("jwt");
-    next();
-    return fetch("http://localhost:3005/signout", {
-        method: "GET"
-    }).then(response => {
-        console.log('signout', response);
-        return response.json()
-    }).catch(err => console.log(err))
-};
-
-export const isAuthenticated = () => {
-    if (typeof window == "undefined") {
-        return false
-    }
-
-    if(localStorage.getItem("jwt")) {
-        return JSON.parse(localStorage.getItem("jwt"))
-    } else {
-        return false
-    }
-};
+import {isAuthenticated, signout} from "./components/auth";
 
 const App = () => (
     <div className="mdl-layout mdl-js-layout mdl-layout--fixed-header">
         <header className="mdl-layout__header">
             <div className="mdl-layout__header-row">
                 {/*Title*/}
+                <NavLink style={{textDecoration: "none", color: "#fff"}} to={`/user/${isAuthenticated().user._id}`}>
                 <span className="mdl-layout-title">{isAuthenticated() ? `${isAuthenticated().user.name}'s profile` : "Social Network"}</span>
+                </NavLink>
                 {/*Add spacer, to align navigation to the right */}
                 <div className="mdl-layout-spacer"/>
                 {/*Navigation. We hide it in small screens.*/}

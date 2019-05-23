@@ -10,7 +10,7 @@ const App = () => (
             <div className="mdl-layout__header-row">
                 {/*Title*/}
                 {isAuthenticated() && (
-                <NavLink style={{textDecoration: "none", color: "#fff"}} to={`/user/${isAuthenticated().user._id}`}>
+                <NavLink style={{textDecoration: "none", color: "#fff"}} to={`/user/${isAuthenticated().user._id}`} activeStyle={{fontWeight: "bold", color: "cyan"}}>
                     <span
                         className="mdl-layout-title">{isAuthenticated() ? `${isAuthenticated().user.name}'s profile` : "Social Network"}</span>
                 </NavLink>
@@ -19,15 +19,15 @@ const App = () => (
                 <div className="mdl-layout-spacer"/>
                 {/*Navigation. We hide it in small screens.*/}
                 <nav className="mdl-navigation mdl-layout--large-screen-only">
-                    <NavLink className="mdl-navigation__link" to="/" activeStyle={{fontWeight: "bold", color: "red"}}
+                    <NavLink className="mdl-navigation__link" to="/" activeStyle={{fontWeight: "bold", color: "cyan"}}
                              exact={true}>Home</NavLink>
 
                     {!isAuthenticated() && (
                         <>
                             <NavLink className="mdl-navigation__link" to="/signin"
-                                     activeStyle={{fontWeight: "bold", color: "red"}}>Sign In</NavLink>
+                                     activeStyle={{fontWeight: "bold", color: "cyan"}}>Sign In</NavLink>
                             <NavLink className="mdl-navigation__link" to="/signup"
-                                     activeStyle={{fontWeight: "bold", color: "red"}}>Sign Up</NavLink>
+                                     activeStyle={{fontWeight: "bold", color: "cyan"}}>Sign Up</NavLink>
                         </>
                     )}
                     {isAuthenticated() && (
@@ -43,14 +43,14 @@ const App = () => (
         <div className="mdl-layout__drawer" onClick={close}>
             <span className="mdl-layout-title">Social Network</span>
             <nav className="mdl-navigation">
-                <NavLink className="mdl-navigation__link" to="/" activeStyle={{fontWeight: "bold", color: "red"}}
+                <NavLink className="mdl-navigation__link" to="/" activeStyle={{fontWeight: "bold", color: "cyan"}}
                          exact={true}>Home</NavLink>
                 {!isAuthenticated() && (
                     <>
                         <NavLink className="mdl-navigation__link" to="/signin"
-                                 activeStyle={{fontWeight: "bold", color: "red"}}>Sign In</NavLink>
+                                 activeStyle={{fontWeight: "bold", color: "cyan"}}>Sign In</NavLink>
                         <NavLink className="mdl-navigation__link" to="/signup"
-                                 activeStyle={{fontWeight: "bold", color: "red"}}>Sign Up</NavLink>
+                                 activeStyle={{fontWeight: "bold", color: "cyan"}}>Sign Up</NavLink>
                     </>
                 )}
                 {isAuthenticated() && (

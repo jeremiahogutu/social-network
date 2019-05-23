@@ -9,10 +9,12 @@ const App = () => (
         <header className="mdl-layout__header">
             <div className="mdl-layout__header-row">
                 {/*Title*/}
+                {isAuthenticated() && (
                 <NavLink style={{textDecoration: "none", color: "#fff"}} to={`/user/${isAuthenticated().user._id}`}>
                     <span
                         className="mdl-layout-title">{isAuthenticated() ? `${isAuthenticated().user.name}'s profile` : "Social Network"}</span>
                 </NavLink>
+                )}
                 {/*Add spacer, to align navigation to the right */}
                 <div className="mdl-layout-spacer"/>
                 {/*Navigation. We hide it in small screens.*/}

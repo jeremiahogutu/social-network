@@ -104,9 +104,11 @@ class Signup extends Component {
     render() {
         const {name, email, password, error, signUpSuccess} = this.state;
         return (
-            <div className='mdl-grid'>
-                <div className="ui positive message" style={{display: signUpSuccess ? "" : "none"}}>New account is successfully created. Please sign in</div>
-                {this.signUpForm(name, email, password, error)}
+            <div className='mdl-grid mdl-grid--no-spacing' style={{display: 'flex', justifyContent: 'center'}}>
+                <div className="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone" style={{display: signUpSuccess ? "flex" : "none", justifyContent: 'center', padding: '20px 0'}}>New account is successfully created. Please sign in</div>
+                <div className="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone">
+                    {this.signUpForm(name, email, password, error)}
+                </div>
             </div>
         );
     }

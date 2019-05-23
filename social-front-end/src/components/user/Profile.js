@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {isAuthenticated} from "../auth";
 import {Redirect} from "react-router-dom";
+import {read} from "./apiUser";
 
 class Profile extends Component {
     constructor() {
@@ -11,19 +12,9 @@ class Profile extends Component {
         }
     }
 
-    componentDidMount() {
-        const userId = this.props.match.params.userId
-        fetch(`${process.env.REACT_APP_API_URL}/user/${userId}`, {
-            method: "GET",
-            headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json',
-                Authorization: `Bearer ${isAuthenticated().token}`
-            }
-        })
-            .then(response => {
-                return response.json()
-            })
+    init = userId => {
+        const token = isAuthenticated().token;
+        read(userId, token)
             .then(data => {
                 if (data.error) {
                     this.setState({
@@ -35,11 +26,16 @@ class Profile extends Component {
                     })
                 }
             })
+    };
+
+    componentDidMount() {
+        const userId = this.props.match.params.userId;
+        this.init(userId)
     }
 
     render() {
         const redirectToSignin = this.state.redirectToSignin;
-        if (redirectToSignin) return <Redirect to='/signin' />;
+        if (redirectToSignin) return <Redirect to='/signin'/>;
         return (
             <div className='mdl-cell mdl-cell--10-col mdl-cell--6-col-tablet mdl-cell--4-col-phone'>
                 <h2>Profile</h2>

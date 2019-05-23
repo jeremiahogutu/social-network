@@ -6,7 +6,7 @@ import Signin from "./components/user/Signin";
 import Profile from "./components/user/Profile";
 
 const MainRouter = () => (
-    <div className="mdl-grid" style={{justifyContent: "center"}}>
+    <div className='container'>
         <Switch>
             <Route exact={true} path="/" component={Home} />
             <Route path="/signup" component={Signup}/>

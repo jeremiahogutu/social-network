@@ -1,10 +1,12 @@
 .demo-card-square.mdl-card {
     width: 320px;
     height: 320px;
+    margin-top: 2em;
 }
 .demo-card-square > .mdl-card__title {
     color: #fff;
-    background: bottom right 15% no-repeat #46B6AC;
+    background:  url('./profile.jpg') center no-repeat #00aeaa;
+    background-size: 40% auto;
 }
 
 .user-container {

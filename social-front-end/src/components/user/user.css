@@ -1,0 +1,15 @@
+.demo-card-square.mdl-card {
+    width: 320px;
+    height: 320px;
+}
+.demo-card-square > .mdl-card__title {
+    color: #fff;
+    background:  url('./profile.jpg') center no-repeat #00aeaa;
+    background-size: 40% auto;
+}
+
+.user-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}

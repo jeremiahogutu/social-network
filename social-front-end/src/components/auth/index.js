@@ -58,3 +58,9 @@ export const isAuthenticated = () => {
         return false
     }
 };
+
+ export const close = () => {
+    const sideNav = document.querySelector('.mdl-layout');
+    sideNav.MaterialLayout.toggleDrawer();
+};
+

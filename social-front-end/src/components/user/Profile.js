@@ -78,7 +78,7 @@ class Profile extends Component {
                                     <NavLink
                                         className='mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored'
                                         to={`/user/edit/${user._id}`}>Edit Profile</NavLink>
-                                   <DeleteUser/>
+                                   <DeleteUser userId={user._id}/>
                                 </div>
                             )}
                         </div>

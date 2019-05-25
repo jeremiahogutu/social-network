@@ -39,19 +39,46 @@ class Profile extends Component {
         if (redirectToSignin) return <Redirect to='/signin'/>;
         return (
             <div className='mdl-grid' style={{justifyContent: 'center'}}>
-                <div className='mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--4-col-phone'>
-                    <h2>Profile</h2>
-                    <p>Hello {isAuthenticated().user.name}</p>
-                    <p>Email: {isAuthenticated().user.email}</p>
-                    <p>{`Joined ${new Date(user.created).toDateString()}`}</p>
+                <div className='mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone'>
+                    <div className="mdl-grid mdl-grid--no-spacing" style={{justifyContent: 'center'}}>
+                        <div className='mdl-cell mdl-cell--8-col mdl-cell--8-col-tablet mdl-cell--4-col-phone'>
+                            <h2>Profile</h2>
+                        </div>
+                    </div>
                 </div>
                 <div className='mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--4-col-phone'>
-                    {isAuthenticated().user && isAuthenticated().user._id === this.state.user._id && (
-                        <div style={{display: 'flex', justifyContent: 'space-evenly', marginTop: '24px'}}>
-                            <NavLink className='mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored' to={`/user/edit/${user._id}`}>Edit Profile</NavLink>
-                            <NavLink className='mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent' to={`/user/edit/${user._id}`}>Delete Profile</NavLink>
+                    <div className="demo-card-square mdl-card mdl-shadow--2dp" style={{width: "100%"}}>
+                        <div className="mdl-card__title mdl-card--expand">
+                            {/*<h2 className="mdl-card__title-text">{user.name}</h2>*/}
                         </div>
-                    )}
+                        {/*<div className="mdl-card__supporting-text">*/}
+                        {/*    {user.email}*/}
+                        {/*</div>*/}
+                        {/*<div className="mdl-card__actions mdl-card--border">*/}
+                        {/*<NavLink to={`/user/${user._id}`} className="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">*/}
+                        {/*    View Profile*/}
+                        {/*</NavLink>*/}
+                        {/*</div>*/}
+                    </div>
+                </div>
+                <div className='mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--4-col-phone' style={{display: 'flex', alignItems: 'center'}}>
+                    <div className="mdl-grid" style={{flexDirection: 'column', alignItems: 'center', width: '100%'}}>
+                        <div className='mdl-cell mdl-cell--10-col mdl-cell--8-col-tablet mdl-cell--4-col-phone'>
+                            <p>Hello {user.name}</p>
+                            <p>Email: {user.email}</p>
+                            <p>{`Joined ${new Date(user.created).toDateString()}`}</p>
+                            {isAuthenticated().user && isAuthenticated().user._id === this.state.user._id && (
+                                <div style={{display: 'flex', justifyContent: 'space-between', marginTop: '24px'}}>
+                                    <NavLink
+                                        className='mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored'
+                                        to={`/user/edit/${user._id}`}>Edit Profile</NavLink>
+                                    <NavLink
+                                        className='mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent'
+                                        to={`/user/edit/${user._id}`}>Delete Profile</NavLink>
+                                </div>
+                            )}
+                        </div>
+                    </div>
                 </div>
             </div>
         );

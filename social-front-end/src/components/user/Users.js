@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {list} from "./apiUser";
+import {NavLink} from "react-router-dom";
 import './user.css';
 
 class Users extends Component {
@@ -23,9 +24,9 @@ class Users extends Component {
     }
 
     renderUsers = (users) => (
-        <div className="mdl-cell mdl-cell--10-col mdl-cell--6-col-tablet mdl-cell--4-col-phone user-container">
+        <div className="mdl-cell mdl-cell--10-col mdl-cell--8-col-tablet mdl-cell--4-col-phone user-container">
             {users.map((user, i) => (
-                <div className="demo-card-square mdl-card mdl-shadow--2dp" key={i}>
+                <div className="demo-card-square mdl-card mdl-shadow--2dp" style={{marginTop: '2em'}} key={i}>
                     <div className="mdl-card__title mdl-card--expand">
                         <h2 className="mdl-card__title-text">{user.name}</h2>
                     </div>
@@ -33,9 +34,9 @@ class Users extends Component {
                         {user.email}
                     </div>
                     <div className="mdl-card__actions mdl-card--border">
-                        <button className="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+                        <NavLink to={`/user/${user._id}`} className="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
                             View Profile
-                        </button>
+                        </NavLink>
                     </div>
                 </div>
             ))}

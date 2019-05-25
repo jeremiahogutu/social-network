@@ -3,6 +3,7 @@ import {isAuthenticated} from "../auth";
 import {Redirect} from "react-router-dom";
 import {read} from "./apiUser";
 import {NavLink} from "react-router-dom";
+import DeleteUser from "./DeleteUser";
 
 class Profile extends Component {
     constructor() {
@@ -72,9 +73,7 @@ class Profile extends Component {
                                     <NavLink
                                         className='mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored'
                                         to={`/user/edit/${user._id}`}>Edit Profile</NavLink>
-                                    <NavLink
-                                        className='mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent'
-                                        to={`/user/edit/${user._id}`}>Delete Profile</NavLink>
+                                   <DeleteUser/>
                                 </div>
                             )}
                         </div>

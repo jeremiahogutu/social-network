@@ -44,15 +44,15 @@ class Profile extends Component {
         const {redirectToSignin, user} = this.state;
         if (redirectToSignin) return <Redirect to='/signin'/>;
         return (
-            <div className='mdl-grid' style={{justifyContent: 'center'}}>
+            <div className='mdl-grid' style={{justifyContent: 'center', maxWidth: '900px'}}>
                 <div className='mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone'>
-                    <div className="mdl-grid mdl-grid--no-spacing" style={{justifyContent: 'center'}}>
+                    <div className="mdl-grid mdl-grid--no-spacing">
                         <div className='mdl-cell mdl-cell--8-col mdl-cell--8-col-tablet mdl-cell--4-col-phone'>
                             <h2>Profile</h2>
                         </div>
                     </div>
                 </div>
-                <div className='mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--4-col-phone'>
+                <div className='mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-cell--4-col-phone'>
                     <div className="demo-card-square mdl-card mdl-shadow--2dp" style={{width: "100%"}}>
                         <div className="mdl-card__title mdl-card--expand">
                             {/*<h2 className="mdl-card__title-text">{user.name}</h2>*/}
@@ -67,7 +67,7 @@ class Profile extends Component {
                         {/*</div>*/}
                     </div>
                 </div>
-                <div className='mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--4-col-phone' style={{display: 'flex', alignItems: 'center'}}>
+                <div className='mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-cell--4-col-phone' style={{display: 'flex', alignItems: 'center'}}>
                     <div className="mdl-grid" style={{flexDirection: 'column', alignItems: 'center', width: '100%'}}>
                         <div className='mdl-cell mdl-cell--10-col mdl-cell--8-col-tablet mdl-cell--4-col-phone'>
                             <p>Hello {user.name}</p>

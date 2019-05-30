@@ -11,9 +11,11 @@ class EditProfile extends Component {
             name: '',
             email: '',
             password: '',
-            redirectToProfile: false
+            redirectToProfile: false,
+            error: ''
         }
     }
+
     init = userId => {
         const token = isAuthenticated().token;
         read(userId, token)
@@ -38,6 +40,32 @@ class EditProfile extends Component {
         this.init(userId)
     }
 
+    isValid = () => {
+        const {name, email, password} = this.state;
+        if (name.length === 0) {
+            this.setState({
+                error: "Name is required"
+            });
+            return false
+        }
+
+        //email@domain.com
+        if (!/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
+            this.setState({
+                error: "A valid email is required"
+            });
+            return false
+        }
+
+        if (password.length >= 1 && password.length <= 5) {
+            this.setState({
+                error: "Password must be at least 6 characters long"
+            });
+            return false
+        }
+        return true
+    };
+
     // higher order function: A function that returns another function
     handleChange = userInput => event => {
         // we use array syntax to change values dynamically
@@ -47,23 +75,26 @@ class EditProfile extends Component {
     // handle submit
     onSubmit = event => {
         event.preventDefault();
-        const {name, email, password} = this.state;
-        const user = {
-            name,
-            email,
-            password: password || undefined
-        };
-        // console.log(user)
-        const userId = this.props.match.params.userId;
-        const token = isAuthenticated().token;
+        
+        if (this.isValid()) {
+            const {name, email, password} = this.state;
+            const user = {
+                name,
+                email,
+                password: password || undefined
+            };
+            // console.log(user)
+            const userId = this.props.match.params.userId;
+            const token = isAuthenticated().token;
 
-        update(userId, token, user).then(data => {
-            if (data.error) this.setState({error: data.error});
-            else
-                this.setState({
-                    redirectToProfile: true
-                })
-        })
+            update(userId, token, user).then(data => {
+                if (data.error) this.setState({error: data.error});
+                else
+                    this.setState({
+                        redirectToProfile: true
+                    })
+            })
+        }
     };
 
     signUpForm = (name, email, password, error) => (
@@ -72,7 +103,6 @@ class EditProfile extends Component {
                 <h2 className="mdl-card__title-text mdl-color-text--white">Edit Profile</h2>
             </div>
             <div className="mdl-card__supporting-text mdl-grid">
-                <b className="mdl-color-text--accent" style={{display: error ? "" : "none"}}>{error}</b>
                 <form>
                     <div className="mdl-textfield mdl-js-textfield mdl-textfield">
                         <label
@@ -123,14 +153,14 @@ class EditProfile extends Component {
     );
 
     render() {
-        const {id, name, email, password, redirectToProfile } = this.state;
+        const {id, name, email, password, redirectToProfile, error} = this.state;
         if (redirectToProfile) {
             return <Redirect to={`/user/${id}`}/>
         }
         return (
-            <div className='mdl-grid' style={{marginTop: '30px'}}>
-                {/*<h2>Edit Profile</h2>*/}
-
+            <div className='mdl-grid' style={{marginTop: '30px', flexDirection: 'column'}}>
+                <p className="mdl-color-text--accent"
+                   style={{display: error ? "block" : "none", textAlign: 'center'}}>{error}</p>
                 {this.signUpForm(name, email, password)}
             </div>
         );

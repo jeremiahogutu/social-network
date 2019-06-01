@@ -3,6 +3,7 @@ import {isAuthenticated} from "../auth";
 import {read, update} from "./apiUser";
 import {Redirect} from "react-router-dom";
 import './editProfile.css'
+import DefaultProfile from './profile.jpg';
 
 class EditProfile extends Component {
     constructor() {
@@ -82,8 +83,8 @@ class EditProfile extends Component {
             error: ''
         });
         // we use array syntax to change values dynamically
-        const value = userInput === 'photo' ? event.target.files[0] : 0;
-        const fileSize = userInput === 'photo' ? event.target.files[0].size :event.target.value;
+        const value = userInput === 'photo' ? event.target.files[0] :event.target.value;
+        const fileSize = userInput === 'photo' ? event.target.files[0].size : 0;
         this.userData.set(userInput, value);
         this.setState({[userInput]: value, fileSize})
     };
@@ -109,7 +110,7 @@ class EditProfile extends Component {
         }
     };
 
-    signUpForm = (name, email, password, error) => (
+    signUpForm = (name, email, password, photoUrl) => (
         <div className='mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone'>
             <div className="mdl-card mdl-shadow--16dp util-center util-spacing-h--40px"
                  style={{margin: "0 auto", maxWidth: '330px', width: '100%'}}>
@@ -117,8 +118,8 @@ class EditProfile extends Component {
                     <h2 className="mdl-card__title-text mdl-color-text--white">Edit Profile</h2>
                 </div>
                 <div className="mdl-card__supporting-text mdl-grid">
+                    <img src={photoUrl} alt={name}/>
                     <form>
-
                         <div className="mdl-textfield mdl-js-textfield mdl-textfield">
                             <label
                                 htmlFor="textfield_username">Name</label>
@@ -184,13 +185,15 @@ class EditProfile extends Component {
         if (redirectToProfile) {
             return <Redirect to={`/user/${id}`}/>
         }
+
+        const photoUrl = id ? `${process.env.REACT_APP_API_URL}/user/photo/${id}` : DefaultProfile;
         return (
             <div className='mdl-grid' style={{marginTop: '30px', flexDirection: 'column'}}>
                 <p className="mdl-color-text--accent"
                    style={{display: error ? "block" : "none", textAlign: 'center'}}>{error}</p>
                 {/*<p className="mdl-color-text--accent"*/}
                 {/*   style={{display: loading ? "block" : "none", textAlign: 'center'}}>Loading...</p>*/}
-                {this.signUpForm(name, email, password)}
+                {this.signUpForm(name, email, password, photoUrl)}
             </div>
         );
     }

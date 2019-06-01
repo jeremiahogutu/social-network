@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {isAuthenticated} from "../auth";
-import {read, update} from "./apiUser";
+import {read, update, updateUser} from "./apiUser";
 import {Redirect} from "react-router-dom";
 import './editProfile.css'
 import DefaultProfile from './profile.jpg';
@@ -16,7 +16,8 @@ class EditProfile extends Component {
             redirectToProfile: false,
             error: '',
             fileSize: 0,
-            loading: false
+            loading: false,
+            about: ""
         }
     }
 
@@ -33,6 +34,7 @@ class EditProfile extends Component {
                         id: data._id,
                         name: data.name,
                         email: data.email,
+                        about: data.about,
                         error: ''
                     })
                 }
@@ -83,7 +85,7 @@ class EditProfile extends Component {
             error: ''
         });
         // we use array syntax to change values dynamically
-        const value = userInput === 'photo' ? event.target.files[0] :event.target.value;
+        const value = userInput === 'photo' ? event.target.files[0] : event.target.value;
         const fileSize = userInput === 'photo' ? event.target.files[0].size : 0;
         this.userData.set(userInput, value);
         this.setState({[userInput]: value, fileSize})
@@ -103,14 +105,16 @@ class EditProfile extends Component {
             update(userId, token, this.userData).then(data => {
                 if (data.error) this.setState({error: data.error});
                 else
-                    this.setState({
-                        redirectToProfile: true
+                    updateUser(data, () => {
+                        this.setState({
+                            redirectToProfile: true
+                        })
                     })
             })
         }
     };
 
-    signUpForm = (name, email, password, photoUrl) => (
+    signUpForm = (name, email, about, password, photoUrl) => (
         <div className='mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone'>
             <div className="mdl-card mdl-shadow--16dp util-center util-spacing-h--40px edit-card">
                 <div className="mdl-card__title mdl-color--indigo">
@@ -119,14 +123,14 @@ class EditProfile extends Component {
                 <div className="mdl-card__supporting-text mdl-grid">
                     <form>
                         <img
-                            style={{ height: '200px', width: 'auto'}}
+                            style={{height: '200px', width: 'auto'}}
                             className='edit-image'
                             src={photoUrl}
                             onError={i => (i.target.src = `${DefaultProfile}`)}
                             alt={name}/>
                         <div className="mdl-textfield mdl-js-textfield mdl-textfield">
                             <label
-                                htmlFor="textfield_username">Name</label>
+                                htmlFor="textfield_name">Name</label>
                             <input
                                 onChange={this.handleChange("name")}
                                 className="mdl-textfield__input"
@@ -137,7 +141,7 @@ class EditProfile extends Component {
                             />
                         </div>
                         <div className="mdl-textfield mdl-js-textfield mdl-textfield">
-                            <label htmlFor="textfield_username">Email</label>
+                            <label htmlFor="textfield_email">Email</label>
                             <input
                                 onChange={this.handleChange("email")}
                                 className="mdl-textfield__input"
@@ -145,6 +149,18 @@ class EditProfile extends Component {
                                 id="textfield_email"
                                 name="email"
                                 value={email}
+                            />
+                        </div>
+                        <div className="mdl-textfield mdl-js-textfield mdl-textfield">
+                            <label htmlFor="textfield_about">About</label>
+                            <textarea
+                                onChange={this.handleChange("about")}
+                                className="mdl-textfield__input"
+                                type="text"
+                                rows="3"
+                                id="textfield_about"
+                                name="about"
+                                value={about}
                             />
                         </div>
                         <div className="mdl-textfield mdl-js-textfield mdl-textfield">
@@ -172,7 +188,9 @@ class EditProfile extends Component {
                                 />
                             </div>
                         </div>
-                        <div className="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone send-button" style={{display: 'flex', justifyContent: 'center', margin: 0, paddingBottom: '10px'}}>
+                        <div
+                            className="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone send-button"
+                            style={{display: 'flex', justifyContent: 'center', margin: 0, paddingBottom: '10px'}}>
                             <button
                                 onClick={this.onSubmit}
                                 type="submit"
@@ -189,7 +207,7 @@ class EditProfile extends Component {
     );
 
     render() {
-        const {id, name, email, password, redirectToProfile, error} = this.state;
+        const {id, name, email, about, password, redirectToProfile, error} = this.state;
         if (redirectToProfile) {
             return <Redirect to={`/user/${id}`}/>
         }
@@ -201,7 +219,7 @@ class EditProfile extends Component {
                    style={{display: error ? "block" : "none", textAlign: 'center'}}>{error}</p>
                 {/*<p className="mdl-color-text--accent"*/}
                 {/*   style={{display: loading ? "block" : "none", textAlign: 'center'}}>Loading...</p>*/}
-                {this.signUpForm(name, email, password, photoUrl)}
+                {this.signUpForm(name, email, about, password, photoUrl)}
             </div>
         );
     }

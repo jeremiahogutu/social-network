@@ -13,6 +13,11 @@ const userSchema = new mongoose.Schema({
         trim: true,
         required: true
     },
+    about: {
+        type: String,
+        trim: true,
+        required: true
+    },
     hashed_password: {
         type: String,
         required: true
@@ -22,7 +27,11 @@ const userSchema = new mongoose.Schema({
         type: Date,
         default: Date.now
     },
-    updated: Date
+    updated: Date,
+    photo: {
+        data: Buffer,
+        contentType: String
+    }
 });
 
 // virtual field

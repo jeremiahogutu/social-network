@@ -4,6 +4,7 @@ import {Redirect} from "react-router-dom";
 import {read} from "./apiUser";
 import {NavLink} from "react-router-dom";
 import DeleteUser from "./DeleteUser";
+import DefaultProfile from "./profile.jpg";
 
 class Profile extends Component {
     constructor() {
@@ -42,19 +43,20 @@ class Profile extends Component {
 
     render() {
         const {redirectToSignin, user} = this.state;
+        // const photoUrl = user._id ? `${process.env.REACT_APP_API_URL}/user/photo/${user._id}?${new Date().getTime()}` : './profile.jpg';
         if (redirectToSignin) return <Redirect to='/signin'/>;
         return (
-            <div className='mdl-grid' style={{justifyContent: 'center'}}>
+            <div className='mdl-grid' style={{justifyContent: 'center', maxWidth: '900px'}}>
                 <div className='mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone'>
-                    <div className="mdl-grid mdl-grid--no-spacing" style={{justifyContent: 'center'}}>
+                    <div className="mdl-grid mdl-grid--no-spacing">
                         <div className='mdl-cell mdl-cell--8-col mdl-cell--8-col-tablet mdl-cell--4-col-phone'>
                             <h2>Profile</h2>
                         </div>
                     </div>
                 </div>
-                <div className='mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--4-col-phone'>
+                <div className='mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-cell--4-col-phone'>
                     <div className="demo-card-square mdl-card mdl-shadow--2dp" style={{width: "100%"}}>
-                        <div className="mdl-card__title mdl-card--expand">
+                        <div className="mdl-card__title mdl-card--expand" style={{background: `no-repeat center/100% url(${process.env.REACT_APP_API_URL}/user/photo/${user._id}), #00aeaa no-repeat center/contain url(${DefaultProfile})`}}>
                             {/*<h2 className="mdl-card__title-text">{user.name}</h2>*/}
                         </div>
                         {/*<div className="mdl-card__supporting-text">*/}
@@ -67,7 +69,7 @@ class Profile extends Component {
                         {/*</div>*/}
                     </div>
                 </div>
-                <div className='mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--4-col-phone' style={{display: 'flex', alignItems: 'center'}}>
+                <div className='mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-cell--4-col-phone' style={{display: 'flex', alignItems: 'center'}}>
                     <div className="mdl-grid" style={{flexDirection: 'column', alignItems: 'center', width: '100%'}}>
                         <div className='mdl-cell mdl-cell--10-col mdl-cell--8-col-tablet mdl-cell--4-col-phone'>
                             <p>Hello {user.name}</p>
@@ -78,11 +80,14 @@ class Profile extends Component {
                                     <NavLink
                                         className='mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored'
                                         to={`/user/edit/${user._id}`}>Edit Profile</NavLink>
-                                   <DeleteUser/>
+                                   <DeleteUser userId={user._id}/>
                                 </div>
                             )}
                         </div>
                     </div>
+                </div>
+                <div className='mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone'>
+                    {user.about}
                 </div>
             </div>
         );

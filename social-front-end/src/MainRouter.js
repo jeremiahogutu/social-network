@@ -5,15 +5,18 @@ import Signup from "./components/user/Signup";
 import Signin from "./components/user/Signin";
 import Profile from "./components/user/Profile";
 import Users from "./components/user/Users";
+import EditProfile from './components/user/EditProfile'
+import PrivateRoute from './components/auth/PrivateRoute'
 
 const MainRouter = () => (
     <div className='container'>
         <Switch>
-            <Route exact={true} path="/" component={Home} />
-            <Route path="/users" component={Users} />
-            <Route path="/signup" component={Signup}/>
-            <Route path="/signin" component={Signin}/>
-            <Route path="/user/:userId" component={Profile}/>
+            <Route exact path="/" component={Home} />
+            <Route exact path="/users" component={Users} />
+            <Route exact path="/signup" component={Signup}/>
+            <Route exact path="/signin" component={Signin}/>
+            <PrivateRoute exact path="/user/edit/:userId" component={EditProfile}/>
+            <PrivateRoute exact path="/user/:userId" component={Profile}/>
         </Switch>
     </div>
 );

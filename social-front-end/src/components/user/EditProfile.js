@@ -47,7 +47,7 @@ class EditProfile extends Component {
 
     isValid = () => {
         const {name, email, password, fileSize} = this.state;
-        if (fileSize > 100000) {
+        if (fileSize > 1000000) {
             this.setState({
                 error: "File size should be less than 100kb"
             });
@@ -112,14 +112,13 @@ class EditProfile extends Component {
 
     signUpForm = (name, email, password, photoUrl) => (
         <div className='mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone'>
-            <div className="mdl-card mdl-shadow--16dp util-center util-spacing-h--40px"
-                 style={{margin: "0 auto", maxWidth: '330px', width: '100%'}}>
+            <div className="mdl-card mdl-shadow--16dp util-center util-spacing-h--40px edit-card">
                 <div className="mdl-card__title mdl-color--indigo">
                     <h2 className="mdl-card__title-text mdl-color-text--white">Edit Profile</h2>
                 </div>
                 <div className="mdl-card__supporting-text mdl-grid">
-                    <img src={photoUrl} alt={name}/>
                     <form>
+                        <img className='edit-image' src={photoUrl} alt={name}/>
                         <div className="mdl-textfield mdl-js-textfield mdl-textfield">
                             <label
                                 htmlFor="textfield_username">Name</label>
@@ -154,17 +153,21 @@ class EditProfile extends Component {
                                 value={password}
                             />
                         </div>
-                        <label htmlFor="avatar">Choose a profile picture:</label>
-
-                        <input
-                            onChange={this.handleChange('photo')}
-                            type="file"
-                            id="avatar" name="avatar"
-                            accept="image/*"
-                            style={{margin: '10px 0'}}
-                        />
-
-                        <div className="mdl-cell mdl-cell--12-col send-button" align="center">
+                        <div className='mdl-grid mdl-grid--no-spacing'>
+                            <div className='mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone'>
+                                <label htmlFor="avatar">Choose a profile picture:</label>
+                            </div>
+                            <div className='mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone'>
+                                <input
+                                    onChange={this.handleChange('photo')}
+                                    type="file"
+                                    id="avatar" name="avatar"
+                                    accept="image/*"
+                                    style={{margin: '10px 0'}}
+                                />
+                            </div>
+                        </div>
+                        <div className="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone send-button" style={{display: 'flex', justifyContent: 'center', margin: 0, paddingBottom: '10px'}}>
                             <button
                                 onClick={this.onSubmit}
                                 type="submit"
@@ -186,7 +189,7 @@ class EditProfile extends Component {
             return <Redirect to={`/user/${id}`}/>
         }
 
-        const photoUrl = id ? `${process.env.REACT_APP_API_URL}/user/photo/${id}` : DefaultProfile;
+        const photoUrl = id ? `${process.env.REACT_APP_API_URL}/user/photo/${id}?${new Date().getTime()}` : DefaultProfile;
         return (
             <div className='mdl-grid' style={{marginTop: '30px', flexDirection: 'column'}}>
                 <p className="mdl-color-text--accent"

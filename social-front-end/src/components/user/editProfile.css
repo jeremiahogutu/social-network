@@ -17,3 +17,16 @@
     right: 0;
 }
 
+.edit-card {
+    max-width: 600px;
+    margin: 0 auto;
+    width: 100%
+}
+
+.edit-image {
+    width: 100%;
+}
+
+.mdl-textfield {
+    width: 100%;
+}

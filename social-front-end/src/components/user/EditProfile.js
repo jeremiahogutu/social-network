@@ -45,7 +45,13 @@ class EditProfile extends Component {
     }
 
     isValid = () => {
-        const {name, email, password} = this.state;
+        const {name, email, password, fileSize} = this.state;
+        if (fileSize > 100000) {
+            this.setState({
+                error: "File size should be less than 100kb"
+            });
+            return false
+        }
         if (name.length === 0) {
             this.setState({
                 error: "Name is required"
@@ -72,10 +78,14 @@ class EditProfile extends Component {
 
     // higher order function: A function that returns another function
     handleChange = userInput => event => {
+        this.setState({
+            error: ''
+        });
         // we use array syntax to change values dynamically
-        const value = userInput === 'photo' ? event.target.files[0] :event.target.value;
+        const value = userInput === 'photo' ? event.target.files[0] : 0;
+        const fileSize = userInput === 'photo' ? event.target.files[0].size :event.target.value;
         this.userData.set(userInput, value);
-        this.setState({[userInput]: value})
+        this.setState({[userInput]: value, fileSize})
     };
 
     // handle submit
@@ -170,7 +180,7 @@ class EditProfile extends Component {
     );
 
     render() {
-        const {id, name, email, password, redirectToProfile, error, loading} = this.state;
+        const {id, name, email, password, redirectToProfile, error} = this.state;
         if (redirectToProfile) {
             return <Redirect to={`/user/${id}`}/>
         }
@@ -178,8 +188,8 @@ class EditProfile extends Component {
             <div className='mdl-grid' style={{marginTop: '30px', flexDirection: 'column'}}>
                 <p className="mdl-color-text--accent"
                    style={{display: error ? "block" : "none", textAlign: 'center'}}>{error}</p>
-                <p className="mdl-color-text--accent"
-                   style={{display: loading ? "block" : "none", textAlign: 'center'}}>Loading...</p>
+                {/*<p className="mdl-color-text--accent"*/}
+                {/*   style={{display: loading ? "block" : "none", textAlign: 'center'}}>Loading...</p>*/}
                 {this.signUpForm(name, email, password)}
             </div>
         );

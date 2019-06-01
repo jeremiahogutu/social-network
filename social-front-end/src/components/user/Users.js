@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {list} from "./apiUser";
 import {NavLink} from "react-router-dom";
 import './user.css';
+import DefaultProfile from "./profile.jpg";
 
 class Users extends Component {
     constructor() {
@@ -24,10 +25,11 @@ class Users extends Component {
     }
 
     renderUsers = (users) => (
+    // const photoUrl = id ? `${process.env.REACT_APP_API_URL}/user/photo/${id}?${new Date().getTime()}` : DefaultProfile;
         <div className="mdl-cell mdl-cell--10-col mdl-cell--8-col-tablet mdl-cell--4-col-phone user-container">
             {users.map((user, i) => (
                 <div className="demo-card-square mdl-card mdl-shadow--2dp" style={{marginTop: '2em'}} key={i}>
-                    <div className="mdl-card__title mdl-card--expand">
+                    <div className="mdl-card__title mdl-card--expand" style={{background: `no-repeat center/100% url(${process.env.REACT_APP_API_URL}/user/photo/${user._id}), #00aeaa no-repeat center/contain url(${DefaultProfile})`}}>
                         <h2 className="mdl-card__title-text">{user.name}</h2>
                     </div>
                     <div className="mdl-card__supporting-text">

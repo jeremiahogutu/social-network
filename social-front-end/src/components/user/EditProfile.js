@@ -13,7 +13,9 @@ class EditProfile extends Component {
             email: '',
             password: '',
             redirectToProfile: false,
-            error: ''
+            error: '',
+            fileSize: 0,
+            loading: false
         }
     }
 
@@ -79,15 +81,11 @@ class EditProfile extends Component {
     // handle submit
     onSubmit = event => {
         event.preventDefault();
+        this.setState({
+            loading: true
+        });
 
         if (this.isValid()) {
-            const {name, email, password} = this.state;
-            const user = {
-                name,
-                email,
-                password: password || undefined
-            };
-            // console.log(user)
             const userId = this.props.match.params.userId;
             const token = isAuthenticated().token;
 
@@ -172,7 +170,7 @@ class EditProfile extends Component {
     );
 
     render() {
-        const {id, name, email, password, redirectToProfile, error} = this.state;
+        const {id, name, email, password, redirectToProfile, error, loading} = this.state;
         if (redirectToProfile) {
             return <Redirect to={`/user/${id}`}/>
         }
@@ -180,6 +178,8 @@ class EditProfile extends Component {
             <div className='mdl-grid' style={{marginTop: '30px', flexDirection: 'column'}}>
                 <p className="mdl-color-text--accent"
                    style={{display: error ? "block" : "none", textAlign: 'center'}}>{error}</p>
+                <p className="mdl-color-text--accent"
+                   style={{display: loading ? "block" : "none", textAlign: 'center'}}>Loading...</p>
                 {this.signUpForm(name, email, password)}
             </div>
         );

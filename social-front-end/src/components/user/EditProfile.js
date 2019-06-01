@@ -118,7 +118,12 @@ class EditProfile extends Component {
                 </div>
                 <div className="mdl-card__supporting-text mdl-grid">
                     <form>
-                        <img className='edit-image' src={photoUrl} alt={name}/>
+                        <img
+                            style={{ height: '200px', width: 'auto'}}
+                            className='edit-image'
+                            src={photoUrl}
+                            onError={i => (i.target.src = `${DefaultProfile}`)}
+                            alt={name}/>
                         <div className="mdl-textfield mdl-js-textfield mdl-textfield">
                             <label
                                 htmlFor="textfield_username">Name</label>

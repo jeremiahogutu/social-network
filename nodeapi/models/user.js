@@ -16,8 +16,7 @@ const userSchema = new mongoose.Schema({
     },
     about: {
         type: String,
-        trim: true,
-        required: true
+        trim: true
     },
     following: [{
         type: ObjectId,

@@ -11,10 +11,20 @@ class Profile extends Component {
     constructor() {
         super();
         this.state = {
-            user: "",
-            redirectToSignin: false
+            user: {following: [], followers: []},
+            redirectToSignin: false,
+            following: false
         }
     }
+
+    // follower check
+    checkFollow = user => {
+        const jwt =  isAuthenticated();
+        const match = user.followers.find(follower => {
+            return follower._id === jwt.user._id
+        });
+        return match
+    };
 
     init = userId => {
         const token = isAuthenticated().token;
@@ -25,8 +35,10 @@ class Profile extends Component {
                         redirectToSignin: true
                     })
                 } else {
+                    let following = this.checkFollow(data);
                     this.setState({
-                        user: data
+                        user: data,
+                        following
                     })
                 }
             })
@@ -43,7 +55,7 @@ class Profile extends Component {
     }
 
     render() {
-        const {redirectToSignin, user} = this.state;
+        const {redirectToSignin, user, following} = this.state;
         const photoUrl = user._id ? `${process.env.REACT_APP_API_URL}/user/photo/${user._id}?${new Date().getTime()}` : DefaultProfile;
         if (redirectToSignin) return <Redirect to='/signin'/>;
         return (
@@ -51,7 +63,7 @@ class Profile extends Component {
                 <div className='mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone'>
                     <div className="mdl-grid mdl-grid--no-spacing">
                         <div className='mdl-cell mdl-cell--8-col mdl-cell--8-col-tablet mdl-cell--4-col-phone'>
-                            <h2>Profile</h2>
+                            {/*<h2 style={{fontFamily: 'Lato'}}>Profile</h2>*/}
                         </div>
                     </div>
                 </div>
@@ -80,7 +92,9 @@ class Profile extends Component {
                                         to={`/user/edit/${user._id}`}>Edit Profile</NavLink>
                                     <DeleteUser userId={user._id}/>
                                 </div>
-                            ) : (<FollowButton/>)}
+                            ) : (
+                                <FollowButton following={following}/>
+                                )}
                         </div>
                     </div>
                 </div>

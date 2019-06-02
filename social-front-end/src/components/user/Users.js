@@ -25,15 +25,20 @@ class Users extends Component {
     }
 
     renderUsers = (users) => (
-    // const photoUrl = id ? `${process.env.REACT_APP_API_URL}/user/photo/${id}?${new Date().getTime()}` : DefaultProfile;
         <div className="mdl-cell mdl-cell--10-col mdl-cell--8-col-tablet mdl-cell--4-col-phone user-container">
             {users.map((user, i) => (
                 <div className="demo-card-square mdl-card mdl-shadow--2dp" style={{marginTop: '2em'}} key={i}>
-                    <div className="mdl-card__title mdl-card--expand" style={{background: `no-repeat center/100% url(${process.env.REACT_APP_API_URL}/user/photo/${user._id}), #00aeaa no-repeat center/contain url(${DefaultProfile})`}}>
-                        <h2 className="mdl-card__title-text">{user.name}</h2>
+                    <div className="mdl-card__title mdl-card--expand">
+                        {/*<h2 className="mdl-card__title-text">{user.name}</h2>*/}
+                        <img
+                            style={{ width: "100%"}}
+                            src={`${process.env.REACT_APP_API_URL}/user/photo/${user._id}`}
+                            onError={i => {i.target.src = `${DefaultProfile}`}}
+                            alt=""
+                        />
                     </div>
                     <div className="mdl-card__supporting-text">
-                        {user.email}
+                        {user.name}
                     </div>
                     <div className="mdl-card__actions mdl-card--border">
                         <NavLink to={`/user/${user._id}`} className="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">

@@ -120,8 +120,8 @@ exports.addFollower = (req, res) => {
                     error: err
                 })
             }
-            result.hashed_password = undefined
-            result.salt = undefined
+            result.hashed_password = undefined;
+            result.salt = undefined;
             res.json(result)
         })
 };
@@ -152,8 +152,8 @@ exports.removeFollower = (req, res) => {
                     error: err
                 })
             }
-            result.hashed_password = undefined
-            result.salt = undefined
+            result.hashed_password = undefined;
+            result.salt = undefined;
             res.json(result)
         })
 };

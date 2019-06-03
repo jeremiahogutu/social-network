@@ -132,9 +132,7 @@ class Profile extends Component {
                     </div>
                 </div>
                 <div className='mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone'>
-                    <hr/>
-                    {user.about}
-                    <hr/>
+                    <p>{user.about}</p>
                     <ProfileTabs followers={user.followers} following={user.following}/>
                 </div>
             </div>

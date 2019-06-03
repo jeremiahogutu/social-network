@@ -1,19 +1,47 @@
 import React, {Component} from 'react';
 import {isAuthenticated} from "../auth";
 import {Redirect} from "react-router-dom";
-import {read} from "./apiUser";
+import {follow, unfollow, read} from "./apiUser";
 import {NavLink} from "react-router-dom";
 import DeleteUser from "./DeleteUser";
 import DefaultProfile from "./profile.jpg";
+import ProfileTabs from "./ProfileTabs";
+// import FollowButton from "./FollowButton";
 
 class Profile extends Component {
     constructor() {
         super();
         this.state = {
-            user: "",
-            redirectToSignin: false
+            user: {following: [], followers: []},
+            redirectToSignin: false,
+            following: false,
+            error: ''
         }
     }
+
+    // follower check
+    checkFollow = user => {
+        // debugger;
+        const jwt = isAuthenticated();
+        const match = user.followers.find(follower => {
+            return follower._id === jwt.user._id
+        });
+        return match
+    };
+
+    clickFollowButton = callApi => {
+        const userId = isAuthenticated().user._id;
+        const token = isAuthenticated().token;
+        const followId = this.state.user._id;
+        // debugger
+        callApi(userId, token, followId).then(data => {
+                if (data.error) {
+                    this.setState({error: data.error})
+                } else {
+                    this.setState({user: data, following: !this.state.following})
+                }
+            })
+    };
 
     init = userId => {
         const token = isAuthenticated().token;
@@ -24,8 +52,10 @@ class Profile extends Component {
                         redirectToSignin: true
                     })
                 } else {
+                    let following = this.checkFollow(data);
                     this.setState({
-                        user: data
+                        user: data,
+                        following
                     })
                 }
             })
@@ -43,51 +73,67 @@ class Profile extends Component {
 
     render() {
         const {redirectToSignin, user} = this.state;
-        // const photoUrl = user._id ? `${process.env.REACT_APP_API_URL}/user/photo/${user._id}?${new Date().getTime()}` : './profile.jpg';
+        const photoUrl = user._id ? `${process.env.REACT_APP_API_URL}/user/photo/${user._id}?${new Date().getTime()}` : DefaultProfile;
         if (redirectToSignin) return <Redirect to='/signin'/>;
         return (
             <div className='mdl-grid' style={{justifyContent: 'center', maxWidth: '900px'}}>
                 <div className='mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone'>
                     <div className="mdl-grid mdl-grid--no-spacing">
                         <div className='mdl-cell mdl-cell--8-col mdl-cell--8-col-tablet mdl-cell--4-col-phone'>
-                            <h2>Profile</h2>
+                            {/*<h2 style={{fontFamily: 'Lato'}}>Profile</h2>*/}
                         </div>
                     </div>
                 </div>
                 <div className='mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-cell--4-col-phone'>
-                    <div className="demo-card-square mdl-card mdl-shadow--2dp" style={{width: "100%"}}>
-                        <div className="mdl-card__title mdl-card--expand" style={{background: `no-repeat center/100% url(${process.env.REACT_APP_API_URL}/user/photo/${user._id}), #00aeaa no-repeat center/contain url(${DefaultProfile})`}}>
-                            {/*<h2 className="mdl-card__title-text">{user.name}</h2>*/}
+                    <div className="demo-card-square mdl-card mdl-shadow--2dp">
+                        <div className="mdl-card__title mdl-card--expand" style={{justifyContent: 'center'}}>
+                            <img
+                                style={{width: '100%'}}
+                                src={photoUrl}
+                                onError={(e) => {
+                                    e.target.onerror = null;
+                                    e.target.src = DefaultProfile
+                                }}
+                                alt={user.name}/>
                         </div>
-                        {/*<div className="mdl-card__supporting-text">*/}
-                        {/*    {user.email}*/}
-                        {/*</div>*/}
-                        {/*<div className="mdl-card__actions mdl-card--border">*/}
-                        {/*<NavLink to={`/user/${user._id}`} className="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">*/}
-                        {/*    View Profile*/}
-                        {/*</NavLink>*/}
-                        {/*</div>*/}
                     </div>
                 </div>
-                <div className='mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-cell--4-col-phone' style={{display: 'flex', alignItems: 'center'}}>
+                <div className='mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-cell--4-col-phone'
+                     style={{display: 'flex', alignItems: 'center'}}>
                     <div className="mdl-grid" style={{flexDirection: 'column', alignItems: 'center', width: '100%'}}>
                         <div className='mdl-cell mdl-cell--10-col mdl-cell--8-col-tablet mdl-cell--4-col-phone'>
                             <p>Hello {user.name}</p>
                             <p>Email: {user.email}</p>
                             <p>{`Joined ${new Date(user.created).toDateString()}`}</p>
-                            {isAuthenticated().user && isAuthenticated().user._id === this.state.user._id && (
+                            {isAuthenticated().user && isAuthenticated().user._id === user._id ? (
                                 <div style={{display: 'flex', justifyContent: 'space-between', marginTop: '24px'}}>
                                     <NavLink
                                         className='mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored'
                                         to={`/user/edit/${user._id}`}>Edit Profile</NavLink>
-                                   <DeleteUser userId={user._id}/>
+                                    <DeleteUser userId={user._id}/>
+                                </div>
+                            ) : (
+                                <div style={{display: 'flex', justifyContent: 'space-between'}}>
+
+                                    {
+                                        !this.state.following ? (
+                                            <button onClick={() => this.clickFollowButton(follow)} className="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">
+                                                Follow
+                                            </button>
+                                        ) : (
+                                            <button onClick={() => this.clickFollowButton(unfollow)} className="mdl-button mdl-js-button mdl-button--raised mdl-button--accent">
+                                                UnFollow
+                                            </button>
+                                        )
+                                    }
                                 </div>
                             )}
                         </div>
                     </div>
                 </div>
                 <div className='mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone'>
-                    {user.about}
+                    <p>{user.about}</p>
+                    <ProfileTabs followers={user.followers} following={user.following}/>
                 </div>
             </div>
         );

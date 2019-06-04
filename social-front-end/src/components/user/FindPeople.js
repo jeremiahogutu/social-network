@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {findPeople} from "./apiUser";
+import {findPeople, follow} from "./apiUser";
 import {NavLink} from "react-router-dom";
 import './user.css';
 import DefaultProfile from "./profile.jpg";
@@ -9,7 +9,9 @@ class FindPeople extends Component {
     constructor() {
         super();
         this.state = {
-            users: []
+            users: [],
+            error: '',
+            open: false
         }
     }
 
@@ -26,6 +28,28 @@ class FindPeople extends Component {
             }
         })
     }
+
+    clickFollow = (user, i) => {
+        const userId = isAuthenticated().user._id;
+        const token = isAuthenticated().token;
+
+        follow(userId, token, user._id)
+            .then(data => {
+                if (data.error) {
+                    this.setState({
+                        error: data.error
+                    })
+                } else {
+                    let tofollow = this.state.users;
+                    tofollow.splice(i, 1);
+                    this.setState({
+                        users: tofollow,
+                        open: true,
+                        followMessage: `Following ${user.name}`
+                    })
+                }
+            })
+    };
 
     renderUsers = (users) => (
         <div className="mdl-cell mdl-cell--10-col mdl-cell--8-col-tablet mdl-cell--4-col-phone user-container">
@@ -47,6 +71,9 @@ class FindPeople extends Component {
                         <NavLink to={`/user/${user._id}`} className="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
                             View Profile
                         </NavLink>
+                        <button onClick={() => this.clickFollow(user, i)} className="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">
+                            Follow
+                        </button>
                     </div>
                 </div>
             ))}
@@ -54,11 +81,14 @@ class FindPeople extends Component {
     );
 
     render() {
-        const {users} = this.state;
+        const {users, open, followMessage} = this.state;
         return (
             <div className="mdl-grid" style={{justifyContent: 'center'}}>
                 <div className="mdl-cell mdl-cell--10-col mdl-cell--6-col-tablet mdl-cell--4-col-phone">
-                    <h2>Users</h2>
+                    <h2>Find People</h2>
+                    <div>
+                        {open && (<p>{followMessage}</p>)}
+                    </div>
                 </div>
                 {this.renderUsers(users)}
             </div>

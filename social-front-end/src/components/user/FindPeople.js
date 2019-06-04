@@ -58,7 +58,7 @@ class FindPeople extends Component {
         return (
             <div className="mdl-grid" style={{justifyContent: 'center'}}>
                 <div className="mdl-cell mdl-cell--10-col mdl-cell--6-col-tablet mdl-cell--4-col-phone">
-                    <h2>Users</h2>
+                    <h2>Find People</h2>
                 </div>
                 {this.renderUsers(users)}
             </div>

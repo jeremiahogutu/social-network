@@ -1,20 +1,20 @@
 import React, {Component} from 'react';
+import {Tab, Tabs} from "react-mdl";
 import {Link} from "react-router-dom";
 import DefaultProfile from "./profile.jpg";
+import './profileTab.css'
 
 class ProfileTabs extends Component {
-    render() {
+    constructor(props) {
+        super(props);
+        this.state = { activeTab: 0 };
+    }
+
+    toggleApps() {
         const {following, followers} = this.props;
-        return (
-
-            <div className="mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
-                <div className="mdl-tabs__tab-bar" style={{justifyContent: 'space-around'}}>
-                    <a href="#starks-panel" className="mdl-tabs__tab is-active">Followers</a>
-                    <a href="#lannisters-panel" className="mdl-tabs__tab">Following</a>
-                    <a href="#targaryens-panel" className="mdl-tabs__tab">Posts</a>
-                </div>
-
-                <div className="mdl-tabs__panel is-active" id="starks-panel">
+        if (this.state.activeTab === 0) {
+            return (
+                <div className="demo-list-action mdl-list" style={{padding: 0}}>
                     {followers.map((person, i) => (
                             <div key={i} className="mdl-list__item" style={{padding: '10px 0'}}>
                                 <span className="mdl-list__item-primary-content">
@@ -22,7 +22,7 @@ class ProfileTabs extends Component {
                                     <Link to={`/user/${person._id}`}
                                           style={{color: '#000', textDecoration: 'none'}}>
                                         <img src={`${process.env.REACT_APP_API_URL}/user/photo/${person._id}`}
-                                             height="30px" style={{ borderRadius: '50%' }} onError={i => {
+                                             style={{ borderRadius: '50%',height: '30px', maxWidth: '30px' }} onError={i => {
                                             i.target.src = `${DefaultProfile}`
                                         }} alt={person.name}/>
                                         <span style={{paddingLeft: '10px'}}>{person.name}</span>
@@ -32,14 +32,17 @@ class ProfileTabs extends Component {
                         )
                     )}
                 </div>
-                <div className="mdl-tabs__panel" id="lannisters-panel">
+            )
+        } else if (this.state.activeTab === 1) {
+            return (
+                <div className="demo-list-action mdl-list" style={{padding: 0}}>
                     {following.map((person, i) => (
-                            <div key={i} className="mdl-list__item" style={{padding: '10px 0'}}>
+                            <div className="mdl-list__item" style={{padding: '10px 0'}}>
                                 <span className="mdl-list__item-primary-content">
                                     <Link to={`/user/${person._id}`}
                                           style={{color: '#000', textDecoration: 'none'}}>
                                         <img src={`${process.env.REACT_APP_API_URL}/user/photo/${person._id}`}
-                                             height="30px" style={{ borderRadius: '50%' }} onError={i => {
+                                             style={{ borderRadius: '50%', height: '30px', maxWidth: '30px' }} onError={i => {
                                             i.target.src = `${DefaultProfile}`
                                         }} alt={person.name}/>
                                     <span style={{paddingLeft: '10px'}}>{person.name}</span></Link>
@@ -48,12 +51,27 @@ class ProfileTabs extends Component {
                         )
                     )}
                 </div>
-                <div className="mdl-tabs__panel" id="targaryens-panel">
-                    {/*<ul>*/}
-                    {/*    <li>Viserys</li>*/}
-                    {/*    <li>Daenerys</li>*/}
-                    {/*</ul>*/}
+            )
+        } else if (this.state.activeTab === 2) {
+            return (
+                <div className="demo-list-action mdl-list" style={{padding: 0}}>
                 </div>
+            )
+        }
+    }
+
+    render() {
+
+        return (
+            <div className="demo-tabs">
+                <Tabs activeTab={this.state.activeTab} onChange={(tabId) => this.setState({ activeTab: tabId })} ripple>
+                    <Tab>Followers</Tab>
+                    <Tab>Following</Tab>
+                    <Tab>Posts</Tab>
+                </Tabs>
+                <section>
+                    <div className="content">{this.toggleApps()}</div>
+                </section>
             </div>
 
         );

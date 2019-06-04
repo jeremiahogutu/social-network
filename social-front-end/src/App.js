@@ -34,6 +34,8 @@ const App = () => (
                         <div style={{display: 'flex'}}>
                             <NavLink className="mdl-navigation__link" to="/users"
                                      activeStyle={{fontWeight: "bold", color: "#3fb5a3"}}>Users</NavLink>
+                            <NavLink className="mdl-navigation__link" to="/findpeople"
+                                     activeStyle={{fontWeight: "bold", color: "#3fb5a3"}}>Find People</NavLink>
                             <button
                                 className="mdl-navigation__link"
                                 style={{cursor: "pointer", color: "#fff", background: "transparent", border: "none"}}
@@ -61,6 +63,8 @@ const App = () => (
                     <div>
                         <NavLink className="mdl-navigation__link" to="/users"
                                  activeStyle={{fontWeight: "bold", color: "#3fb5a3"}}>Users</NavLink>
+                        <NavLink className="mdl-navigation__link" to="/findpeople"
+                                 activeStyle={{fontWeight: "bold", color: "#3fb5a3"}}>Find People</NavLink>
                         <button
                             className="mdl-navigation__link"
                             style={{

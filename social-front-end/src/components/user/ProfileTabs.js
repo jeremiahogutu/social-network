@@ -1,81 +1,127 @@
-import React, {Component} from 'react';
-import {Tab, Tabs} from "react-mdl";
-import {Link} from "react-router-dom";
+import React from 'react';
+import PropTypes from 'prop-types';
+import {makeStyles} from '@material-ui/core/styles';
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
+import Typography from '@material-ui/core/Typography';
+import {Divider, AppBar, List, ListItem, ListItemAvatar, Avatar, ListItemText} from "@material-ui/core";
+// import PersonPinIcon from '@material-ui/icons/PersonPin';
+import {PeopleOutline, People, Forum} from "@material-ui/icons";
 import DefaultProfile from "./profile.jpg";
 import './profileTab.css'
 
-class ProfileTabs extends Component {
-    constructor(props) {
-        super(props);
-        this.state = { activeTab: 0 };
-    }
 
-    toggleApps() {
-        const {following, followers} = this.props;
-        if (this.state.activeTab === 0) {
-            return (
-                <div className="demo-list-action mdl-list" style={{padding: 0}}>
-                    {followers.map((person, i) => (
-                            <div key={i} className="mdl-list__item" style={{padding: '10px 0'}}>
-                                <span className="mdl-list__item-primary-content">
-                                  {/*<i className="material-icons mdl-list__item-avatar">person</i>*/}
-                                    <Link to={`/user/${person._id}`}
-                                          style={{color: '#000', textDecoration: 'none'}}>
-                                        <img src={`${process.env.REACT_APP_API_URL}/user/photo/${person._id}`}
-                                             style={{ borderRadius: '50%',height: '30px', maxWidth: '30px' }} onError={i => {
-                                            i.target.src = `${DefaultProfile}`
-                                        }} alt={person.name}/>
-                                        <span style={{paddingLeft: '10px'}}>{person.name}</span>
-                                    </Link>
-                                </span>
-                            </div>
-                        )
-                    )}
-                </div>
-            )
-        } else if (this.state.activeTab === 1) {
-            return (
-                <div className="demo-list-action mdl-list" style={{padding: 0}}>
-                    {following.map((person, i) => (
-                            <div className="mdl-list__item" style={{padding: '10px 0'}}>
-                                <span className="mdl-list__item-primary-content">
-                                    <Link to={`/user/${person._id}`}
-                                          style={{color: '#000', textDecoration: 'none'}}>
-                                        <img src={`${process.env.REACT_APP_API_URL}/user/photo/${person._id}`}
-                                             style={{ borderRadius: '50%', height: '30px', maxWidth: '30px' }} onError={i => {
-                                            i.target.src = `${DefaultProfile}`
-                                        }} alt={person.name}/>
-                                    <span style={{paddingLeft: '10px'}}>{person.name}</span></Link>
-                                </span>
-                            </div>
-                        )
-                    )}
-                </div>
-            )
-        } else if (this.state.activeTab === 2) {
-            return (
-                <div className="demo-list-action mdl-list" style={{padding: 0}}>
-                </div>
-            )
-        }
-    }
-
-    render() {
-
-        return (
-            <div className="demo-tabs">
-                <Tabs activeTab={this.state.activeTab} onChange={(tabId) => this.setState({ activeTab: tabId })} ripple>
-                    <Tab>Followers</Tab>
-                    <Tab>Following</Tab>
-                    <Tab>Posts</Tab>
-                </Tabs>
-                <section>
-                    <div className="content">{this.toggleApps()}</div>
-                </section>
-            </div>
-
-        );
-    }
+function TabContainer(props) {
+    return (
+        <Typography component="div" style={{padding: 8 * 3}}>
+            {props.children}
+        </Typography>
+    );
 }
 
-export default ProfileTabs;
+TabContainer.propTypes = {
+    children: PropTypes.node.isRequired,
+};
+
+const useStyles = makeStyles(theme => ({
+    root: {
+        flexGrow: 1,
+        width: '100%',
+        backgroundColor: theme.palette.background.paper,
+    },
+}));
+
+function ScrollableTabsButtonAuto(props) {
+    const classes = useStyles();
+    // const {followers, following} = this.props;
+    const [value, setValue] = React.useState(0);
+
+    function handleChange(event, newValue) {
+        setValue(newValue);
+    }
+
+    return (
+
+        <div className={classes.root}>
+            <AppBar position="static" color="#fff" style={{display: 'flex', justifyContent: "space-between"}}>
+                <Tabs
+                    value={value}
+                    onChange={handleChange}
+                    indicatorColor="primary"
+                    textColor="primary"
+                    variant="scrollable"
+                    scrollButtons="auto"
+                >
+                    <Tab style={{width: '100%'}} label="Followers" icon={<People/>}/>
+                    <Tab style={{width: '100%'}} label="Following" icon={<PeopleOutline/>}/>
+                    <Tab style={{width: '100%'}} label="Posts" icon={<Forum/>}/>
+                </Tabs>
+            </AppBar>
+            {value === 0 && <TabContainer>
+                {props.followers.map((person, i) => (
+                    <List className={classes.root}>
+                        <ListItem alignItems="flex-start">
+                            <ListItemAvatar>
+                                <Avatar
+                                    alt="Remy Sharp"
+                                    src={`${process.env.REACT_APP_API_URL}/user/photo/${person._id}`}
+                                    onError={i => { i.target.src = `${DefaultProfile}` }}
+                                />
+                            </ListItemAvatar>
+                            <ListItemText
+                                primary={person.name}
+                                secondary={
+                                    <React.Fragment>
+                                        <Typography
+                                            component="span"
+                                            variant="body2"
+                                            className={classes.inline}
+                                            color="textPrimary"
+                                        >
+                                        </Typography>
+                                        {"Chilling like a villan"}
+                                    </React.Fragment>
+                                }
+                            />
+                        </ListItem>
+                        <Divider variant="inset" component="li"/>
+                    </List>
+                ))}
+            </TabContainer>}
+            {value === 1 && <TabContainer>
+                {props.following.map((person, i) => (
+                    <List className={classes.root}>
+                        <ListItem alignItems="flex-start">
+                            <ListItemAvatar>
+                                <Avatar
+                                    alt="Remy Sharp"
+                                    src={`${process.env.REACT_APP_API_URL}/user/photo/${person._id}`}
+                                    onError={i => { i.target.src = `${DefaultProfile}` }}
+                                />
+                            </ListItemAvatar>
+                            <ListItemText
+                                primary={person.name}
+                                secondary={
+                                    <React.Fragment>
+                                        <Typography
+                                            component="span"
+                                            variant="body2"
+                                            className={classes.inline}
+                                            color="textPrimary"
+                                        >
+                                        </Typography>
+                                        {"Happy to be here"}
+                                    </React.Fragment>
+                                }
+                            />
+                        </ListItem>
+                        <Divider variant="inset" component="li"/>
+                    </List>
+                ))}
+            </TabContainer>}
+            {value === 2 && <TabContainer>Posts</TabContainer>}
+        </div>
+    );
+}
+
+export default ScrollableTabsButtonAuto;

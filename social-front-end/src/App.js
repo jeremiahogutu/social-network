@@ -36,6 +36,8 @@ const App = () => (
                                      activeStyle={{fontWeight: "bold", color: "#3fb5a3"}}>Users</NavLink>
                             <NavLink className="mdl-navigation__link" to="/findpeople"
                                      activeStyle={{fontWeight: "bold", color: "#3fb5a3"}}>Find People</NavLink>
+                            <NavLink className="mdl-navigation__link" to="/post/create"
+                                     activeStyle={{fontWeight: "bold", color: "#3fb5a3"}}>Create Post</NavLink>
                             <button
                                 className="mdl-navigation__link"
                                 style={{cursor: "pointer", color: "#fff", background: "transparent", border: "none"}}

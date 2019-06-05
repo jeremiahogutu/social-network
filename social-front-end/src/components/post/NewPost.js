@@ -2,8 +2,9 @@ import React, {Component} from 'react';
 import {isAuthenticated} from "../auth";
 import {create} from "./apiPost";
 import {Redirect} from "react-router-dom";
-import './editProfile.css'
-import DefaultProfile from './profile.jpg';
+import '../user/editProfile.css'
+import DefaultProfile from '../user/profile.jpg';
+import {AppBar, Toolbar, Typography} from "@material-ui/core";
 
 class NewPost extends Component {
     constructor() {
@@ -13,29 +14,11 @@ class NewPost extends Component {
             body: '',
             photo: '',
             error: '',
-            user: {}
+            user: {},
+            fileSize: 0,
+            loading: false
         }
     }
-
-    init = userId => {
-        const token = isAuthenticated().token;
-        read(userId, token)
-            .then(data => {
-                if (data.error) {
-                    this.setState({
-                        redirectToProfile: true
-                    })
-                } else {
-                    this.setState({
-                        id: data._id,
-                        name: data.name,
-                        email: data.email,
-                        about: data.about,
-                        error: ''
-                    })
-                }
-            })
-    };
 
     componentDidMount() {
         this.postData = new FormData();
@@ -54,7 +37,8 @@ class NewPost extends Component {
         }
         if (title.length === 0 || body.length === 0) {
             this.setState({
-                error: "All fields are required"
+                error: "All fields are required",
+                loading: false
             });
             return false
         }
@@ -71,7 +55,7 @@ class NewPost extends Component {
         // we use array syntax to change values dynamically
         const value = userInput === 'photo' ? event.target.files[0] : event.target.value;
         const fileSize = userInput === 'photo' ? event.target.files[0].size : 0;
-        this.userData.set(userInput, value);
+        this.postData.set(userInput, value);
         this.setState({[userInput]: value, fileSize})
     };
 
@@ -83,79 +67,55 @@ class NewPost extends Component {
         });
 
         if (this.isValid()) {
-            const userId = this.props.match.params.userId;
+            const userId = isAuthenticated().user._id;
             const token = isAuthenticated().token;
 
-            update(userId, token, this.userData).then(data => {
+            create(userId, token, this.postData).then(data => {
                 if (data.error) this.setState({error: data.error});
-                else
-                    updateUser(data, () => {
-                        this.setState({
-                            redirectToProfile: true
-                        })
-                    })
+                else console.log("New Post: ", data)
             })
         }
     };
 
-    signUpForm = (name, email, about, password, photoUrl) => (
+    newPostForm = (title, body, photo) => (
         <div className='mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone'>
             <div className="mdl-card mdl-shadow--16dp util-center util-spacing-h--40px edit-card">
-                <div className="mdl-card__title mdl-color--indigo">
-                    <h2 className="mdl-card__title-text mdl-color-text--white">Edit Profile</h2>
-                </div>
-                <div className="mdl-card__supporting-text mdl-grid">
+                <AppBar position="static" style={{boxShadow: 'none'}}>
+                    <Toolbar>
+                        <Typography variant="h6" color="inherit">
+                            Create New Post
+                        </Typography>
+                    </Toolbar>
+                </AppBar>
+                <div className="mdl-card__supporting-text mdl-grid" style={{display: 'flex', justifyContent: 'center'}}>
                     <form>
-                        <img
-                            style={{height: '200px', width: 'auto'}}
-                            className='edit-image'
-                            src={photoUrl}
-                            onError={i => (i.target.src = `${DefaultProfile}`)}
-                            alt={name}/>
+                        {/*<img*/}
+                        {/*    style={{height: '200px', width: 'auto'}}*/}
+                        {/*    className='edit-image'*/}
+                        {/*    src={photoUrl}*/}
+                        {/*    onError={i => (i.target.src = `${DefaultProfile}`)}*/}
+                        {/*    alt={name}/>*/}
                         <div className="mdl-textfield mdl-js-textfield mdl-textfield">
                             <label
-                                htmlFor="textfield_name">Name</label>
+                                htmlFor="textfield_title">Name</label>
                             <input
-                                onChange={this.handleChange("name")}
+                                onChange={this.handleChange("title")}
                                 className="mdl-textfield__input"
                                 type="text"
-                                id="textfield_name"
+                                id="textfield_title"
                                 name="name"
-                                value={name}
+                                value={title}
                             />
                         </div>
                         <div className="mdl-textfield mdl-js-textfield mdl-textfield">
-                            <label htmlFor="textfield_email">Email</label>
-                            <input
-                                onChange={this.handleChange("email")}
-                                className="mdl-textfield__input"
-                                type="email"
-                                id="textfield_email"
-                                name="email"
-                                value={email}
-                            />
-                        </div>
-                        <div className="mdl-textfield mdl-js-textfield mdl-textfield">
-                            <label htmlFor="textfield_about">About</label>
+                            <label htmlFor="textfield_body">Body</label>
                             <textarea
-                                onChange={this.handleChange("about")}
+                                onChange={this.handleChange("body")}
                                 className="mdl-textfield__input"
-                                type="text"
                                 rows="3"
-                                id="textfield_about"
-                                name="about"
-                                value={about}
-                            />
-                        </div>
-                        <div className="mdl-textfield mdl-js-textfield mdl-textfield">
-                            <label htmlFor="textfield_password">Password</label>
-                            <input
-                                className="mdl-textfield__input"
-                                onChange={this.handleChange("password")}
-                                type="password"
-                                id="textfield_password"
-                                name="password"
-                                value={password}
+                                id="textfield_body"
+                                name="body"
+                                value={body}
                             />
                         </div>
                         <div className='mdl-grid mdl-grid--no-spacing'>
@@ -180,7 +140,7 @@ class NewPost extends Component {
                                 type="submit"
                                 className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--colored mdl-color--primary"
                             >
-                                Update
+                                Create Post
                             </button>
                         </div>
                     </form>
@@ -191,19 +151,19 @@ class NewPost extends Component {
     );
 
     render() {
-        const {id, name, email, about, password, redirectToProfile, error} = this.state;
-        if (redirectToProfile) {
-            return <Redirect to={`/user/${id}`}/>
-        }
+        const {title, body, photo, user, error, loading} = this.state;
+        // if (redirectToProfile) {
+        //     return <Redirect to={`/user/${id}`}/>
+        // }
 
-        const photoUrl = id ? `${process.env.REACT_APP_API_URL}/user/photo/${id}?${new Date().getTime()}` : DefaultProfile;
+        // const photoUrl = id ? `${process.env.REACT_APP_API_URL}/user/photo/${id}?${new Date().getTime()}` : DefaultProfile;
         return (
             <div className='mdl-grid' style={{marginTop: '30px', flexDirection: 'column'}}>
                 <p className="mdl-color-text--accent"
                    style={{display: error ? "block" : "none", textAlign: 'center'}}>{error}</p>
                 {/*<p className="mdl-color-text--accent"*/}
                 {/*   style={{display: loading ? "block" : "none", textAlign: 'center'}}>Loading...</p>*/}
-                {this.signUpForm(name, email, about, password, photoUrl)}
+                {this.newPostForm(title, body, photo)}
             </div>
         );
     }

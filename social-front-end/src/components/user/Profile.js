@@ -88,7 +88,7 @@ class Profile extends Component {
                     <div className="demo-card-square mdl-card mdl-shadow--2dp">
                         <div className="mdl-card__title mdl-card--expand" style={{justifyContent: 'center'}}>
                             <img
-                                style={{width: '100%'}}
+                                style={{width: '100%', maxHeight: '300px'}}
                                 src={photoUrl}
                                 onError={(e) => {
                                     e.target.onerror = null;

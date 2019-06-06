@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {isAuthenticated} from "../auth";
 import {read, update, updateUser} from "./apiUser";
+import {AppBar, Toolbar, Typography} from "@material-ui/core";
 import {Redirect} from "react-router-dom";
 import './editProfile.css'
 import DefaultProfile from './profile.jpg';
@@ -117,9 +118,16 @@ class EditProfile extends Component {
     signUpForm = (name, email, about, password, photoUrl) => (
         <div className='mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone'>
             <div className="mdl-card mdl-shadow--16dp util-center util-spacing-h--40px edit-card">
-                <div className="mdl-card__title mdl-color--indigo">
-                    <h2 className="mdl-card__title-text mdl-color-text--white">Edit Profile</h2>
-                </div>
+                <AppBar position="static" style={{boxShadow: 'none'}}>
+                    <Toolbar>
+                        <Typography variant="h6" color="inherit">
+                            Edit Profile
+                        </Typography>
+                    </Toolbar>
+                </AppBar>
+                {/*<div className="mdl-card__title mdl-color--indigo">*/}
+                {/*    <h2 className="mdl-card__title-text mdl-color-text--white">Edit Profile</h2>*/}
+                {/*</div>*/}
                 <div className="mdl-card__supporting-text mdl-grid">
                     <form>
                         <img

@@ -6,7 +6,7 @@ const postSchema = new mongoose.Schema({
         type: String,
         required: "Title is required",
     },
-    description: {
+    body: {
         type: String,
         required: "Description is required",
     },

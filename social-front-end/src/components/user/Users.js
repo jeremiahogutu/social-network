@@ -31,7 +31,7 @@ class Users extends Component {
                     <div className="mdl-card__title mdl-card--expand">
                         {/*<h2 className="mdl-card__title-text">{user.name}</h2>*/}
                         <img
-                            style={{ width: "100%"}}
+                            style={{ width: "100%", maxHeight: "300px"}}
                             src={`${process.env.REACT_APP_API_URL}/user/photo/${user._id}`}
                             onError={i => {i.target.src = `${DefaultProfile}`}}
                             alt=""

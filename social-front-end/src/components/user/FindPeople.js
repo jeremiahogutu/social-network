@@ -52,7 +52,7 @@ class FindPeople extends Component {
     };
 
     renderUsers = (users) => (
-        <div className="mdl-cell mdl-cell--10-col mdl-cell--8-col-tablet mdl-cell--4-col-phone user-container">
+        <div className="mdl-cell mdl-cell--10-col mdl-cell--8-col-tablet mdl-cell--4-col-phone" style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-evenly'}}>
             {users.map((user, i) => (
                 <div className="demo-card-square mdl-card mdl-shadow--2dp" style={{marginTop: '2em'}} key={i}>
                     <div className="mdl-card__title mdl-card--expand">

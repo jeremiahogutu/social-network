@@ -16,7 +16,8 @@ class NewPost extends Component {
             error: '',
             user: {},
             fileSize: 0,
-            loading: false
+            loading: false,
+            redirectToProfile: false
         }
     }
 
@@ -72,7 +73,14 @@ class NewPost extends Component {
 
             create(userId, token, this.postData).then(data => {
                 if (data.error) this.setState({error: data.error});
-                else console.log("New Post: ", data)
+                else {
+                    this.setState({
+                        loading: false,
+                        title: '',
+                        body: '',
+                        photo: ''
+                    })
+                }
             })
         }
     };
@@ -151,12 +159,10 @@ class NewPost extends Component {
     );
 
     render() {
-        const {title, body, photo, user, error, loading} = this.state;
-        // if (redirectToProfile) {
-        //     return <Redirect to={`/user/${id}`}/>
-        // }
-
-        // const photoUrl = id ? `${process.env.REACT_APP_API_URL}/user/photo/${id}?${new Date().getTime()}` : DefaultProfile;
+        const {title, body, photo, user, error, loading, redirectToProfile} = this.state;
+        if (redirectToProfile) {
+            return <Redirect to={`/user/${user._id}`}/>
+        }
         return (
             <div className='mdl-grid' style={{marginTop: '30px', flexDirection: 'column'}}>
                 <p className="mdl-color-text--accent"

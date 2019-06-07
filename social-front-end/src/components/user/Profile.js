@@ -123,9 +123,9 @@ class Profile extends Component {
                                                 Follow
                                             </Button>
                                         ) : (
-                                            <button onClick={() => this.clickFollowButton(unfollow)} className="mdl-button mdl-js-button mdl-button--raised mdl-button--accent">
+                                            <Button onClick={() => this.clickFollowButton(unfollow)} variant="contained" size="large" color="secondary">
                                                 UnFollow
-                                            </button>
+                                            </Button>
                                         )
                                     }
                                 </div>

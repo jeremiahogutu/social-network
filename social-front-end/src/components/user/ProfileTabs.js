@@ -47,8 +47,8 @@ function ScrollableTabsButtonAuto(props) {
                 <Tabs
                     value={value}
                     onChange={handleChange}
-                    indicatorColor={"#2196f3"}
-                    textColor={"#2196f3"}
+                    indicatorColor="primary"
+                    textColor="primary"
                     variant="scrollable"
                     scrollButtons="auto"
                 >

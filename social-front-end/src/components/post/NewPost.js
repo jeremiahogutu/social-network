@@ -3,7 +3,6 @@ import {isAuthenticated} from "../auth";
 import {create} from "./apiPost";
 import {Redirect} from "react-router-dom";
 import '../user/editProfile.css'
-import DefaultProfile from '../user/profile.jpg';
 import {AppBar, Toolbar, Typography} from "@material-ui/core";
 
 class NewPost extends Component {
@@ -78,7 +77,8 @@ class NewPost extends Component {
                         loading: false,
                         title: '',
                         body: '',
-                        photo: ''
+                        photo: '',
+                        redirectToProfile: true
                     })
                 }
             })
@@ -97,12 +97,6 @@ class NewPost extends Component {
                 </AppBar>
                 <div className="mdl-card__supporting-text mdl-grid" style={{display: 'flex', justifyContent: 'center'}}>
                     <form>
-                        {/*<img*/}
-                        {/*    style={{height: '200px', width: 'auto'}}*/}
-                        {/*    className='edit-image'*/}
-                        {/*    src={photoUrl}*/}
-                        {/*    onError={i => (i.target.src = `${DefaultProfile}`)}*/}
-                        {/*    alt={name}/>*/}
                         <div className="mdl-textfield mdl-js-textfield mdl-textfield">
                             <label
                                 htmlFor="textfield_title">Name</label>
@@ -167,8 +161,8 @@ class NewPost extends Component {
             <div className='mdl-grid' style={{marginTop: '30px', flexDirection: 'column'}}>
                 <p className="mdl-color-text--accent"
                    style={{display: error ? "block" : "none", textAlign: 'center'}}>{error}</p>
-                {/*<p className="mdl-color-text--accent"*/}
-                {/*   style={{display: loading ? "block" : "none", textAlign: 'center'}}>Loading...</p>*/}
+                <p className="mdl-color-text--accent"
+                   style={{display: loading ? "block" : "none", textAlign: 'center'}}>Loading...</p>
                 {this.newPostForm(title, body, photo)}
             </div>
         );

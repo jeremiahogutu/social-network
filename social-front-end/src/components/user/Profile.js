@@ -6,6 +6,7 @@ import {NavLink} from "react-router-dom";
 import DeleteUser from "./DeleteUser";
 import DefaultProfile from "./profile.jpg";
 import ProfileTabs from "./ProfileTabs";
+import {Button} from "@material-ui/core";
 // import FollowButton from "./FollowButton";
 
 class Profile extends Component {
@@ -117,9 +118,10 @@ class Profile extends Component {
 
                                     {
                                         !this.state.following ? (
-                                            <button onClick={() => this.clickFollowButton(follow)} className="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">
+                                            <Button onClick={() => this.clickFollowButton(follow)} variant="contained" size="large"
+                                                    style={{backgroundColor: '#2196f3', color: '#fff'}}>
                                                 Follow
-                                            </button>
+                                            </Button>
                                         ) : (
                                             <button onClick={() => this.clickFollowButton(unfollow)} className="mdl-button mdl-js-button mdl-button--raised mdl-button--accent">
                                                 UnFollow

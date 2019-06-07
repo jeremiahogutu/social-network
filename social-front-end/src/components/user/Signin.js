@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import {Redirect} from "react-router-dom";
 import {signin, authenticate} from "../auth";
-// import AppBar from '@material-ui/core/AppBar';
 import {AppBar, Typography, Toolbar, Button, Box, TextField, Card, Grid} from "@material-ui/core";
 
 class Signin extends Component {

@@ -1,33 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {makeStyles} from '@material-ui/core/styles';
-import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
-import Button from '@material-ui/core/Button';
-import List from '@material-ui/core/List';
-import Divider from '@material-ui/core/Divider';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import Home from '@material-ui/icons/Home';
-import People from '@material-ui/icons/People';
-import PeopleOutline from '@material-ui/icons/PeopleOutline'
-import Power from '@material-ui/icons/Power'
-import Forum from '@material-ui/icons/Forum'
-import PowerOff from '@material-ui/icons/PowerOff'
-import VpnKey from '@material-ui/icons/VpnKey'
-import ExitToApp from '@material-ui/icons/ExitToApp'
-import PersonAdd from '@material-ui/icons/PersonAdd'
-import MailIcon from '@material-ui/icons/Mail';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import useScrollTrigger from '@material-ui/core/useScrollTrigger';
-import {AppBar, IconButton, Toolbar, Typography} from "@material-ui/core";
-import MenuIcon from '@material-ui/icons/Menu';
+import {SwipeableDrawer, makeStyles, Button, List, Divider, ListItem, ListItemIcon, ListItemText, CssBaseline, useScrollTrigger, AppBar, IconButton, Toolbar, Typography} from "@material-ui/core";
+import {Home, People, PeopleOutline, Forum, VpnKey, ExitToApp, PersonAdd, Menu} from "@material-ui/icons";
 import {NavLink} from "react-router-dom";
-import {close, isAuthenticated, signout} from "../auth";
-// import {close, isAuthenticated, signout} from "./components/auth";
-import DraftsIcon from '@material-ui/icons/Drafts';
-import Signup from "../user/Signup";
+import {isAuthenticated, signout} from "../auth";
 
 const useStyles = makeStyles({
     list: {
@@ -37,10 +13,6 @@ const useStyles = makeStyles({
         width: 'auto',
     },
 });
-
-function ListItemLink(props) {
-    return <ListItem button component="a" {...props} />;
-}
 
 function ElevationScroll(props) {
     const {children, window} = props;
@@ -90,53 +62,116 @@ function SwipeableTemporaryDrawer() {
             onKeyDown={toggleDrawer(side, false)}
         >
             <Divider/>
-            <Typography variant="h5" style={{flexGrow: 1, margin: '20px 0 20px 20px'}}>
-                Social Network
-            </Typography>
+            {isAuthenticated() && (
+                <NavLink style={{textDecoration: "none", color: "#757575", flexGrow: 1}}
+                         to={`/user/${isAuthenticated().user._id}`}
+                         activeStyle={{fontWeight: "bold", color: "#f3ca86"}}>
+                    <Typography variant="h5" style={{flexGrow: 1, margin: '20px 0 20px 20px'}}>
+                        {isAuthenticated() ? `${isAuthenticated().user.name}'s profile` : "Social Network"}
+                    </Typography>
+                </NavLink>
+            )}
+            {!isAuthenticated() && (
+                <>
+                    <Typography variant="h5" style={{flexGrow: 1, margin: '20px 0 20px 20px'}}>
+                        Social Network
+                    </Typography>
+                </>
+            )}
             <Divider/>
             <List component="nav" aria-label="Main mailbox folders">
-                <ListItem button>
-                    <ListItemIcon>
-                        <Home/>
-                    </ListItemIcon>
-                    <ListItemText primary="Home"/>
-                </ListItem>
-                <ListItem button>
-                    <ListItemIcon>
-                        <People/>
-                    </ListItemIcon>
-                    <ListItemText primary="Users"/>
-                </ListItem>
-                <ListItem button>
-                    <ListItemIcon>
-                        <PeopleOutline/>
-                    </ListItemIcon>
-                    <ListItemText primary="Find People"/>
-                </ListItem>
-                <ListItem button>
-                    <ListItemIcon>
-                        <Forum/>
-                    </ListItemIcon>
-                    <ListItemText primary="Create Post"/>
-                </ListItem>
-                <ListItem button>
-                    <ListItemIcon>
-                        <VpnKey/>
-                    </ListItemIcon>
-                    <ListItemText primary="Sign In"/>
-                </ListItem>
-                <ListItem button>
-                    <ListItemIcon>
-                        <PersonAdd/>
-                    </ListItemIcon>
-                    <ListItemText primary="Sign Up"/>
-                </ListItem>
-                <ListItem button>
-                    <ListItemIcon>
-                        <ExitToApp/>
-                    </ListItemIcon>
-                    <ListItemText primary="Sign Out"/>
-                </ListItem>
+                {!isAuthenticated() && (
+                    <>
+                        <NavLink style={{color: '#212121', textDecoration: 'none'}}
+                                 to="/"
+                                 activeStyle={{fontWeight: "bold", color: "#f3ca86"}}
+                                 exact={true}>
+                            <ListItem button>
+                                <ListItemIcon>
+                                    <Home/>
+                                </ListItemIcon>
+                                <ListItemText primary="Home"/>
+                            </ListItem>
+                        </NavLink>
+                        <NavLink
+                            style={{color: '#212121', textDecoration: 'none'}}
+                            to="/signin"
+                            activeStyle={{fontWeight: "bold", color: "#f3ca86"}}>
+                            <ListItem button>
+                                <ListItemIcon>
+                                    <VpnKey/>
+                                </ListItemIcon>
+                                <ListItemText primary="Sign In"/>
+                            </ListItem>
+                        </NavLink>
+                        <NavLink
+                            style={{color: '#212121', textDecoration: 'none'}}
+                            to="/signup"
+                            activeStyle={{fontWeight: "bold", color: "#f3ca86"}}>
+                            <ListItem button>
+                                <ListItemIcon>
+                                    <PersonAdd/>
+                                </ListItemIcon>
+                                <ListItemText primary="Sign Up"/>
+                            </ListItem>
+                        </NavLink>
+                    </>
+                )}
+                {isAuthenticated() && (
+                    <div>
+                        <NavLink
+                            style={{color: '#212121', textDecoration: 'none'}}
+                            to="/"
+                            activeStyle={{fontWeight: "bold", color: "#f3ca86"}}
+                            exact={true}>
+                            <ListItem button>
+                                <ListItemIcon>
+                                    <Home/>
+                                </ListItemIcon>
+                                <ListItemText primary="Home"/>
+                            </ListItem>
+                        </NavLink>
+                        <NavLink
+                            style={{color: '#212121', textDecoration: 'none'}}
+                            to="/users"
+                            activeStyle={{fontWeight: "bold", color: "#f3ca86"}}>
+                            <ListItem button>
+                                <ListItemIcon>
+                                    <People/>
+                                </ListItemIcon>
+                                <ListItemText primary="Users"/>
+                            </ListItem>
+                        </NavLink>
+                        <NavLink
+                            style={{color: '#212121', textDecoration: 'none'}}
+                            to="/findpeople"
+                            activeStyle={{fontWeight: "bold", color: "#f3ca86"}}>
+                            <ListItem button>
+                                <ListItemIcon>
+                                    <PeopleOutline/>
+                                </ListItemIcon>
+                                <ListItemText primary="Find People"/>
+                            </ListItem>
+                        </NavLink>
+                        <NavLink
+                            style={{color: '#212121', textDecoration: 'none'}}
+                            to="/post/create"
+                            activeStyle={{fontWeight: "bold", color: "#f3ca86"}}>
+                            <ListItem button>
+                                <ListItemIcon>
+                                    <Forum/>
+                                </ListItemIcon>
+                                <ListItemText primary="Create Post"/>
+                            </ListItem>
+                        </NavLink>
+                        <ListItem button onClick={() => signout(() => window.location.href = "http://localhost:3000/")}>
+                            <ListItemIcon>
+                                <ExitToApp/>
+                            </ListItemIcon>
+                            <ListItemText primary="Sign Out"/>
+                        </ListItem>
+                    </div>
+                )}
             </List>
         </div>
     );
@@ -148,86 +183,84 @@ function SwipeableTemporaryDrawer() {
                 <AppBar>
                     <Toolbar>
                         <IconButton edge="start" color="inherit" aria-label="Menu" onClick={toggleDrawer('left', true)}>
-                            <MenuIcon/>
+                            <Menu/>
                         </IconButton>
-                        {/*     {isAuthenticated() && (*/}
-                        {/*         <NavLink style={{textDecoration: "none", color: "#fff"}} to={`/user/${isAuthenticated().user._id}`} activeStyle={{fontWeight: "bold", color: "#f3ca86"}}>*/}
-                        {/*<span*/}
-                        {/*    className="mdl-layout-title">{isAuthenticated() ? `${isAuthenticated().user.name}'s profile` : "Social Network"}</span>*/}
-                        {/*         </NavLink>*/}
-                        {/*     )}*/}
                         {isAuthenticated() && (
-                        <NavLink style={{textDecoration: "none", color: "#fff", flexGrow: 1}}
-                                 to={`/user/${isAuthenticated().user._id}`}
-                                 activeStyle={{fontWeight: "bold", color: "#f3ca86"}}>
-                            <Typography variant="h6" style={{flexGrow: 1}}>
-                                {isAuthenticated() ? `${isAuthenticated().user.name}'s profile` : "Social Network"}
-                            </Typography>
-                        </NavLink>
+                            <NavLink style={{textDecoration: "none", color: "#fff", flexGrow: 1}}
+                                     to={`/user/${isAuthenticated().user._id}`}
+                                     activeStyle={{fontWeight: "bold", color: "#f3ca86"}}>
+                                <Typography variant="h6" style={{flexGrow: 1}}>
+                                    {isAuthenticated() ? `${isAuthenticated().user.name}'s profile` : "Social Network"}
+                                </Typography>
+                            </NavLink>
                         )}
-                        <NavLink style={{color: '#fff'}}
-                                 to="/"
-                                 activeStyle={{fontWeight: "bold", color: "#f3ca86"}}
-                                 exact={true}>
-                            <Button color="inherit">Home</Button>
-                        </NavLink>
+
                         {!isAuthenticated() && (
                             <>
-                                <NavLink to="/signin"
-                                         activeStyle={{fontWeight: "bold", color: "#f3ca86"}}>
+                                <Typography variant="h6" style={{flexGrow: 1}}>
+                                    Social Network
+                                </Typography>
+                                <NavLink style={{color: '#fff'}}
+                                         to="/"
+                                         activeStyle={{fontWeight: "bold", color: "#f3ca86"}}
+                                         exact={true}>
+                                    <Button color="inherit">Home</Button>
+                                </NavLink>
+                                <NavLink
+                                    style={{color: '#fff'}}
+                                    to="/signin"
+                                    activeStyle={{fontWeight: "bold", color: "#f3ca86"}}>
                                     <Button color="inherit">Sign In</Button>
                                 </NavLink>
-                                <NavLink to="/signup"
-                                         activeStyle={{fontWeight: "bold", color: "#f3ca86"}}>
+                                <NavLink
+                                    style={{color: '#fff'}}
+                                    to="/signup"
+                                    activeStyle={{fontWeight: "bold", color: "#f3ca86"}}>
                                     <Button color="inherit">Sign Up</Button>
                                 </NavLink>
                             </>
                         )}
                         {isAuthenticated() && (
                             <div>
-                                <NavLink to="/users"
-                                         activeStyle={{fontWeight: "bold", color: "#f3ca86"}}>
+                                <NavLink style={{color: '#fff'}}
+                                         to="/"
+                                         activeStyle={{fontWeight: "bold", color: "#f3ca86"}}
+                                         exact={true}>
+                                    <Button color="inherit">Home</Button>
+                                </NavLink>
+                                <NavLink
+                                    style={{color: '#fff'}}
+                                    to="/users"
+                                    activeStyle={{fontWeight: "bold", color: "#f3ca86"}}>
                                     <Button color="inherit">Users</Button>
                                 </NavLink>
-                                <NavLink to="/findpeople"
-                                         activeStyle={{fontWeight: "bold", color: "#f3ca86"}}>
+                                <NavLink
+                                    style={{color: '#fff'}}
+                                    to="/findpeople"
+                                    activeStyle={{fontWeight: "bold", color: "#f3ca86"}}>
                                     <Button color="inherit">Find People</Button>
                                 </NavLink>
-                                <NavLink to="/post/create"
-                                         activeStyle={{fontWeight: "bold", color: "#f3ca86"}}>
+                                <NavLink
+                                    style={{color: '#fff'}}
+                                    to="/post/create"
+                                    activeStyle={{fontWeight: "bold", color: "#f3ca86"}}>
                                     <Button color="inherit">Create Post</Button>
                                 </NavLink>
                                 <Button
-                                    style={{cursor: "pointer", color: "#fff", background: "transparent", border: "none"}}
-                                    onClick={() => signout(() => window.location.href = "http://localhost:3000/")}>Sign Out
+                                    style={{
+                                        cursor: "pointer",
+                                        color: "#fff",
+                                        background: "transparent",
+                                        border: "none"
+                                    }}
+                                    onClick={() => signout(() => window.location.href = "http://localhost:3000/")}>Sign
+                                    Out
                                 </Button>
                             </div>
                         )}
-
-
-                        {/*<Button color="inherit">Create Post</Button>*/}
-                        {/*<Button color="inherit">Sign In</Button>*/}
-                        {/*<Button color="inherit">Sign Up</Button>*/}
-                        {/*<Button color="inherit">Sign Out</Button>*/}
                     </Toolbar>
                 </AppBar>
             </ElevationScroll>
-            {/*<AppBar position="static">*/}
-            {/*    <Toolbar>*/}
-            {/*        <IconButton edge="start" color="inherit" aria-label="Menu" onClick={toggleDrawer('left', true)}>*/}
-            {/*            <MenuIcon />*/}
-            {/*        </IconButton>*/}
-            {/*        <Typography variant="h6" style={{flexGrow: 1}}>*/}
-            {/*            Social Network*/}
-            {/*        </Typography>*/}
-            {/*        <Button color="inherit">Home</Button>*/}
-            {/*        <Button color="inherit">Users</Button>*/}
-            {/*        <Button color="inherit">Find People</Button>*/}
-            {/*        <Button color="inherit">Create Post</Button>*/}
-            {/*        <Button color="inherit">Sign In</Button>*/}
-            {/*        <Button color="inherit">Sign Out</Button>*/}
-            {/*    </Toolbar>*/}
-            {/*</AppBar>*/}
             <SwipeableDrawer
                 open={state.left}
                 onClose={toggleDrawer('left', false)}

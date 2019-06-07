@@ -2,7 +2,8 @@ import React, {Component} from 'react';
 import {isAuthenticated} from "../auth";
 import {remove} from "./apiUser";
 import {signout} from "../auth";
-import {Redirect} from "react-router-dom";
+import { Redirect} from "react-router-dom";
+import {Button} from "@material-ui/core";
 
 class DeleteUser extends Component {
 
@@ -15,7 +16,7 @@ class DeleteUser extends Component {
         const userId = this.props.userId;
         remove(userId, token)
             .then(data => {
-                if(data.error) {
+                if (data.error) {
                     console.log(data.error)
                 } else {
                     // signout user
@@ -34,15 +35,15 @@ class DeleteUser extends Component {
             this.deleteAccount()
         }
     };
-    
+
     render() {
-        if(this.state.redirect) {
-            return <Redirect to='/' />
+        if (this.state.redirect) {
+            return <Redirect to='/'/>
         }
         return (
-            <button
-                onClick={this.deleteConfirmed}
-                className='mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent'>Delete Profile</button>
+            <Button variant="contained" size="large" color="secondary" onClick={this.deleteConfirmed}>
+                Delete Profile
+            </Button>
         );
     }
 }

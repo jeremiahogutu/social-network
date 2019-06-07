@@ -7,6 +7,7 @@ import DeleteUser from "./DeleteUser";
 import DefaultProfile from "./profile.jpg";
 import ProfileTabs from "./ProfileTabs";
 import {Button} from "@material-ui/core";
+
 // import FollowButton from "./FollowButton";
 
 class Profile extends Component {
@@ -36,12 +37,12 @@ class Profile extends Component {
         const followId = this.state.user._id;
         // debugger
         callApi(userId, token, followId).then(data => {
-                if (data.error) {
-                    this.setState({error: data.error})
-                } else {
-                    this.setState({user: data, following: !this.state.following})
-                }
-            })
+            if (data.error) {
+                this.setState({error: data.error})
+            } else {
+                this.setState({user: data, following: !this.state.following})
+            }
+        })
     };
 
     init = userId => {
@@ -109,8 +110,12 @@ class Profile extends Component {
                             {isAuthenticated().user && isAuthenticated().user._id === user._id ? (
                                 <div style={{display: 'flex', justifyContent: 'space-between', marginTop: '24px'}}>
                                     <NavLink
-                                        className='mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored'
-                                        to={`/user/edit/${user._id}`}>Edit Profile</NavLink>
+                                        to={`/user/edit/${user._id}`}>
+                                        <Button variant="contained" size="large"
+                                                style={{backgroundColor: '#2196f3', color: '#fff'}}>
+                                            Edit Profile
+                                        </Button>
+                                    </NavLink>
                                     <DeleteUser userId={user._id}/>
                                 </div>
                             ) : (
@@ -118,12 +123,14 @@ class Profile extends Component {
 
                                     {
                                         !this.state.following ? (
-                                            <Button onClick={() => this.clickFollowButton(follow)} variant="contained" size="large"
+                                            <Button onClick={() => this.clickFollowButton(follow)} variant="contained"
+                                                    size="large"
                                                     style={{backgroundColor: '#2196f3', color: '#fff'}}>
                                                 Follow
                                             </Button>
                                         ) : (
-                                            <Button onClick={() => this.clickFollowButton(unfollow)} variant="contained" size="large" color="secondary">
+                                            <Button onClick={() => this.clickFollowButton(unfollow)} variant="contained"
+                                                    size="large" color="secondary">
                                                 UnFollow
                                             </Button>
                                         )

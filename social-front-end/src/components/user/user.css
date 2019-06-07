@@ -3,3 +3,25 @@
     flex-wrap: wrap;
     justify-content: space-evenly;
 }
+
+#userGrid {
+    justify-content: space-between;
+}
+
+.userCard {
+    min-width: 330px;
+    margin: 2em 1em 0;
+}
+
+@media only screen and (max-width: 320px){
+    .userCard {
+        min-width: 300px;
+        margin: 2em 1em 0;
+    }
+}
+
+@media only screen and (max-width: 767px){
+    #userGrid {
+        justify-content: center;
+    }
+}

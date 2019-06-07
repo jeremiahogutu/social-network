@@ -3,8 +3,16 @@ import {list} from "./apiUser";
 import {NavLink} from "react-router-dom";
 import './user.css';
 import DefaultProfile from "./profile.jpg";
-import {Button, Card, CardActionArea, CardActions, CardContent, CardMedia, Typography} from "@material-ui/core";
+import {Button, Card, CardActionArea, CardActions, CardContent, CardMedia, Grid, Typography} from "@material-ui/core";
 
+// breakpoint
+// values: {
+//     xs: 0,
+//         sm: 450,
+//         md: 600,
+//         lg: 900,
+//         xl: 1200
+// }
 class Users extends Component {
     constructor() {
         super();
@@ -26,9 +34,9 @@ class Users extends Component {
     }
 
     renderUsers = (users) => (
-        <div className="mdl-cell mdl-cell--10-col mdl-cell--8-col-tablet mdl-cell--4-col-phone user-container">
+        <Grid id="userGrid" item xl={10} md={10} style={{display: 'flex', alignItems: 'center', flexWrap: 'wrap'}}>
             {users.map((user, i) => (
-                <Card style={{width: 330, marginTop: '2em'}} key={i}>
+                <Card key={i} className="userCard">
                     <CardActionArea>
                         <NavLink to={`/user/${user._id}`}>
                             <CardMedia
@@ -56,52 +64,29 @@ class Users extends Component {
                     </CardActionArea>
                     <CardActions>
                         <NavLink to={`/user/${user._id}`}>
-                            <Button variant="contained" size="large" style={{backgroundColor: '#2196f3', color: '#fff'}}>
+                            <Button variant="contained" size="large"
+                                    style={{backgroundColor: '#2196f3', color: '#fff'}}>
                                 View Profile
                             </Button>
                         </NavLink>
                     </CardActions>
                 </Card>
             ))}
-        </div>
-        // <div className="mdl-cell mdl-cell--10-col mdl-cell--8-col-tablet mdl-cell--4-col-phone user-container">
-        //     {users.map((user, i) => (
-        //         <div className="demo-card-square mdl-card mdl-shadow--2dp" style={{marginTop: '2em'}} key={i}>
-        //             <div className="mdl-card__title mdl-card--expand">
-        //                 {/*<h2 className="mdl-card__title-text">{user.name}</h2>*/}
-        //                 <img
-        //                     style={{ width: "100%", maxHeight: "300px"}}
-        //                     src={`${process.env.REACT_APP_API_URL}/user/photo/${user._id}`}
-        //                     onError={i => {i.target.src = `${DefaultProfile}`}}
-        //                     alt=""
-        //                 />
-        //             </div>
-        //             <div className="mdl-card__supporting-text">
-        //                 {user.name}
-        //             </div>
-        //             <div className="mdl-card__actions mdl-card--border">
-        //                 <NavLink to={`/user/${user._id}`} className="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
-        //                     View Profile
-        //                 </NavLink>
-        //             </div>
-        //         </div>
-        //     ))}
-        // </div>
+        </Grid>
     );
-
+    // className="mdl-cell mdl-cell--10-col mdl-cell--6-col-tablet mdl-cell--4-col-phone
     render() {
         const {users} = this.state;
-        // const photoUrl = user._id ? `${process.env.REACT_APP_API_URL}/user/photo/${user._id}?${new Date().getTime()}` : DefaultProfile;
         return (
-            <div className="mdl-grid" style={{justifyContent: 'center', marginTop: '60px'}}>
-                <div className="mdl-cell mdl-cell--10-col mdl-cell--6-col-tablet mdl-cell--4-col-phone"
-                     style={{display: 'flex', flexDirection: 'Column', alignItems: 'center'}}>
-                    <Typography gutterBottom variant="h2" component="h2" style={{alignSelf: 'flex-start', color: '#777', padding: 20}}>
+            <Grid container xl={12} md={12} style={{justifyContent: 'center', marginTop: '60px'}}>
+                <Grid item xl={10}  md={10} style={{display: 'flex', flexDirection: 'Column', alignItems: 'center'}}>
+                    <Typography gutterBottom variant="h2" component="h2"
+                                style={{alignSelf: 'flex-start', color: '#777', padding: 20}}>
                         Users
                     </Typography>
-                    {this.renderUsers(users)}
-                </div>
-            </div>
+                </Grid>
+                {this.renderUsers(users)}
+            </Grid>
         );
     }
 }

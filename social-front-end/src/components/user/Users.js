@@ -93,7 +93,7 @@ class Users extends Component {
         const {users} = this.state;
         // const photoUrl = user._id ? `${process.env.REACT_APP_API_URL}/user/photo/${user._id}?${new Date().getTime()}` : DefaultProfile;
         return (
-            <div className="mdl-grid" style={{justifyContent: 'center'}}>
+            <div className="mdl-grid" style={{justifyContent: 'center', marginTop: '60px'}}>
                 <div className="mdl-cell mdl-cell--10-col mdl-cell--6-col-tablet mdl-cell--4-col-phone"
                      style={{display: 'flex', flexDirection: 'Column', alignItems: 'center'}}>
                     <Typography gutterBottom variant="h2" component="h2" style={{alignSelf: 'flex-start', color: '#777', padding: 20}}>

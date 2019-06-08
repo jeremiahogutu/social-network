@@ -185,79 +185,81 @@ function SwipeableTemporaryDrawer() {
                         <IconButton edge="start" color="inherit" aria-label="Menu" onClick={toggleDrawer('left', true)}>
                             <Menu/>
                         </IconButton>
-                        {isAuthenticated() && (
-                            <NavLink style={{textDecoration: "none", color: "#fff", flexGrow: 1}}
-                                     to={`/user/${isAuthenticated().user._id}`}
-                                     activeStyle={{fontWeight: "bold", color: "#006494"}}>
-                                <Typography variant="h6" style={{flexGrow: 1}}>
-                                    {isAuthenticated() ? `${isAuthenticated().user.name}'s profile` : "Social Network"}
-                                </Typography>
-                            </NavLink>
-                        )}
 
-                        {!isAuthenticated() && (
-                            <>
-                                <Typography variant="h6" style={{flexGrow: 1}}>
-                                    Social Network
-                                </Typography>
-                                <NavLink style={{color: '#fff'}}
-                                         to="/"
-                                         activeStyle={{fontWeight: "bold", color: "#006494"}}
-                                         exact={true}>
-                                    <Button color="inherit">Home</Button>
+                            {isAuthenticated() && (
+                                <NavLink style={{textDecoration: "none", color: "#fff", flexGrow: 1}}
+                                         to={`/user/${isAuthenticated().user._id}`}
+                                         activeStyle={{fontWeight: "bold", color: "#006494"}}>
+                                    <Typography variant="h6" style={{flexGrow: 1}}>
+                                        {isAuthenticated() ? `${isAuthenticated().user.name}'s profile` : "Social Network"}
+                                    </Typography>
                                 </NavLink>
-                                <NavLink
-                                    style={{color: '#fff'}}
-                                    to="/signin"
-                                    activeStyle={{fontWeight: "bold", color: "#006494"}}>
-                                    <Button color="inherit">Sign In</Button>
-                                </NavLink>
-                                <NavLink
-                                    style={{color: '#fff'}}
-                                    to="/signup"
-                                    activeStyle={{fontWeight: "bold", color: "#006494"}}>
-                                    <Button color="inherit">Sign Up</Button>
-                                </NavLink>
-                            </>
-                        )}
-                        {isAuthenticated() && (
-                            <div>
-                                <NavLink style={{color: '#fff'}}
-                                         to="/"
-                                         activeStyle={{fontWeight: "bold", color: "#006494"}}
-                                         exact={true}>
-                                    <Button color="inherit">Home</Button>
-                                </NavLink>
-                                <NavLink
-                                    style={{color: '#fff'}}
-                                    to="/users"
-                                    activeStyle={{fontWeight: "bold", color: "#006494"}}>
-                                    <Button color="inherit">Users</Button>
-                                </NavLink>
-                                <NavLink
-                                    style={{color: '#fff'}}
-                                    to="/findpeople"
-                                    activeStyle={{fontWeight: "bold", color: "#006494"}}>
-                                    <Button color="inherit">Find People</Button>
-                                </NavLink>
-                                <NavLink
-                                    style={{color: '#fff'}}
-                                    to="/post/create"
-                                    activeStyle={{fontWeight: "bold", color: "#006494"}}>
-                                    <Button color="inherit">Create Post</Button>
-                                </NavLink>
-                                <Button
-                                    style={{
-                                        cursor: "pointer",
-                                        color: "#fff",
-                                        background: "transparent",
-                                        border: "none"
-                                    }}
-                                    onClick={() => signout(() => window.location.href = "http://localhost:3000/")}>Sign
-                                    Out
-                                </Button>
-                            </div>
-                        )}
+                            )}
+                        <div id="mainNavLinks">
+                            {!isAuthenticated() && (
+                                <>
+                                    <Typography variant="h6" style={{flexGrow: 1}}>
+                                        Social Network
+                                    </Typography>
+                                    <NavLink style={{color: '#fff'}}
+                                             to="/"
+                                             activeStyle={{fontWeight: "bold", color: "#006494"}}
+                                             exact={true}>
+                                        <Button color="inherit">Home</Button>
+                                    </NavLink>
+                                    <NavLink
+                                        style={{color: '#fff'}}
+                                        to="/signin"
+                                        activeStyle={{fontWeight: "bold", color: "#006494"}}>
+                                        <Button color="inherit">Sign In</Button>
+                                    </NavLink>
+                                    <NavLink
+                                        style={{color: '#fff'}}
+                                        to="/signup"
+                                        activeStyle={{fontWeight: "bold", color: "#006494"}}>
+                                        <Button color="inherit">Sign Up</Button>
+                                    </NavLink>
+                                </>
+                            )}
+                            {isAuthenticated() && (
+                                <div>
+                                    <NavLink style={{color: '#fff'}}
+                                             to="/"
+                                             activeStyle={{fontWeight: "bold", color: "#006494"}}
+                                             exact={true}>
+                                        <Button color="inherit">Home</Button>
+                                    </NavLink>
+                                    <NavLink
+                                        style={{color: '#fff'}}
+                                        to="/users"
+                                        activeStyle={{fontWeight: "bold", color: "#006494"}}>
+                                        <Button color="inherit">Users</Button>
+                                    </NavLink>
+                                    <NavLink
+                                        style={{color: '#fff'}}
+                                        to="/findpeople"
+                                        activeStyle={{fontWeight: "bold", color: "#006494"}}>
+                                        <Button color="inherit">Find People</Button>
+                                    </NavLink>
+                                    <NavLink
+                                        style={{color: '#fff'}}
+                                        to="/post/create"
+                                        activeStyle={{fontWeight: "bold", color: "#006494"}}>
+                                        <Button color="inherit">Create Post</Button>
+                                    </NavLink>
+                                    <Button
+                                        style={{
+                                            cursor: "pointer",
+                                            color: "#fff",
+                                            background: "transparent",
+                                            border: "none"
+                                        }}
+                                        onClick={() => signout(() => window.location.href = "http://localhost:3000/")}>Sign
+                                        Out
+                                    </Button>
+                                </div>
+                            )}
+                        </div>
                     </Toolbar>
                 </AppBar>
             </ElevationScroll>

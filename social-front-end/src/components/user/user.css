@@ -4,8 +4,14 @@
     justify-content: space-evenly;
 }
 
-#userGrid #followerGrid #postGrid{
-    justify-content: space-between;
+#editCard {
+    margin: 0 auto;
+    width: 600px;
+    border-radius: 0
+}
+
+#userGrid, #followerGrid, #postGrid{
+    justify-content: space-evenly;
 }
 
 .userCard {
@@ -19,9 +25,15 @@
         margin: 2em 1em 0;
     }
 }
-
+@media only screen and (max-width: 599px){
+    #editCard {
+        padding: 0 10px;
+        width: 100%;
+        border-radius: 0
+    }
+}
 @media only screen and (max-width: 767px){
-    #userGrid #followerGrid #postGrid {
+    #userGrid, #followerGrid, #postGrid {
         justify-content: center;
     }
 }

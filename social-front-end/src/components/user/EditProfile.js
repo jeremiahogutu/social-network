@@ -119,11 +119,7 @@ class EditProfile extends Component {
     signUpForm = (name, email, about, password, photoUrl) => (
         <Grid container style={{justifyContent: 'center', width: '100%'}}>
             <Grid item xs style={{justifyContent: 'center'}}>
-
-                {/*<div className="mdl-card__title mdl-color--indigo">*/}
-                {/*    <h2 className="mdl-card__title-text mdl-color-text--white">Edit Profile</h2>*/}
-                {/*</div>*/}
-                <Card style={{margin: "0px auto", width: '600px', borderRadius: 0}}>
+                <Card id="editCard">
                     <div style={{flexGrow: 1}}>
                         <AppBar position="static" style={{boxShadow: 'none', backgroundColor: '#2196f3'}}>
                             <Toolbar>
@@ -206,7 +202,7 @@ class EditProfile extends Component {
                             </Grid>
                         </div>
                         <div style={{margin: '16px 15px'}}>
-                            <Grid container xs={12}>
+                            <Grid container xs={12} style={{display: 'flex', justifyContent: 'center'}}>
                                 <Button
                                     variant="contained" size="large"
                                     style={{backgroundColor: '#2196f3', color: '#fff'}}

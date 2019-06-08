@@ -35,6 +35,7 @@ class Users extends Component {
 
     renderUsers = (users) => (
         <Grid id="userGrid" item xl={10} md={10} style={{display: 'flex', alignItems: 'center', flexWrap: 'wrap'}}>
+
             {users.map((user, i) => (
                 <Card key={i} className="userCard">
                     <CardActionArea>

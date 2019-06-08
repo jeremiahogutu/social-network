@@ -4,7 +4,7 @@
     justify-content: space-evenly;
 }
 
-#userGrid {
+#userGrid #followerGrid #postGrid{
     justify-content: space-between;
 }
 
@@ -21,7 +21,7 @@
 }
 
 @media only screen and (max-width: 767px){
-    #userGrid {
+    #userGrid #followerGrid #postGrid {
         justify-content: center;
     }
 }

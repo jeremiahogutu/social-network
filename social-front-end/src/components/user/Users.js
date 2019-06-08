@@ -74,18 +74,21 @@ class Users extends Component {
             ))}
         </Grid>
     );
+
     // className="mdl-cell mdl-cell--10-col mdl-cell--6-col-tablet mdl-cell--4-col-phone
     render() {
         const {users} = this.state;
         return (
             <Grid container xl={12} md={12} style={{justifyContent: 'center', marginTop: '60px'}}>
-                <Grid item xl={10}  md={10} style={{display: 'flex', flexDirection: 'Column', alignItems: 'center'}}>
+                <Grid item xl={10} md={10} style={{display: 'flex', flexDirection: 'Column', alignItems: 'center'}}>
                     <Typography gutterBottom variant="h2" component="h2"
                                 style={{alignSelf: 'flex-start', color: '#777', padding: 20}}>
                         Users
                     </Typography>
                 </Grid>
-                {this.renderUsers(users)}
+                <div style={{display: 'flex', justifyContent: 'center', width: '100%'}}>
+                    {this.renderUsers(users)}
+                </div>
             </Grid>
         );
     }

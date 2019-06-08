@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import MainRouter from "./MainRouter";
 import SwipeableTemporaryDrawer from "./components/ui-helpers/SwipeableTemporaryDrawer";
-
+import "./App.css"
 
 class App extends Component {
     render() {

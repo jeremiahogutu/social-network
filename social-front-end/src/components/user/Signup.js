@@ -123,7 +123,7 @@ class Signup extends Component {
                     <Box color="error.main" style={{display: error ? "" : "none"}}>New account is successfully created. Please{" "} <NavLink to='/signin'>{" "} Sign in</NavLink></Box>
                 </Typography>
                 {/*<div className="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone" style={{display: signUpSuccess ? "flex" : "none", justifyContent: 'center', padding: '20px 0'}}>New account is successfully created. Please{" "} <NavLink to='/signin'>{" "} Sign in</NavLink></div>*/}
-                <Grid container spacing={3}>
+                <Grid container xl={12} md={12} style={{justifyContent: 'center', marginTop: '60px'}}>
                     <Grid item xs={12}>
                         {this.signUpForm(name, email, password, error)}
                     </Grid>

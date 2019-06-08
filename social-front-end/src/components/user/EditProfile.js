@@ -1,10 +1,11 @@
 import React, {Component} from 'react';
 import {isAuthenticated} from "../auth";
 import {read, update, updateUser} from "./apiUser";
-import {AppBar, Toolbar, Typography} from "@material-ui/core";
+import {AppBar, Box, Card, Grid, TextField, Toolbar, Typography} from "@material-ui/core";
 import {Redirect} from "react-router-dom";
 import './editProfile.css'
 import DefaultProfile from './profile.jpg';
+import Button from "@material-ui/core/Button";
 
 class EditProfile extends Component {
     constructor() {
@@ -116,101 +117,111 @@ class EditProfile extends Component {
     };
 
     signUpForm = (name, email, about, password, photoUrl) => (
-        <div className='mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone'>
-            <div className="mdl-card mdl-shadow--16dp util-center util-spacing-h--40px edit-card">
-                <AppBar position="static" style={{boxShadow: 'none'}}>
-                    <Toolbar>
-                        <Typography variant="h6" color="inherit">
-                            Edit Profile
-                        </Typography>
-                    </Toolbar>
-                </AppBar>
+        <Grid container style={{justifyContent: 'center', width: '100%'}}>
+            <Grid item xs style={{justifyContent: 'center'}}>
+
                 {/*<div className="mdl-card__title mdl-color--indigo">*/}
                 {/*    <h2 className="mdl-card__title-text mdl-color-text--white">Edit Profile</h2>*/}
                 {/*</div>*/}
-                <div className="mdl-card__supporting-text mdl-grid">
-                    <form>
+                <Card style={{margin: "0px auto", width: '600px', borderRadius: 0}}>
+                    <div style={{flexGrow: 1}}>
+                        <AppBar position="static" style={{boxShadow: 'none', backgroundColor: '#2196f3'}}>
+                            <Toolbar>
+                                <Typography variant="h6" color="inherit">
+                                    Edit Profile
+                                </Typography>
+                            </Toolbar>
+                        </AppBar>
+                    </div>
+                    <form style={{width: '100%'}}>
                         <img
                             style={{height: '200px', width: 'auto'}}
                             className='edit-image'
                             src={photoUrl}
                             onError={i => (i.target.src = `${DefaultProfile}`)}
                             alt={name}/>
-                        <div className="mdl-textfield mdl-js-textfield mdl-textfield">
-                            <label
-                                htmlFor="textfield_name">Name</label>
-                            <input
-                                onChange={this.handleChange("name")}
-                                className="mdl-textfield__input"
-                                type="text"
-                                id="textfield_name"
+
+                        <div style={{margin: '0 15px 0'}}>
+                            <TextField
+                                id="standard-name"
+                                label="Name"
+                                type="name"
                                 name="name"
                                 value={name}
+                                fullWidth
+                                margin="normal"
+                                onChange={this.handleChange("name")}
                             />
                         </div>
-                        <div className="mdl-textfield mdl-js-textfield mdl-textfield">
-                            <label htmlFor="textfield_email">Email</label>
-                            <input
-                                onChange={this.handleChange("email")}
-                                className="mdl-textfield__input"
+                        <div style={{margin: '0 15px 0'}}>
+                            <TextField
+                                id="standard-email-input"
+                                label="Email"
                                 type="email"
-                                id="textfield_email"
                                 name="email"
                                 value={email}
+                                fullWidth
+                                margin="normal"
+                                onChange={this.handleChange("email")}
                             />
                         </div>
-                        <div className="mdl-textfield mdl-js-textfield mdl-textfield">
-                            <label htmlFor="textfield_about">About</label>
-                            <textarea
-                                onChange={this.handleChange("about")}
-                                className="mdl-textfield__input"
-                                type="text"
-                                rows="3"
-                                id="textfield_about"
+                        <div style={{margin: '16px 15px'}}>
+                            <TextField
+                                id="standard-multiline-static"
+                                label="About"
                                 name="about"
                                 value={about}
+                                multiline
+                                rows="4"
+                                fullWidth
+                                margin="normal"
+                                onChange={this.handleChange("about")}
                             />
                         </div>
-                        <div className="mdl-textfield mdl-js-textfield mdl-textfield">
-                            <label htmlFor="textfield_password">Password</label>
-                            <input
-                                className="mdl-textfield__input"
-                                onChange={this.handleChange("password")}
+                        <div style={{margin: '16px 15px'}}>
+                            <TextField
+                                id="standard-password-input"
+                                label="Password"
                                 type="password"
-                                id="textfield_password"
                                 name="password"
                                 value={password}
+                                fullWidth
+                                onChange={this.handleChange("password")}
                             />
                         </div>
-                        <div className='mdl-grid mdl-grid--no-spacing'>
-                            <div className='mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone'>
-                                <label htmlFor="avatar">Choose a profile picture:</label>
-                            </div>
-                            <div className='mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone'>
-                                <input
-                                    onChange={this.handleChange('photo')}
-                                    type="file"
-                                    id="avatar" name="avatar"
-                                    accept="image/*"
-                                    style={{margin: '10px 0'}}
-                                />
-                            </div>
+                        <div style={{margin: '16px 15px'}}>
+                            <Grid container xs={12}>
+                                <Grid item xs={12}>
+                                    <label htmlFor="avatar">Choose a profile picture:</label>
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <input
+                                        onChange={this.handleChange('photo')}
+                                        type="file"
+                                        id="avatar" name="avatar"
+                                        accept="image/*"
+                                        style={{margin: '10px 0'}}
+                                    />
+                                </Grid>
+                            </Grid>
                         </div>
-                        <div
-                            className="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone send-button"
-                            style={{display: 'flex', justifyContent: 'center', margin: 0, paddingBottom: '10px'}}>
-                            <button
-                                onClick={this.onSubmit}
-                                type="submit"
-                                className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--colored mdl-color--primary"
-                            >
-                                Update
-                            </button>
+                        <div style={{margin: '16px 15px'}}>
+                            <Grid container xs={12}>
+                                <Button
+                                    variant="contained" size="large"
+                                    style={{backgroundColor: '#2196f3', color: '#fff'}}
+                                    onClick={this.onSubmit}
+                                    type="submit"
+                                    className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--colored mdl-color--primary"
+                                >
+                                    Update
+                                </Button>
+                            </Grid>
                         </div>
                     </form>
-                </div>
-            </div>
-        </div>
+                </Card>
+            </Grid>
+        </Grid>
 
     );
 
@@ -222,13 +233,23 @@ class EditProfile extends Component {
 
         const photoUrl = id ? `${process.env.REACT_APP_API_URL}/user/photo/${id}?${new Date().getTime()}` : DefaultProfile;
         return (
-            <div className='mdl-grid' style={{marginTop: '30px', flexDirection: 'column'}}>
+            <Grid container xl={12} md={12} style={{justifyContent: 'center', marginTop: '60px'}}>
+
+                <Typography component="div" variant="body1"
+                            style={{display: error ? "block" : "none", textAlign: 'center'}}>
+                    <Box color="error.main" style={{display: error ? "" : "none"}}>{error}</Box>
+                </Typography>
                 <p className="mdl-color-text--accent"
                    style={{display: error ? "block" : "none", textAlign: 'center'}}>{error}</p>
                 {/*<p className="mdl-color-text--accent"*/}
                 {/*   style={{display: loading ? "block" : "none", textAlign: 'center'}}>Loading...</p>*/}
-                {this.signUpForm(name, email, about, password, photoUrl)}
-            </div>
+                <Grid container xl={12} md={12} style={{justifyContent: 'center', marginTop: '60px'}}>
+                    <Grid item xs={12}>
+                        {this.signUpForm(name, email, about, password, photoUrl)}
+                    </Grid>
+                </Grid>
+
+            </Grid>
         );
     }
 }

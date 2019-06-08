@@ -3,7 +3,8 @@ import {isAuthenticated} from "../auth";
 import {create} from "./apiPost";
 import {Redirect} from "react-router-dom";
 import '../user/editProfile.css'
-import {AppBar, Toolbar, Typography} from "@material-ui/core";
+import {AppBar, Box, Card, Grid, TextField, Toolbar, Typography} from "@material-ui/core";
+import Button from "@material-ui/core/Button";
 
 class NewPost extends Component {
     constructor() {
@@ -31,7 +32,7 @@ class NewPost extends Component {
         const {title, body, fileSize} = this.state;
         if (fileSize > 1000000) {
             this.setState({
-                error: "File size should be less than 100kb"
+                error: "File size should be less than 1mb"
             });
             return false
         }
@@ -85,46 +86,55 @@ class NewPost extends Component {
         }
     };
 
-    newPostForm = (title, body, photo) => (
-        <div className='mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone'>
-            <div className="mdl-card mdl-shadow--16dp util-center util-spacing-h--40px edit-card">
-                <AppBar position="static" style={{boxShadow: 'none'}}>
-                    <Toolbar>
-                        <Typography variant="h6" color="inherit">
-                            Create New Post
-                        </Typography>
-                    </Toolbar>
-                </AppBar>
-                <div className="mdl-card__supporting-text mdl-grid" style={{display: 'flex', justifyContent: 'center'}}>
-                    <form>
-                        <div className="mdl-textfield mdl-js-textfield mdl-textfield">
-                            <label
-                                htmlFor="textfield_title">Name</label>
-                            <input
-                                onChange={this.handleChange("title")}
-                                className="mdl-textfield__input"
-                                type="text"
-                                id="textfield_title"
-                                name="name"
-                                value={title}
-                            />
-                        </div>
-                        <div className="mdl-textfield mdl-js-textfield mdl-textfield">
-                            <label htmlFor="textfield_body">Body</label>
-                            <textarea
-                                onChange={this.handleChange("body")}
-                                className="mdl-textfield__input"
-                                rows="3"
-                                id="textfield_body"
-                                name="body"
-                                value={body}
-                            />
-                        </div>
-                        <div className='mdl-grid mdl-grid--no-spacing'>
-                            <div className='mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone'>
+    newPostForm = (title, body, photo, error) => (
+        <Grid item xs style={{justifyContent: 'center', marginTop: '60px'}}>
+            <Card id="createPostCard">
+                <div style={{flexGrow: 1}}>
+                    <AppBar position="static" style={{boxShadow: 'none', backgroundColor: '#2196f3'}}>
+                        <Toolbar>
+                            <Typography variant="h6" color="inherit">
+                                Create New Post
+                            </Typography>
+                        </Toolbar>
+                    </AppBar>
+                </div>
+                <form style={{width: '100%'}}>
+                    <Typography component="div" variant="body1"
+                                style={{display: error ? "block" : "none", textAlign: 'center'}}>
+                        <Box color="error.main" style={{display: error ? "" : "none"}}>{error}</Box>
+                    </Typography>
+                    <div style={{margin: '0 15px 0'}}>
+                        <TextField
+                            id="standard-title"
+                            label="Title"
+                            type="title"
+                            name="title"
+                            value={title}
+                            fullWidth
+                            margin="normal"
+                            onChange={this.handleChange("title")}
+                        />
+                    </div>
+                    <div style={{margin: '0 15px 0'}}>
+                        <TextField
+                            id="standard-body"
+                            label="Body"
+                            type="body"
+                            name="body"
+                            value={body}
+                            multiline
+                            rows="4"
+                            fullWidth
+                            margin="normal"
+                            onChange={this.handleChange("body")}
+                        />
+                    </div>
+                    <div style={{margin: '16px 15px'}}>
+                        <Grid container xs={12}>
+                            <Grid item xs={12}>
                                 <label htmlFor="avatar">Choose a profile picture:</label>
-                            </div>
-                            <div className='mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone'>
+                            </Grid>
+                            <Grid item xs={12}>
                                 <input
                                     onChange={this.handleChange('photo')}
                                     type="file"
@@ -132,24 +142,25 @@ class NewPost extends Component {
                                     accept="image/*"
                                     style={{margin: '10px 0'}}
                                 />
-                            </div>
-                        </div>
-                        <div
-                            className="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone send-button"
-                            style={{display: 'flex', justifyContent: 'center', margin: 0, paddingBottom: '10px'}}>
-                            <button
+                            </Grid>
+                        </Grid>
+                    </div>
+                    <div style={{margin: '16px 15px'}}>
+                        <Grid container xs={12} style={{display: 'flex', justifyContent: 'center'}}>
+                            <Button
+                                variant="contained" size="large"
+                                style={{backgroundColor: '#2196f3', color: '#fff'}}
                                 onClick={this.onSubmit}
                                 type="submit"
                                 className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--colored mdl-color--primary"
                             >
                                 Create Post
-                            </button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-
+                            </Button>
+                        </Grid>
+                    </div>
+                </form>
+            </Card>
+        </Grid>
     );
 
     render() {
@@ -158,13 +169,14 @@ class NewPost extends Component {
             return <Redirect to={`/user/${user._id}`}/>
         }
         return (
-            <div className='mdl-grid' style={{marginTop: '30px', flexDirection: 'column'}}>
-                <p className="mdl-color-text--accent"
-                   style={{display: error ? "block" : "none", textAlign: 'center'}}>{error}</p>
-                <p className="mdl-color-text--accent"
-                   style={{display: loading ? "block" : "none", textAlign: 'center'}}>Loading...</p>
-                {this.newPostForm(title, body, photo)}
-            </div>
+            <Grid container xl={12} md={12} style={{justifyContent: 'center', marginTop: '60px'}}>
+                {/*<p className="mdl-color-text--accent"*/}
+                {/*   style={{display: error ? "block" : "none", textAlign: 'center'}}>{error}</p>*/}
+                {/*<p className="mdl-color-text--accent"*/}
+                {/*   style={{display: loading ? "block" : "none", textAlign: 'center'}}>Loading...</p>*/}
+
+                {this.newPostForm(title, body, photo, error)}
+            </Grid>
         );
     }
 }

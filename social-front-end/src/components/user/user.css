@@ -4,7 +4,7 @@
     justify-content: space-evenly;
 }
 
-#editCard {
+#editProfileCard, #createPostCard{
     margin: 0 auto;
     width: 600px;
     border-radius: 0

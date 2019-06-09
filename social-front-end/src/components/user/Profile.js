@@ -6,6 +6,7 @@ import {NavLink} from "react-router-dom";
 import DeleteUser from "./DeleteUser";
 import DefaultProfile from "./profile.jpg";
 import ProfileTabs from "./ProfileTabs";
+import {listByUser} from "../post/apiPost";
 import {Button, Card, Grid} from "@material-ui/core";
 import "./user.css"
 
@@ -18,7 +19,8 @@ class Profile extends Component {
             user: {following: [], followers: []},
             redirectToSignin: false,
             following: false,
-            error: ''
+            error: '',
+            posts: []
         }
     }
 
@@ -59,10 +61,24 @@ class Profile extends Component {
                     this.setState({
                         user: data,
                         following
-                    })
+                    });
+                    this.loadPosts(data._id)
                 }
             })
     };
+
+    loadPosts = userId => {
+        const token = isAuthenticated().token;
+        listByUser(userId, token).then(data => {
+            if (data.error) {
+                console.log(data.error)
+            } else {
+                this.setState({
+                    posts: data
+                })
+            }
+        })
+    }
 
     componentDidMount() {
         const userId = this.props.match.params.userId;
@@ -75,12 +91,12 @@ class Profile extends Component {
     }
 
     render() {
-        const {redirectToSignin, user} = this.state;
+        const {redirectToSignin, user, posts} = this.state;
         const photoUrl = user._id ? `${process.env.REACT_APP_API_URL}/user/photo/${user._id}?${new Date().getTime()}` : DefaultProfile;
         if (redirectToSignin) return <Redirect to='/signin'/>;
         return (
             <div style={{display: 'flex', justifyContent: 'center'}}>
-                <Grid container xs={12} style={{justifyContent: 'center', marginTop: '60px', maxWidth: '900px'}}>
+                <Grid container style={{justifyContent: 'center', marginTop: '60px', maxWidth: '900px'}}>
                     {/*<Grid item xs={12}>*/}
                     {/*    <Grid container xs={12}>*/}
                     {/*        <Grid item xs={12}>*/}
@@ -111,12 +127,19 @@ class Profile extends Component {
                         <p>Email: {user.email}</p>
                         <p>{`Joined ${new Date(user.created).toDateString()}`}</p>
                         {isAuthenticated().user && isAuthenticated().user._id === user._id ? (
-                            <div style={{display: 'flex', justifyContent: 'space-between', marginTop: '24px'}}>
+                            <div style={{display: 'flex', justifyContent: 'space-between', marginTop: '24px', flexWrap: 'wrap'}}>
                                 <NavLink
                                     to={`/user/edit/${user._id}`}>
-                                    <Button variant="contained" size="large"
-                                            style={{backgroundColor: '#2196f3', color: '#fff'}}>
+                                    <Button variant="contained" size="medium"
+                                            style={{backgroundColor: '#2196f3', color: '#fff', width: '150px', marginTop: '10px'}}>
                                         Edit Profile
+                                    </Button>
+                                </NavLink>
+                                <NavLink
+                                    to={`/post/create`}>
+                                    <Button variant="contained" size="medium"
+                                            style={{backgroundColor: '#2196f3', color: '#fff', width: '150px', marginTop: '10px'}}>
+                                        Create Post
                                     </Button>
                                 </NavLink>
                                 <DeleteUser userId={user._id}/>
@@ -140,9 +163,13 @@ class Profile extends Component {
                             </div>
                         )}
                     </Grid>
-                    <Grid xs={12} className='profileAboutTabs'>
+                    <Grid item xs={12} className='profileAboutTabs'>
                         <p>{user.about}</p>
-                        <ProfileTabs followers={user.followers} following={user.following}/>
+                        <ProfileTabs
+                            followers={user.followers}
+                            following={user.following}
+                            posts={posts}
+                        />
                     </Grid>
                 </Grid>
             </div>

@@ -9,6 +9,7 @@ import {Divider, AppBar, List, ListItem, ListItemAvatar, Avatar, ListItemText} f
 import {PeopleOutline, People, Forum} from "@material-ui/icons";
 import DefaultProfile from "./profile.jpg";
 import './profileTab.css'
+import {NavLink} from "react-router-dom";
 
 
 function TabContainer(props) {
@@ -43,7 +44,7 @@ function ScrollableTabsButtonAuto(props) {
     return (
 
         <div className={classes.root}>
-            <AppBar position="static" color="#fff" style={{display: 'flex'}}>
+            <AppBar position="static" color="default" style={{display: 'flex'}}>
                 <Tabs
                     value={value}
                     onChange={handleChange}
@@ -59,67 +60,100 @@ function ScrollableTabsButtonAuto(props) {
             </AppBar>
             {value === 0 && <TabContainer>
                 {props.followers.map((person, i) => (
-                    <List className={classes.root}>
-                        <ListItem>
-                            <ListItemAvatar>
-                                <Avatar
-                                    alt="Remy Sharp"
-                                    src={`${process.env.REACT_APP_API_URL}/user/photo/${person._id}`}
-                                    onError={i => { i.target.src = `${DefaultProfile}` }}
+                    <List className={classes.root} key={i}>
+                        <NavLink to={`/user/${person._id}`} style={{textDecoration: 'none', outline: 'none'}}>
+                            <ListItem>
+                                <ListItemAvatar>
+                                    <Avatar
+                                        alt="Remy Sharp"
+                                        src={`${process.env.REACT_APP_API_URL}/user/photo/${person._id}`}
+                                        onError={i => {
+                                            i.target.src = `${DefaultProfile}`
+                                        }}
+                                    />
+                                </ListItemAvatar>
+                                <ListItemText
+                                    primary={person.name}
+                                    secondary={
+                                        <React.Fragment>
+                                            <Typography
+                                                component="span"
+                                                variant="body2"
+                                                className={classes.inline}
+                                                color="textPrimary"
+                                            >
+                                            </Typography>
+                                            {"Chilling like a villan"}
+                                        </React.Fragment>
+                                    }
                                 />
-                            </ListItemAvatar>
-                            <ListItemText
-                                primary={person.name}
-                                secondary={
-                                    <React.Fragment>
-                                        <Typography
-                                            component="span"
-                                            variant="body2"
-                                            className={classes.inline}
-                                            color="textPrimary"
-                                        >
-                                        </Typography>
-                                        {"Chilling like a villan"}
-                                    </React.Fragment>
-                                }
-                            />
-                        </ListItem>
-                        <Divider variant="inset" component="li"/>
+                            </ListItem>
+                            <Divider variant="inset" component="li"/>
+                        </NavLink>
                     </List>
                 ))}
             </TabContainer>}
             {value === 1 && <TabContainer>
                 {props.following.map((person, i) => (
-                    <List className={classes.root}>
-                        <ListItem alignItems="flex-start">
-                            <ListItemAvatar>
-                                <Avatar
-                                    alt="Remy Sharp"
-                                    src={`${process.env.REACT_APP_API_URL}/user/photo/${person._id}`}
-                                    onError={i => { i.target.src = `${DefaultProfile}` }}
+                    <List className={classes.root} key={i}>
+                        <NavLink to={`/user/${person._id}`} style={{textDecoration: 'none', outline: 'none'}}>
+                            <ListItem alignItems="flex-start">
+                                <ListItemAvatar>
+                                    <Avatar
+                                        alt="Remy Sharp"
+                                        src={`${process.env.REACT_APP_API_URL}/user/photo/${person._id}`}
+                                        onError={i => {
+                                            i.target.src = `${DefaultProfile}`
+                                        }}
+                                    />
+                                </ListItemAvatar>
+                                <ListItemText
+                                    primary={person.name}
+                                    secondary={
+                                        <React.Fragment>
+                                            <Typography
+                                                component="span"
+                                                variant="body2"
+                                                className={classes.inline}
+                                                color="textPrimary"
+                                            >
+                                            </Typography>
+                                            {"Happy to be here"}
+                                        </React.Fragment>
+                                    }
                                 />
-                            </ListItemAvatar>
-                            <ListItemText
-                                primary={person.name}
-                                secondary={
-                                    <React.Fragment>
-                                        <Typography
-                                            component="span"
-                                            variant="body2"
-                                            className={classes.inline}
-                                            color="textPrimary"
-                                        >
-                                        </Typography>
-                                        {"Happy to be here"}
-                                    </React.Fragment>
-                                }
-                            />
-                        </ListItem>
-                        <Divider variant="inset" component="li"/>
+                            </ListItem>
+                            <Divider variant="inset" component="li"/>
+                        </NavLink>
                     </List>
                 ))}
             </TabContainer>}
-            {value === 2 && <TabContainer>Posts</TabContainer>}
+            {value === 2 && <TabContainer>
+                {props.posts.map((post, i) => (
+                    <List className={classes.root} key={i}>
+                        <NavLink to={`/post/${post._id}`} style={{textDecoration: 'none', outline: 'none'}}>
+                            <ListItem alignItems="flex-start">
+                                <ListItemText
+                                    primary={post.title}
+                                    secondary={
+                                        <React.Fragment>
+                                            <Typography
+                                                component="span"
+                                                variant="body2"
+                                                className={classes.inline}
+                                                color="textPrimary"
+                                            >
+                                            </Typography>
+                                            {post.body.substring(0, 40)}
+                                        </React.Fragment>
+                                    }
+                                />
+                            </ListItem>
+                            <Divider variant="inset" component="li" style={{margin: 0}}/>
+                        </NavLink>
+                    </List>
+                ))}
+            </TabContainer>}
         </div>
     );
 }

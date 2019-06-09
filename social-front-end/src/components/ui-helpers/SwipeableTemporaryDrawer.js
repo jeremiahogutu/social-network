@@ -202,7 +202,7 @@ function SwipeableTemporaryDrawer() {
                         </IconButton>
 
                         {isAuthenticated() && (
-                            <NavLink style={{textDecoration: "none", color: "#fff", flexGrow: 1}}
+                            <NavLink style={{textDecoration: "none", color: "#fff", flexGrow: 1, outline: 'none'}}
                                      to={`/user/${isAuthenticated().user._id}`}
                                      activeStyle={{fontWeight: "bold", color: "#006494"}}>
                                 <Typography variant="h6" style={{flexGrow: 1}}>
@@ -211,7 +211,7 @@ function SwipeableTemporaryDrawer() {
                             </NavLink>
                         )}
                         {!isAuthenticated() && (
-                            <NavLink style={{textDecoration: "none", color: "#fff", flexGrow: 1}}
+                            <NavLink style={{textDecoration: "none", color: "#fff", flexGrow: 1, outline: 'none'}}
                                      to={`/`}>
                                 <Typography variant="h6" style={{flexGrow: 1}}>
                                     Social Network

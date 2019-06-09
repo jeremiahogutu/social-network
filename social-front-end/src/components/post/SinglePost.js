@@ -73,10 +73,15 @@ class SinglePost extends Component {
                     <Typography variant="h3" style={{padding: "20px 0"}}>
                         {post.title}
                     </Typography>
-                    <Typography variant="body2" component="p">
+                    {!post ? (
+                        <Typography variant="h3">Loading...</Typography>
+                    ) : (
+                        <Typography variant="h3">
+                            {this.renderPost(post)}
+                        </Typography>
+                    )}
 
-                        {this.renderPost(post)}
-                    </Typography>
+
                 </Grid>
             </Grid>
         );

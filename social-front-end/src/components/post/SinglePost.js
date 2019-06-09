@@ -1,17 +1,18 @@
 import React, {Component} from 'react';
 import {Button, Card, CardActions, CardContent, Grid, Typography} from "@material-ui/core";
-import {singlePost} from "./apiPost";
+import {singlePost, remove} from "./apiPost";
 import DefaultPost from "../assets/alpine-lake.jpg";
-import {NavLink} from "react-router-dom";
+import {NavLink, Redirect} from "react-router-dom";
 import {isAuthenticated} from "../auth";
 
 class SinglePost extends Component {
     state = {
-        post: ''
+        post: '',
+        redirectToHome: false
     };
 
     componentDidMount = () => {
-        const postId = this.props.match.params.postId
+        const postId = this.props.match.params.postId;
         singlePost(postId).then(data => {
             if (data.error) {
                 console.log(data.error)
@@ -20,6 +21,21 @@ class SinglePost extends Component {
                     post: data
                 })
             }
+        })
+    };
+
+    deletePost = () => {
+        const postId = this.props.match.params.postId;
+        const token = isAuthenticated().token;
+        remove(postId, token).then(data => {
+            if (data.error) {
+                console.log(data.error)
+            } else {
+                this.setState({
+                    redirectToHome: true
+                })
+            }
+
         })
     };
 
@@ -63,11 +79,9 @@ class SinglePost extends Component {
                                 Update post
                             </Button>
                         </NavLink>
-                        <NavLink to={`/`}>
-                            <Button size="small" color="secondary">
-                                Delete post
-                            </Button>
-                        </NavLink>
+                        <Button size="small" color="secondary" onClick={this.deletePost}>
+                            Delete post
+                        </Button>
                     </React.Fragment>
                     }
 
@@ -77,7 +91,10 @@ class SinglePost extends Component {
     };
 
     render() {
-        const {post} = this.state;
+        const {post, redirectToHome} = this.state;
+        if (redirectToHome) {
+            return <Redirect to={`/`}/>
+        }
         return (
             <Grid container style={{justifyContent: 'center', marginTop: '60px'}}>
                 <Grid item xs={12} style={{display: 'flex', flexDirection: 'Column', alignItems: 'center'}}>
@@ -91,8 +108,6 @@ class SinglePost extends Component {
                             {this.renderPost(post)}
                         </Typography>
                     )}
-
-
                 </Grid>
             </Grid>
         );

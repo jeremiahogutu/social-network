@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {signup} from "../auth";
 import {NavLink} from "react-router-dom";
+import {AppBar, Box, Button, Card, Grid, TextField, Toolbar, Typography} from "@material-ui/core";
 
 class Signup extends Component {
     constructor() {
@@ -47,70 +48,87 @@ class Signup extends Component {
 
 
     signUpForm = (name, email, password, error) => (
-        <div className="mdl-card mdl-shadow--16dp util-center util-spacing-h--40px" style={{margin: "0 auto"}}>
-            <div className="mdl-card__title mdl-color--indigo">
-                <h2 className="mdl-card__title-text mdl-color-text--white">SignUp</h2>
-            </div>
-            <div className="mdl-card__supporting-text mdl-grid">
-                <b className="mdl-color-text--accent" style={{display: error ? "" : "none"}}>{error}</b>
-                <form>
-                    <div className="mdl-textfield mdl-js-textfield mdl-textfield">
-                        <label
-                               htmlFor="textfield_username">Name</label>
-                        <input
-                            onChange={this.handleChange("name")}
-                            className="mdl-textfield__input"
-                            type="text"
-                            id="textfield_name"
-                            name="name"
-                            value={name}
-                        />
+        <Grid container style={{justifyContent: 'center', width: '100%'}}>
+            <Grid item xs style={{justifyContent: 'center'}}>
+                <Card style={{margin: "30px auto", width: '330px', borderRadius: 0}}>
+                    <div style={{flexGrow: 1}}>
+                        <AppBar position="static" style={{boxShadow: 'none', backgroundColor: '#2196f3'}}>
+                            <Toolbar>
+                                <Typography variant="h6" color="inherit">
+                                    Sign Up
+                                </Typography>
+                            </Toolbar>
+                        </AppBar>
                     </div>
-                    <div className="mdl-textfield mdl-js-textfield mdl-textfield">
-                        <label htmlFor="textfield_username">Email</label>
-                        <input
-                            onChange={this.handleChange("email")}
-                            className="mdl-textfield__input"
-                            type="email"
-                            id="textfield_email"
-                            name="email"
-                            value={email}
-                        />
-                    </div>
-                    <div className="mdl-textfield mdl-js-textfield mdl-textfield">
-                        <label htmlFor="textfield_password">Password</label>
-                        <input
-                            className="mdl-textfield__input"
-                            onChange={this.handleChange("password")}
-                            type="password"
-                            id="textfield_password"
-                            name="password"
-                            value={password}
-                        />
-                    </div>
-                    <div className="mdl-cell mdl-cell--12-col send-button" align="center">
-                        <button
-                            onClick={this.onSubmit}
-                            type="submit"
-                            className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--colored mdl-color--primary"
-                        >
-                            Sign Up
-                        </button>
-                    </div>
-                </form>
-            </div>
-        </div>
+                    <Typography component="div" variant="body1">
+                        <Box color="error.main" style={{display: error ? "" : "none"}}>{error}</Box>
+                    </Typography>
+                    <form style={{width: '100%'}}>
+                        <div style={{margin: '0 15px 0'}}>
+                            <TextField
+                                id="standard-name"
+                                label="Name"
+                                type="name"
+                                name="name"
+                                value={name}
+                                fullWidth
+                                margin="normal"
+                                onChange={this.handleChange("name")}
+                            />
+                        </div>
+                        <div style={{margin: '0 15px 0'}}>
+                            <TextField
+                                id="standard-email-input"
+                                label="Email"
+                                type="email"
+                                name="email"
+                                value={email}
+                                fullWidth
+                                margin="normal"
+                                onChange={this.handleChange("email")}
+                            />
+                        </div>
+                        <div style={{margin: '16px 15px'}}>
+                            <TextField
+                                id="standard-password-input"
+                                label="Password"
+                                type="password"
+                                name="password"
+                                value={password}
+                                fullWidth
+                                onChange={this.handleChange("password")}
+                            />
+                        </div>
+                        <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '30px 0'}}>
+                            <Button
+                                onClick={this.onSubmit}
+                                type="submit"
+                                style={{backgroundColor: '#2196f3', color: '#fff'}}
+                                variant="contained" size="large"
+                            >
+                                Sign Up
+                            </Button>
+                        </div>
+                    </form>
+                </Card>
+            </Grid>
+        </Grid>
     );
 
     render() {
         const {name, email, password, error, signUpSuccess} = this.state;
         return (
-            <div className='mdl-grid' style={{display: 'flex', justifyContent: 'center'}}>
-                <div className="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone" style={{display: signUpSuccess ? "flex" : "none", justifyContent: 'center', padding: '20px 0'}}>New account is successfully created. Please{" "} <NavLink to='/signin'>{" "} Sign in</NavLink></div>
-                <div className="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone">
-                    {this.signUpForm(name, email, password, error)}
-                </div>
-            </div>
+            <Grid style={{display: 'flex', justifyContent: 'center'}}>
+                <Typography component="div" variant="body1"  style={{display: signUpSuccess ? "flex" : "none", justifyContent: 'center', padding: '20px 0'}}>
+                    <Box color="error.main" style={{display: error ? "" : "none"}}>New account is successfully created. Please{" "} <NavLink to='/signin'>{" "} Sign in</NavLink></Box>
+                </Typography>
+                {/*<div className="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone" style={{display: signUpSuccess ? "flex" : "none", justifyContent: 'center', padding: '20px 0'}}>New account is successfully created. Please{" "} <NavLink to='/signin'>{" "} Sign in</NavLink></div>*/}
+                <Grid container xl={12} md={12} style={{justifyContent: 'center', marginTop: '60px'}}>
+                    <Grid item xs={12}>
+                        {this.signUpForm(name, email, password, error)}
+                    </Grid>
+                </Grid>
+            </Grid>
         );
     }
 }

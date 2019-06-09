@@ -1,0 +1,11 @@
+/*.MuiSvgIcon-root {*/
+/*    color: #006494;*/
+/*}*/
+
+
+
+@media only screen and (max-width: 730px){
+    #mainNavLinks {
+        display: none;
+    }
+}

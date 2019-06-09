@@ -26,7 +26,7 @@ TabContainer.propTypes = {
 const useStyles = makeStyles(theme => ({
     root: {
         flexGrow: 1,
-        width: '100%',
+        // width: '100%',
         backgroundColor: theme.palette.background.paper,
     },
 }));
@@ -43,7 +43,7 @@ function ScrollableTabsButtonAuto(props) {
     return (
 
         <div className={classes.root}>
-            <AppBar position="static" color="#fff" style={{display: 'flex', justifyContent: "space-between"}}>
+            <AppBar position="static" color="#fff" style={{display: 'flex'}}>
                 <Tabs
                     value={value}
                     onChange={handleChange}
@@ -52,15 +52,15 @@ function ScrollableTabsButtonAuto(props) {
                     variant="scrollable"
                     scrollButtons="auto"
                 >
-                    <Tab style={{width: '100%'}} label="Followers" icon={<People/>}/>
-                    <Tab style={{width: '100%'}} label="Following" icon={<PeopleOutline/>}/>
-                    <Tab style={{width: '100%'}} label="Posts" icon={<Forum/>}/>
+                    <Tab label="Followers" icon={<People/>}/>
+                    <Tab label="Following" icon={<PeopleOutline/>}/>
+                    <Tab label="Posts" icon={<Forum/>}/>
                 </Tabs>
             </AppBar>
             {value === 0 && <TabContainer>
                 {props.followers.map((person, i) => (
                     <List className={classes.root}>
-                        <ListItem alignItems="flex-start">
+                        <ListItem>
                             <ListItemAvatar>
                                 <Avatar
                                     alt="Remy Sharp"

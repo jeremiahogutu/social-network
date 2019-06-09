@@ -1,5 +1,57 @@
 .user-container {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: space-evenly;
+}
+
+#editProfileCard, #createPostCard{
+    margin: 0 auto;
+    width: 600px;
+    border-radius: 0
+}
+
+#userGrid, #followerGrid, #postGrid{
+    justify-content: space-evenly;
+}
+
+.userCard {
+    min-width: 330px;
+    margin: 2em 1em 0;
+}
+
+.profileCard {
+    margin: 2em 1em 0;
+    box-shadow: none;
+}
+
+.profileGrid {
+    display: flex;
+    justify-content: center;
+}
+
+
+@media only screen and (max-width: 320px){
+    .userCard {
+        min-width: 300px;
+        margin: 2em 1em 0;
+    }
+}
+@media only screen and (max-width: 599px){
+    #editCard {
+        padding: 0 10px;
+        width: 100%;
+        border-radius: 0
+    }
+}
+@media only screen and (max-width: 767px){
+    #userGrid, #followerGrid, #postGrid {
+        justify-content: center;
+    }
+}
+
+@media only screen and (max-width: 900px){
+    .profileAboutTabs {
+        padding: 0 16px;
+        height: auto;
+    }
 }

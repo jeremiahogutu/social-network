@@ -5,8 +5,8 @@ exports.createPostValidator = (req, res, next) => {
         max: 150
     });
 
-    req.check('description', 'write a description').notEmpty();
-    req.check('description', 'description must be between 4 and 2000 characters long').isLength({
+    req.check('body', 'write a description').notEmpty();
+    req.check('body', 'description must be between 4 and 2000 characters long').isLength({
         min: 4,
         max: 2000
     });

@@ -6,6 +6,9 @@ import {NavLink} from "react-router-dom";
 import DeleteUser from "./DeleteUser";
 import DefaultProfile from "./profile.jpg";
 import ProfileTabs from "./ProfileTabs";
+import {Button, Card, Grid} from "@material-ui/core";
+import "./user.css"
+
 // import FollowButton from "./FollowButton";
 
 class Profile extends Component {
@@ -35,12 +38,12 @@ class Profile extends Component {
         const followId = this.state.user._id;
         // debugger
         callApi(userId, token, followId).then(data => {
-                if (data.error) {
-                    this.setState({error: data.error})
-                } else {
-                    this.setState({user: data, following: !this.state.following})
-                }
-            })
+            if (data.error) {
+                this.setState({error: data.error})
+            } else {
+                this.setState({user: data, following: !this.state.following})
+            }
+        })
     };
 
     init = userId => {
@@ -76,65 +79,72 @@ class Profile extends Component {
         const photoUrl = user._id ? `${process.env.REACT_APP_API_URL}/user/photo/${user._id}?${new Date().getTime()}` : DefaultProfile;
         if (redirectToSignin) return <Redirect to='/signin'/>;
         return (
-            <div className='mdl-grid' style={{justifyContent: 'center', maxWidth: '900px'}}>
-                <div className='mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone'>
-                    <div className="mdl-grid mdl-grid--no-spacing">
-                        <div className='mdl-cell mdl-cell--8-col mdl-cell--8-col-tablet mdl-cell--4-col-phone'>
-                            {/*<h2 style={{fontFamily: 'Lato'}}>Profile</h2>*/}
-                        </div>
-                    </div>
-                </div>
-                <div className='mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-cell--4-col-phone'>
-                    <div className="demo-card-square mdl-card mdl-shadow--2dp">
-                        <div className="mdl-card__title mdl-card--expand" style={{justifyContent: 'center'}}>
+            <div style={{display: 'flex', justifyContent: 'center'}}>
+                <Grid container xs={12} style={{justifyContent: 'center', marginTop: '60px', maxWidth: '900px'}}>
+                    {/*<Grid item xs={12}>*/}
+                    {/*    <Grid container xs={12}>*/}
+                    {/*        <Grid item xs={12}>*/}
+                    {/*            /!*<h2 style={{fontFamily: 'Lato'}}>Profile</h2>*!/*/}
+                    {/*        </Grid>*/}
+                    {/*    </Grid>*/}
+                    {/*</Grid>*/}
+                    <Grid item xl={6} lg={6} md={6} sm={6} className="profileGrid">
+                        <Card className="profileCard" style={{boxShadow: 'None'}}>
                             <img
-                                style={{width: '100%', maxHeight: '300px'}}
+                                style={{ height: '300px'}}
                                 src={photoUrl}
                                 onError={(e) => {
                                     e.target.onerror = null;
                                     e.target.src = DefaultProfile
                                 }}
                                 alt={user.name}/>
-                        </div>
-                    </div>
-                </div>
-                <div className='mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-cell--4-col-phone'
-                     style={{display: 'flex', alignItems: 'center'}}>
-                    <div className="mdl-grid" style={{flexDirection: 'column', alignItems: 'center', width: '100%'}}>
-                        <div className='mdl-cell mdl-cell--10-col mdl-cell--8-col-tablet mdl-cell--4-col-phone'>
-                            <p>Hello {user.name}</p>
-                            <p>Email: {user.email}</p>
-                            <p>{`Joined ${new Date(user.created).toDateString()}`}</p>
-                            {isAuthenticated().user && isAuthenticated().user._id === user._id ? (
-                                <div style={{display: 'flex', justifyContent: 'space-between', marginTop: '24px'}}>
-                                    <NavLink
-                                        className='mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored'
-                                        to={`/user/edit/${user._id}`}>Edit Profile</NavLink>
-                                    <DeleteUser userId={user._id}/>
-                                </div>
-                            ) : (
-                                <div style={{display: 'flex', justifyContent: 'space-between'}}>
-
-                                    {
-                                        !this.state.following ? (
-                                            <button onClick={() => this.clickFollowButton(follow)} className="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">
-                                                Follow
-                                            </button>
-                                        ) : (
-                                            <button onClick={() => this.clickFollowButton(unfollow)} className="mdl-button mdl-js-button mdl-button--raised mdl-button--accent">
-                                                UnFollow
-                                            </button>
-                                        )
-                                    }
-                                </div>
-                            )}
-                        </div>
-                    </div>
-                </div>
-                <div className='mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone'>
-                    <p>{user.about}</p>
-                    <ProfileTabs followers={user.followers} following={user.following}/>
-                </div>
+                        </Card>
+                    </Grid>
+                    <Grid item xl={6} lg={6} md={6} sm={6} style={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                        flexDirection: 'column',
+                        width: '100%',
+                        padding: '0 20px'
+                    }}>
+                        <p>Hello {user.name}</p>
+                        <p>Email: {user.email}</p>
+                        <p>{`Joined ${new Date(user.created).toDateString()}`}</p>
+                        {isAuthenticated().user && isAuthenticated().user._id === user._id ? (
+                            <div style={{display: 'flex', justifyContent: 'space-between', marginTop: '24px'}}>
+                                <NavLink
+                                    to={`/user/edit/${user._id}`}>
+                                    <Button variant="contained" size="large"
+                                            style={{backgroundColor: '#2196f3', color: '#fff'}}>
+                                        Edit Profile
+                                    </Button>
+                                </NavLink>
+                                <DeleteUser userId={user._id}/>
+                            </div>
+                        ) : (
+                            <div style={{display: 'flex', justifyContent: 'space-between'}}>
+                                {
+                                    !this.state.following ? (
+                                        <Button onClick={() => this.clickFollowButton(follow)} variant="contained"
+                                                size="large"
+                                                style={{backgroundColor: '#2196f3', color: '#fff'}}>
+                                            Follow
+                                        </Button>
+                                    ) : (
+                                        <Button onClick={() => this.clickFollowButton(unfollow)} variant="contained"
+                                                size="large" color="secondary">
+                                            UnFollow
+                                        </Button>
+                                    )
+                                }
+                            </div>
+                        )}
+                    </Grid>
+                    <Grid xs={12} className='profileAboutTabs'>
+                        <p>{user.about}</p>
+                        <ProfileTabs followers={user.followers} following={user.following}/>
+                    </Grid>
+                </Grid>
             </div>
         );
     }

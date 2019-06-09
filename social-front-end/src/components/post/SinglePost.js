@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Button, Card, CardActions, CardContent, Grid, Typography} from "@material-ui/core";
-import {singlePost, remove} from "./apiPost";
+import {singlePost, remove, like, unlike} from "./apiPost";
 import DefaultPost from "../assets/alpine-lake.jpg";
 import {NavLink, Redirect} from "react-router-dom";
 import {isAuthenticated} from "../auth";
@@ -8,7 +8,15 @@ import {isAuthenticated} from "../auth";
 class SinglePost extends Component {
     state = {
         post: '',
-        redirectToHome: false
+        redirectToHome: false,
+        like: false,
+        likes: 0
+    };
+
+    checkLike = (likes) => {
+        const userId = isAuthenticated().user._id;
+        let match = likes.indexOf(userId) !== -1;
+        return match
     };
 
     componentDidMount = () => {
@@ -18,7 +26,28 @@ class SinglePost extends Component {
                 console.log(data.error)
             } else {
                 this.setState({
-                    post: data
+                    post: data,
+                    likes: data.likes.length,
+                    like: this.checkLike(data.likes)
+                })
+            }
+        })
+    };
+
+
+
+    likeToggle = () => {
+        let callApi = this.state.like ? unlike : like;
+        const userId = isAuthenticated().user._id;
+        const postId = this.state.post._id;
+        const token = isAuthenticated().token;
+        callApi(userId, token, postId).then(data => {
+            if (data.error) {
+                console.log(data.error)
+            } else {
+                this.setState({
+                    like: !this.state.like,
+                    likes: data.likes.length
                 })
             }
         })
@@ -49,6 +78,7 @@ class SinglePost extends Component {
     renderPost = (post) => {
         const posterId = post.postedBy ? `/user/${post.postedBy._id}` : '';
         const posterName = post.postedBy ? post.postedBy.name : 'Unknown';
+        const {like, likes} = this.state;
         return (
             <Card className="postCard">
                 <CardContent style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
@@ -62,6 +92,9 @@ class SinglePost extends Component {
                             alt={post.title}
                         />
                     </div>
+                    <Typography variant="h3" color="textSecondary" onClick={this.likeToggle}>
+                        {likes} Like
+                    </Typography>
                     <Typography variant="body2" color="textSecondary" component="p" style={{maxWidth: '900px'}}>
                         {post.body}
                     </Typography>

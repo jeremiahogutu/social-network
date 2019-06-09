@@ -12,9 +12,11 @@ const {
     like,
     unlike
 } = require('../controllers/post');
+
 const {requireSignin} = require('../controllers/auth');
 const {userById} = require('../controllers/user');
 const {createPostValidator} = require('../validator');
+
 const router = express.Router();
 
 router.get('/posts', getPosts);
@@ -39,8 +41,6 @@ router.delete('/post/:postId', requireSignin, isPoster, deletePost);
 
 // photo
 router.get("/post/photo/:postId", photo);
-
-
 
 // any route containing :userId, our app will first execute userById() method
 router.param("userId", userById);

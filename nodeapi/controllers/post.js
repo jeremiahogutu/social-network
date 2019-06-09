@@ -161,7 +161,7 @@ exports.like = (req, res) => {
             res.json(result)
         }
     })
-}
+};
 
 exports.unlike = (req, res) => {
     Post.findByIdAndUpdate(req.body.postId, {$pull: {likes: req.body.userId}}, {new: true}
@@ -174,4 +174,4 @@ exports.unlike = (req, res) => {
             res.json(result)
         }
     })
-}
+};

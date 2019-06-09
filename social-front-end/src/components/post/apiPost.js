@@ -76,10 +76,10 @@ export const like = (userId, token, postId) => {
         method: "PUT",
         headers: {
             Accept: 'application/json',
-            "content-Type": 'application/json',
+            "Content-Type": 'application/json',
             Authorization: `Bearer ${token}`
         },
-        body: JSON.stringify(userId, postId)
+        body: JSON.stringify({userId, postId})
     })
         .then(response => {
             return response.json()
@@ -92,10 +92,10 @@ export const unlike = (userId, token, postId) => {
         method: "PUT",
         headers: {
             Accept: 'application/json',
-            "content-Type": 'application/json',
+            "Content-Type": 'application/json',
             Authorization: `Bearer ${token}`
         },
-        body: JSON.stringify(userId, postId)
+        body: JSON.stringify({userId, postId})
     })
         .then(response => {
             return response.json()

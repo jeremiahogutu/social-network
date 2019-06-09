@@ -3,6 +3,7 @@ import {list} from "./apiPost";
 import {NavLink} from "react-router-dom";
 import '../user/user.css';
 import {Card, CardActionArea, CardActions, CardContent, CardMedia, Button, Typography, Grid} from "@material-ui/core";
+import DefaultPost from "../assets/alpine-lake.jpg";
 
 // import DefaultProfile from "./profile.jpg";
 
@@ -39,9 +40,17 @@ class Posts extends Component {
                             <CardActionArea>
                                 <CardMedia
                                     style={{height: 300}}
-                                    image="/static/images/cards/contemplative-reptile.jpg"
                                     title="Contemplative Reptile"
-                                />
+                                >
+                                    <img
+                                        style={{ maxWidth: '330px', width: "100%", maxHeight: "250px", display: 'flex'}}
+                                        src={`${process.env.REACT_APP_API_URL}/post/photo/${post._id}`}
+                                        onError={i => {
+                                            i.target.src = `${DefaultPost}`
+                                        }}
+                                        alt={post.title}
+                                    />
+                                </CardMedia>
                                 <CardContent>
                                     <Typography gutterBottom variant="h5" component="h2">
                                         {post.title}

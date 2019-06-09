@@ -38,7 +38,7 @@ class SinglePost extends Component {
                             alt={post.title}
                         />
                     </div>
-                    <Typography variant="body2" color="textSecondary" component="p" style={{width: '100%'}}>
+                    <Typography variant="body2" color="textSecondary" component="p" style={{maxWidth: '900px'}}>
                         {post.body}
                     </Typography>
                 </CardContent>

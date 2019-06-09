@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {list} from "./apiPost";
 import {NavLink} from "react-router-dom";
 import '../user/user.css';
-import {Card, CardActionArea, CardActions, CardContent, Button, Typography, Grid} from "@material-ui/core";
+import {Card, CardActions, CardContent, Button, Typography, Grid} from "@material-ui/core";
 import DefaultPost from "../assets/alpine-lake.jpg";
 
 // import DefaultProfile from "./profile.jpg";

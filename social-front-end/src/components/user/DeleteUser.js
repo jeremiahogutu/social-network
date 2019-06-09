@@ -41,7 +41,7 @@ class DeleteUser extends Component {
             return <Redirect to='/'/>
         }
         return (
-            <Button variant="contained" size="large" color="secondary" onClick={this.deleteConfirmed}>
+            <Button variant="contained" size="medium" color="secondary" onClick={this.deleteConfirmed} style={{width: '150px', marginTop: '10px'}}>
                 Delete Profile
             </Button>
         );

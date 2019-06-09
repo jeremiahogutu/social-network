@@ -172,8 +172,8 @@ class NewPost extends Component {
             <Grid container style={{justifyContent: 'center', marginTop: '60px'}}>
                 {/*<p className="mdl-color-text--accent"*/}
                 {/*   style={{display: error ? "block" : "none", textAlign: 'center'}}>{error}</p>*/}
-                {/*<p className="mdl-color-text--accent"*/}
-                {/*   style={{display: loading ? "block" : "none", textAlign: 'center'}}>Loading...</p>*/}
+                <p className="mdl-color-text--accent"
+                   style={{display: loading ? "block" : "none", textAlign: 'center'}}>Loading...</p>
 
                 {this.newPostForm(title, body, photo, error)}
             </Grid>

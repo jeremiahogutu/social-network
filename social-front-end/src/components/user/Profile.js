@@ -127,12 +127,19 @@ class Profile extends Component {
                         <p>Email: {user.email}</p>
                         <p>{`Joined ${new Date(user.created).toDateString()}`}</p>
                         {isAuthenticated().user && isAuthenticated().user._id === user._id ? (
-                            <div style={{display: 'flex', justifyContent: 'space-between', marginTop: '24px'}}>
+                            <div style={{display: 'flex', justifyContent: 'space-between', marginTop: '24px', flexWrap: 'wrap'}}>
                                 <NavLink
                                     to={`/user/edit/${user._id}`}>
-                                    <Button variant="contained" size="large"
-                                            style={{backgroundColor: '#2196f3', color: '#fff'}}>
+                                    <Button variant="contained" size="medium"
+                                            style={{backgroundColor: '#2196f3', color: '#fff', width: '150px', marginTop: '10px'}}>
                                         Edit Profile
+                                    </Button>
+                                </NavLink>
+                                <NavLink
+                                    to={`/post/create`}>
+                                    <Button variant="contained" size="medium"
+                                            style={{backgroundColor: '#2196f3', color: '#fff', width: '150px', marginTop: '10px'}}>
+                                        Create Post
                                     </Button>
                                 </NavLink>
                                 <DeleteUser userId={user._id}/>

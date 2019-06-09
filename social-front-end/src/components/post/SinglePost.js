@@ -81,7 +81,7 @@ class SinglePost extends Component {
                     </NavLink>
                     {isAuthenticated().user && isAuthenticated().user._id === post.postedBy._id &&
                     <React.Fragment>
-                        <NavLink to={`/`}>
+                        <NavLink to={`/post/edit/${post._id}`}>
                             <Button size="small" color="primary">
                                 Update post
                             </Button>

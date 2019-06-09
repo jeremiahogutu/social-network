@@ -3,6 +3,7 @@ import {Button, Card, CardActions, CardContent, Grid, Typography} from "@materia
 import {singlePost} from "./apiPost";
 import DefaultPost from "../assets/alpine-lake.jpg";
 import {NavLink} from "react-router-dom";
+import {isAuthenticated} from "../auth";
 
 class SinglePost extends Component {
     state = {
@@ -55,6 +56,21 @@ class SinglePost extends Component {
                             Back to posts
                         </Button>
                     </NavLink>
+                    {isAuthenticated().user && isAuthenticated().user._id === post.postedBy._id &&
+                    <React.Fragment>
+                        <NavLink to={`/`}>
+                            <Button size="small" color="primary">
+                                Update post
+                            </Button>
+                        </NavLink>
+                        <NavLink to={`/`}>
+                            <Button size="small" color="secondary">
+                                Delete post
+                            </Button>
+                        </NavLink>
+                    </React.Fragment>
+                    }
+
                 </CardActions>
             </Card>
         )

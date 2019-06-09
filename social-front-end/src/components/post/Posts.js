@@ -39,7 +39,7 @@ class Posts extends Component {
                         <Card className="userCard" key={i}>
                             <CardActionArea>
                                 <CardMedia
-                                    style={{height: 300}}
+                                    style={{height: 300, display: 'flex'}}
                                     title="Contemplative Reptile"
                                 >
                                     <img
@@ -68,7 +68,7 @@ class Posts extends Component {
                                 on {new Date(post.created).toDateString()}
                             </Typography>
                             <CardActions>
-                                <NavLink to={`/posts/${post._id}`}>
+                                <NavLink to={`/post/${post._id}`}>
                                     <Button size="small" color="primary">
                                         Read More
                                     </Button>

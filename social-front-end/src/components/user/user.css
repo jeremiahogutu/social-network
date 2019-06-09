@@ -19,6 +19,17 @@
     margin: 2em 1em 0;
 }
 
+.profileCard {
+    margin: 2em 1em 0;
+    box-shadow: none;
+}
+
+.profileGrid {
+    display: flex;
+    justify-content: center;
+}
+
+
 @media only screen and (max-width: 320px){
     .userCard {
         min-width: 300px;
@@ -35,5 +46,12 @@
 @media only screen and (max-width: 767px){
     #userGrid, #followerGrid, #postGrid {
         justify-content: center;
+    }
+}
+
+@media only screen and (max-width: 900px){
+    .profileAboutTabs {
+        padding: 0 16px;
+        height: auto;
     }
 }

@@ -27,39 +27,50 @@ class Posts extends Component {
     }
 
 
-    renderPosts = (posts) => (
-        <Grid id="postGrid" item xl={10} md={10} style={{display: 'flex', alignItems: 'center', flexWrap: 'wrap'}}>
-            {posts.map((post, i) => (
-                <Card className="userCard" key={i}>
-                    <CardActionArea>
-                        <CardMedia
-                            style={{height: 300}}
-                            image="/static/images/cards/contemplative-reptile.jpg"
-                            title="Contemplative Reptile"
-                        />
-                        <CardContent>
-                            <Typography gutterBottom variant="h5" component="h2">
-                                {post.title}
+    renderPosts = (posts) => {
+
+        return (
+            <Grid id="postGrid" item xl={10} md={10} style={{display: 'flex', alignItems: 'center', flexWrap: 'wrap'}}>
+                {posts.map((post, i) => {
+                    const posterId = post.postedBy ? `/user/${post.postedBy._id}` : '';
+                    const posterName = post.postedBy ? post.postedBy.name : 'Unknown';
+                    return (
+                        <Card className="userCard" key={i}>
+                            <CardActionArea>
+                                <CardMedia
+                                    style={{height: 300}}
+                                    image="/static/images/cards/contemplative-reptile.jpg"
+                                    title="Contemplative Reptile"
+                                />
+                                <CardContent>
+                                    <Typography gutterBottom variant="h5" component="h2">
+                                        {post.title}
+                                    </Typography>
+                                    <Typography variant="body2" color="textSecondary" component="p">
+                                        {post.body.substring(0, 40)}
+                                    </Typography>
+                                </CardContent>
+                            </CardActionArea>
+                            <Typography variant="body2" color="textSecondary" component="p" style={{padding: "0 16px"}}>
+                                posted by:
+                                <NavLink to={`${posterId}`} style={{textDecoration: "none"}}>
+                                    {' '}{posterName}{' '}
+                                </NavLink>
+                                on {new Date(post.created).toDateString()}
                             </Typography>
-                            <Typography variant="body2" color="textSecondary" component="p">
-                                {post.body}
-                            </Typography>
-                        </CardContent>
-                    </CardActionArea>
-                    <CardActions>
-                        <Button size="small" color="primary">
-                            Share
-                        </Button>
-                        <NavLink to={`/posts/${post._id}`}>
-                            <Button size="small" color="primary">
-                                Learn More
-                            </Button>
-                        </NavLink>
-                    </CardActions>
-                </Card>
-            ))}
-        </Grid>
-    );
+                            <CardActions>
+                                <NavLink to={`/posts/${post._id}`}>
+                                    <Button size="small" color="primary">
+                                        Read More
+                                    </Button>
+                                </NavLink>
+                            </CardActions>
+                        </Card>
+                    )
+                })}
+            </Grid>
+        )
+    }
 
     render() {
         const {posts} = this.state;

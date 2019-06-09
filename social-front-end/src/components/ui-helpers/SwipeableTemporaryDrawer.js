@@ -1,6 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {SwipeableDrawer, makeStyles, Button, List, Divider, ListItem, ListItemIcon, ListItemText, CssBaseline, useScrollTrigger, AppBar, IconButton, Toolbar, Typography} from "@material-ui/core";
+import {
+    SwipeableDrawer,
+    makeStyles,
+    Button,
+    List,
+    Divider,
+    ListItem,
+    ListItemIcon,
+    ListItemText,
+    CssBaseline,
+    useScrollTrigger,
+    AppBar,
+    IconButton,
+    Toolbar,
+    Typography
+} from "@material-ui/core";
 import {Home, People, PeopleOutline, Forum, VpnKey, ExitToApp, PersonAdd, Menu} from "@material-ui/icons";
 import {NavLink} from "react-router-dom";
 import {isAuthenticated, signout} from "../auth";
@@ -88,7 +103,7 @@ function SwipeableTemporaryDrawer() {
                                  exact={true}>
                             <ListItem button>
                                 <ListItemIcon>
-                                    <Home />
+                                    <Home/>
                                 </ListItemIcon>
                                 <ListItemText primary="Home"/>
                             </ListItem>
@@ -186,21 +201,26 @@ function SwipeableTemporaryDrawer() {
                             <Menu/>
                         </IconButton>
 
-                            {isAuthenticated() && (
-                                <NavLink style={{textDecoration: "none", color: "#fff", flexGrow: 1}}
-                                         to={`/user/${isAuthenticated().user._id}`}
-                                         activeStyle={{fontWeight: "bold", color: "#006494"}}>
-                                    <Typography variant="h6" style={{flexGrow: 1}}>
-                                        {isAuthenticated() ? `${isAuthenticated().user.name}'s profile` : "Social Network"}
-                                    </Typography>
-                                </NavLink>
-                            )}
+                        {isAuthenticated() && (
+                            <NavLink style={{textDecoration: "none", color: "#fff", flexGrow: 1}}
+                                     to={`/user/${isAuthenticated().user._id}`}
+                                     activeStyle={{fontWeight: "bold", color: "#006494"}}>
+                                <Typography variant="h6" style={{flexGrow: 1}}>
+                                    {isAuthenticated() ? `${isAuthenticated().user.name}'s profile` : "Social Network"}
+                                </Typography>
+                            </NavLink>
+                        )}
+                        {!isAuthenticated() && (
+                            <NavLink style={{textDecoration: "none", color: "#fff", flexGrow: 1}}
+                                     to={`/`}>
+                                <Typography variant="h6" style={{flexGrow: 1}}>
+                                    Social Network
+                                </Typography>
+                            </NavLink>
+                        )}
                         <div id="mainNavLinks">
                             {!isAuthenticated() && (
-                                <>
-                                    <Typography variant="h6" style={{flexGrow: 1}}>
-                                        Social Network
-                                    </Typography>
+                                <div>
                                     <NavLink style={{color: '#fff'}}
                                              to="/"
                                              activeStyle={{fontWeight: "bold", color: "#006494"}}
@@ -219,7 +239,7 @@ function SwipeableTemporaryDrawer() {
                                         activeStyle={{fontWeight: "bold", color: "#006494"}}>
                                         <Button color="inherit">Sign Up</Button>
                                     </NavLink>
-                                </>
+                                </div>
                             )}
                             {isAuthenticated() && (
                                 <div>

@@ -146,7 +146,7 @@ class NewPost extends Component {
                         </Grid>
                     </div>
                     <div style={{margin: '16px 15px'}}>
-                        <Grid container xs={12} style={{display: 'flex', justifyContent: 'center'}}>
+                        <Grid container style={{display: 'flex', justifyContent: 'center'}}>
                             <Button
                                 variant="contained" size="large"
                                 style={{backgroundColor: '#2196f3', color: '#fff'}}
@@ -169,11 +169,11 @@ class NewPost extends Component {
             return <Redirect to={`/user/${user._id}`}/>
         }
         return (
-            <Grid container xl={12} md={12} style={{justifyContent: 'center', marginTop: '60px'}}>
+            <Grid container style={{justifyContent: 'center', marginTop: '60px'}}>
                 {/*<p className="mdl-color-text--accent"*/}
                 {/*   style={{display: error ? "block" : "none", textAlign: 'center'}}>{error}</p>*/}
-                <p className="mdl-color-text--accent"
-                   style={{display: loading ? "block" : "none", textAlign: 'center'}}>Loading...</p>
+                {/*<p className="mdl-color-text--accent"*/}
+                {/*   style={{display: loading ? "block" : "none", textAlign: 'center'}}>Loading...</p>*/}
 
                 {this.newPostForm(title, body, photo, error)}
             </Grid>

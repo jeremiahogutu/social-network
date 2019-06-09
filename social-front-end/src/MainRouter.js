@@ -17,7 +17,6 @@ const MainRouter = () => (
     <div className='container'>
         <Switch>
             <Route exact path="/" component={Home} />
-            <Route exact path="/post/:postId" component={SinglePost} />
             <Route exact path="/users" component={Users} />
             <Route exact path="/signup" component={Signup}/>
             <Route exact path="/signin" component={Signin}/>
@@ -25,6 +24,7 @@ const MainRouter = () => (
             <PrivateRoute exact path="/findpeople" component={FindPeople}/>
             <PrivateRoute exact path="/user/:userId" component={Profile}/>
             <PrivateRoute exact path="/post/create" component={NewPost}/>
+            <Route exact path="/post/:postId" component={SinglePost} />
         </Switch>
     </div>
 );

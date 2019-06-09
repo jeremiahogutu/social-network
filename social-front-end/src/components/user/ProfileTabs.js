@@ -39,11 +39,10 @@ function ScrollableTabsButtonAuto(props) {
     function handleChange(event, newValue) {
         setValue(newValue);
     }
-
     return (
 
         <div className={classes.root}>
-            <AppBar position="static" color="#fff" style={{display: 'flex'}}>
+            <AppBar position="static" color="default" style={{display: 'flex'}}>
                 <Tabs
                     value={value}
                     onChange={handleChange}
@@ -59,7 +58,7 @@ function ScrollableTabsButtonAuto(props) {
             </AppBar>
             {value === 0 && <TabContainer>
                 {props.followers.map((person, i) => (
-                    <List className={classes.root}>
+                    <List className={classes.root} key={i}>
                         <ListItem>
                             <ListItemAvatar>
                                 <Avatar
@@ -90,7 +89,7 @@ function ScrollableTabsButtonAuto(props) {
             </TabContainer>}
             {value === 1 && <TabContainer>
                 {props.following.map((person, i) => (
-                    <List className={classes.root}>
+                    <List className={classes.root} key={i}>
                         <ListItem alignItems="flex-start">
                             <ListItemAvatar>
                                 <Avatar
@@ -119,7 +118,7 @@ function ScrollableTabsButtonAuto(props) {
                     </List>
                 ))}
             </TabContainer>}
-            {value === 2 && <TabContainer>Posts</TabContainer>}
+            {value === 2 && <TabContainer>{JSON.stringify(props.posts)}</TabContainer>}
         </div>
     );
 }

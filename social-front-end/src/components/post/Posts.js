@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {list} from "./apiPost";
 import {NavLink} from "react-router-dom";
 import '../user/user.css';
-import {Card, CardActionArea, CardActions, CardContent, CardMedia, Button, Typography, Grid} from "@material-ui/core";
+import {Card, CardActionArea, CardActions, CardContent, Button, Typography, Grid} from "@material-ui/core";
 import DefaultPost from "../assets/alpine-lake.jpg";
 
 // import DefaultProfile from "./profile.jpg";
@@ -37,30 +37,26 @@ class Posts extends Component {
                     const posterName = post.postedBy ? post.postedBy.name : 'Unknown';
                     return (
                         <Card className="userCard" key={i}>
-                            <CardActionArea>
-                                <CardMedia
-                                    style={{height: 300, display: 'flex'}}
-                                    title="Contemplative Reptile"
-                                >
-                                    <img
-                                        style={{ maxWidth: '330px', width: "100%", maxHeight: "250px", display: 'flex'}}
-                                        src={`${process.env.REACT_APP_API_URL}/post/photo/${post._id}`}
-                                        onError={i => {
-                                            i.target.src = `${DefaultPost}`
-                                        }}
-                                        alt={post.title}
-                                    />
-                                </CardMedia>
-                                <CardContent>
-                                    <Typography gutterBottom variant="h5" component="h2">
+                            <CardContent style={{height: 300, display: 'flex', flexDirection: 'column'}}>
+                                <img
+                                    style={{maxWidth: '330px', width: "100%", minHeight: "250px", display: 'flex'}}
+                                    src={`${process.env.REACT_APP_API_URL}/post/photo/${post._id}`}
+                                    onError={i => {
+                                        i.target.src = `${DefaultPost}`
+                                    }}
+                                    alt={post.title}
+                                />
+                                <div style={{width: '100%'}}>
+                                    <Typography gutterBottom variant="h5" component="h2" style={{marginTop: '10px'}}>
                                         {post.title}
                                     </Typography>
                                     <Typography variant="body2" color="textSecondary" component="p">
                                         {post.body.substring(0, 40)}
                                     </Typography>
-                                </CardContent>
-                            </CardActionArea>
-                            <Typography variant="body2" color="textSecondary" component="p" style={{padding: "0 16px"}}>
+                                </div>
+                            </CardContent>
+                            <Typography variant="body2" color="textSecondary" component="p"
+                                        style={{padding: "45px 16px 0"}}>
                                 posted by:
                                 <NavLink to={`${posterId}`} style={{textDecoration: "none"}}>
                                     {' '}{posterName}{' '}
@@ -84,7 +80,7 @@ class Posts extends Component {
     render() {
         const {posts} = this.state;
         return (
-            <Grid container xl={12} md={12} style={{justifyContent: 'center', marginTop: '60px'}}>
+            <Grid container style={{justifyContent: 'center', marginTop: '60px'}}>
                 <Grid item xl={10} md={10} style={{display: 'flex', flexDirection: 'Column', alignItems: 'center'}}>
 
 

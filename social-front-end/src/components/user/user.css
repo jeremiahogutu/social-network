@@ -19,6 +19,9 @@
     margin: 2em 1em 0;
 }
 
+.postCard {
+    min-width: 900px;
+}
 .profileCard {
     margin: 2em 1em 0;
     box-shadow: none;

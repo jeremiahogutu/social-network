@@ -35,9 +35,16 @@ class SinglePost extends Component {
                     redirectToHome: true
                 })
             }
-
         })
     };
+
+    deleteConfirmed = () => {
+        let answer = window.confirm("Are you sure you want to delete your account?");
+        if (answer) {
+            this.deletePost()
+        }
+    };
+
 
     renderPost = (post) => {
         const posterId = post.postedBy ? `/user/${post.postedBy._id}` : '';
@@ -79,7 +86,7 @@ class SinglePost extends Component {
                                 Update post
                             </Button>
                         </NavLink>
-                        <Button size="small" color="secondary" onClick={this.deletePost}>
+                        <Button size="small" color="secondary" onClick={this.deleteConfirmed}>
                             Delete post
                         </Button>
                     </React.Fragment>

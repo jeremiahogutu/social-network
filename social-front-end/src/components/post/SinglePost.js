@@ -51,7 +51,7 @@ class SinglePost extends Component {
         const posterName = post.postedBy ? post.postedBy.name : 'Unknown';
         return (
             <Card className="postCard">
-                <CardContent style={{display: 'flex', flexDirection: 'column'}}>
+                <CardContent style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
                     <div style={{padding: '10px 0 26px', alignSelf: 'center'}}>
                         <img
                             style={{maxHeight: '450px', display: 'flex'}}

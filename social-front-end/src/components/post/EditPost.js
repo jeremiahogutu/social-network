@@ -4,10 +4,11 @@ import {update, singlePost} from "./apiPost";
 import Button from "@material-ui/core/Button";
 import {isAuthenticated} from "../auth";
 import {Redirect} from "react-router-dom";
+import DefaultProfile from "../assets/alpine-lake.jpg";
 
 class EditPost extends Component {
     constructor() {
-        super()
+        super();
         this.state = {
             id: '',
             title: '',
@@ -47,7 +48,8 @@ class EditPost extends Component {
         const {title, body, fileSize} = this.state;
         if (fileSize > 1000000) {
             this.setState({
-                error: "File size should be less than 1mb"
+                error: "File size should be less than 1mb",
+                loading: false
             });
             return false
         }
@@ -91,6 +93,7 @@ class EditPost extends Component {
                         loading: false,
                         title: '',
                         body: '',
+                        photo: '',
                         redirectToProfile: true
                     })
                 }
@@ -98,7 +101,7 @@ class EditPost extends Component {
         }
     };
 
-    editPostForm = (title, body, error) => (
+    editPostForm = (title, body, photoUrl, error) => (
         <Grid item xs style={{justifyContent: 'center', marginTop: '60px'}}>
             <Card id="createPostCard">
                 <div style={{flexGrow: 1}}>
@@ -111,6 +114,12 @@ class EditPost extends Component {
                     </AppBar>
                 </div>
                 <form style={{width: '100%'}}>
+                    <img
+                        style={{height: '200px', width: 'auto', margin: '15px'}}
+                        className='edit-image'
+                        src={photoUrl}
+                        onError={i => (i.target.src = `${DefaultProfile}`)}
+                        alt={title}/>
                     <Typography component="div" variant="body1"
                                 style={{display: error ? "block" : "none", textAlign: 'center'}}>
                         <Box color="error.main" style={{display: error ? "" : "none"}}>{error}</Box>
@@ -142,7 +151,7 @@ class EditPost extends Component {
                         />
                     </div>
                     <div style={{margin: '16px 15px'}}>
-                        <Grid container xs={12}>
+                        <Grid container>
                             <Grid item xs={12}>
                                 <label htmlFor="avatar">Choose a profile picture:</label>
                             </Grid>
@@ -174,22 +183,27 @@ class EditPost extends Component {
             </Card>
         </Grid>
     );
+
     render() {
-        const {title, body, error, redirectToProfile} = this.state;
+        const {id, title, body, error, redirectToProfile, loading} = this.state;
 
         if (redirectToProfile) {
             return <Redirect to={`/user/${isAuthenticated().user._id}`}/>
         }
+        const photoUrl = id ? `${process.env.REACT_APP_API_URL}/post/photo/${id}?${new Date().getTime()}` : DefaultProfile;
 
         return (
             <Grid container style={{justifyContent: 'center', marginTop: '60px'}}>
                 <Grid item xs={12} style={{display: 'flex', flexDirection: 'Column', alignItems: 'center'}}>
-                    <Typography variant="h3" style={{padding: "20px 0"}}>
-                        {title}
-                    </Typography>
-                    <Typography variant="body2" color="textSecondary" style={{padding: "20px 0"}}>
-                        {this.editPostForm(title, body, error)}
-                    </Typography>
+                    {loading ? (
+                        <Typography variant="h3">Loading...</Typography>
+                    ) : (
+                        <Typography variant="h3" style={{padding: "20px 0"}}>
+                            {title}
+                        </Typography>
+                    )}
+
+                    {this.editPostForm(title, body, photoUrl, error)}
                 </Grid>
             </Grid>
         );

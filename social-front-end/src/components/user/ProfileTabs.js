@@ -144,7 +144,7 @@ function ScrollableTabsButtonAuto(props) {
                                                 color="textPrimary"
                                             >
                                             </Typography>
-                                            {"Happy to be here"}
+                                            {post.body.substring(0, 40)}
                                         </React.Fragment>
                                     }
                                 />

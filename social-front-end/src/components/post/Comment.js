@@ -134,9 +134,10 @@ class Comment extends Component {
                     <h3>{comments.length} Comments</h3>
                     {comments.map((comment, i) => (
                         <List key={i} style={{width: '100%'}}>
-                            <NavLink to={`/user/${comment.postedBy._id}`}
-                                     style={{textDecoration: 'none', outline: 'none'}}>
-                                <ListItem alignItems="flex-start">
+
+                            <ListItem alignItems="flex-start">
+                                <NavLink to={`/user/${comment.postedBy._id}`}
+                                         style={{textDecoration: 'none', outline: 'none'}}>
                                     <ListItemAvatar>
                                         <Avatar
                                             alt={comment.postedBy.name}
@@ -146,43 +147,41 @@ class Comment extends Component {
                                             }}
                                         />
                                     </ListItemAvatar>
-                                    <ListItemText
-                                        primary={comment.postedBy.name}
-                                        secondary={
-                                            <React.Fragment>
-                                                <Typography
-                                                    component="span"
-                                                    variant="body2"
-                                                    color="textPrimary"
-                                                >
-                                                </Typography>
+                                </NavLink>
+                                <ListItemText
+                                    primary={comment.postedBy.name}
+                                    secondary={
+                                        <React.Fragment style={{display: 'flex'}}>
+                                            <Typography
+                                                component="span"
+                                                variant="body2"
+                                                color="textPrimary"
+                                            >
                                                 {comment.text}
-                                                <Typography variant="body2" color="textSecondary" component="p">
-                                                    posted by:
-                                                    <NavLink to={`${comment.postedBy._id}`}
-                                                             style={{textDecoration: "none"}}>
-                                                        {' '}{comment.postedBy.name}{' '}
-                                                    </NavLink>
-                                                    on {new Date(comment.created).toDateString()}
+                                            </Typography>
 
-                                                    <span>
-                                                        {isAuthenticated().user && isAuthenticated().user._id === comment.postedBy._id && (
-                                                            <>
-                                                                <Button size="small" color="secondary"
-                                                                        onClick={() => this.deleteConfirmed(comment)}>
-                                                                    Remove
-                                                                </Button>
-                                                            </>
-                                                        )}
-                                                    </span>
-                                                </Typography>
-                                            </React.Fragment>
+                                            <Typography variant="body2" color="textSecondary" component="p">
+                                                posted by:
+                                                <NavLink to={`${comment.postedBy._id}`}
+                                                         style={{textDecoration: "none"}}>
+                                                    {' '}{comment.postedBy.name}{' '}
+                                                </NavLink>
+                                                on {new Date(comment.created).toDateString()}
+                                            </Typography>
 
-                                        }
-                                    />
-                                </ListItem>
-                                <Divider variant="inset" component="li"/>
-                            </NavLink>
+                                            {isAuthenticated().user && isAuthenticated().user._id === comment.postedBy._id && (
+                                                <>
+                                                    <Button size="small" color="secondary"
+                                                            onClick={() => this.deleteConfirmed(comment)}>
+                                                        Remove
+                                                    </Button>
+                                                </>
+                                            )}
+                                        </React.Fragment>
+                                    }
+                                />
+                            </ListItem>
+                            <Divider variant="inset" component="li"/>
                         </List>
                     ))}
                 </Grid>

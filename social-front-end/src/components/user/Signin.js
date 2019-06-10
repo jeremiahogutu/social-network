@@ -107,7 +107,7 @@ class Signin extends Component {
             return <Redirect to="/"/>
         }
         return (
-            <Grid container xl={12} md={12} style={{justifyContent: 'center', marginTop: '60px'}}>
+            <Grid container style={{justifyContent: 'center', marginTop: '60px'}}>
                 {this.signInForm(email, password, error)}
             </Grid>
         );

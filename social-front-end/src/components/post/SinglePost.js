@@ -1,14 +1,26 @@
 import React, {Component} from 'react';
 import {Button, Card, CardActions, CardContent, Grid, Typography} from "@material-ui/core";
-import {singlePost, remove} from "./apiPost";
+import {singlePost, remove, like, unlike} from "./apiPost";
 import DefaultPost from "../assets/alpine-lake.jpg";
 import {NavLink, Redirect} from "react-router-dom";
 import {isAuthenticated} from "../auth";
+import {ThumbUp, ThumbUpAltOutlined} from '@material-ui/icons';
+import Comment from "./Comment";
 
 class SinglePost extends Component {
     state = {
         post: '',
-        redirectToHome: false
+        redirectToHome: false,
+        redirectToSignIn: false,
+        like: false,
+        likes: 0,
+        comments: []
+    };
+
+    checkLike = likes => {
+        const userId = isAuthenticated() && isAuthenticated().user._id;
+        let match = likes.indexOf(userId) !== -1;
+        return match
     };
 
     componentDidMount = () => {
@@ -18,7 +30,41 @@ class SinglePost extends Component {
                 console.log(data.error)
             } else {
                 this.setState({
-                    post: data
+                    post: data,
+                    likes: data.likes.length,
+                    like: this.checkLike(data.likes),
+                    comments: data.comments
+                })
+            }
+        })
+    };
+
+    updateComments = comments => {
+        this.setState({
+            comments,
+            redirectToHome: false,
+            redirectToSignIn: false,
+        })
+    };
+
+    likeToggle = () => {
+        if (!isAuthenticated()) {
+            this.setState({
+                redirectToSignIn: true
+            });
+            return false
+        }
+        let callApi = this.state.like ? unlike : like;
+        const userId = isAuthenticated().user._id;
+        const postId = this.state.post._id;
+        const token = isAuthenticated().token;
+        callApi(userId, token, postId).then(data => {
+            if (data.error) {
+                console.log(data.error)
+            } else {
+                this.setState({
+                    like: !this.state.like,
+                    likes: data.likes.length
                 })
             }
         })
@@ -49,12 +95,13 @@ class SinglePost extends Component {
     renderPost = (post) => {
         const posterId = post.postedBy ? `/user/${post.postedBy._id}` : '';
         const posterName = post.postedBy ? post.postedBy.name : 'Unknown';
+        const {like, likes} = this.state;
         return (
             <Card className="postCard">
                 <CardContent style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
                     <div style={{padding: '10px 0 26px', alignSelf: 'center'}}>
                         <img
-                            style={{maxHeight: '450px', display: 'flex'}}
+                            style={{maxHeight: '450px', display: 'flex', width: '100%'}}
                             src={`${process.env.REACT_APP_API_URL}/post/photo/${post._id}`}
                             onError={i => {
                                 i.target.src = `${DefaultPost}`
@@ -62,7 +109,17 @@ class SinglePost extends Component {
                             alt={post.title}
                         />
                     </div>
-                    <Typography variant="body2" color="textSecondary" component="p" style={{maxWidth: '900px'}}>
+                    {like ? (
+                        <Typography variant="body1" color="textSecondary" onClick={this.likeToggle} style={{display: 'flex', alignSelf: 'flex-start', paddingBottom: '15px'}}>
+                            <ThumbUp color="primary" style={{marginRight: '10px'}}/> {likes} Like
+                        </Typography>
+                    ) : (
+                        <Typography variant="body1" color="textSecondary" onClick={this.likeToggle} style={{display: 'flex', alignSelf: 'flex-start', paddingBottom: '15px'}}>
+                            <ThumbUpAltOutlined style={{marginRight: '10px'}}/>{' '}{likes} Like
+                        </Typography>
+                    )}
+
+                    <Typography variant="body2" color="textSecondary" component="p" >
                         {post.body}
                     </Typography>
                 </CardContent>
@@ -98,13 +155,16 @@ class SinglePost extends Component {
     };
 
     render() {
-        const {post, redirectToHome} = this.state;
+        const {post, redirectToHome, redirectToSignIn, comments} = this.state;
+
         if (redirectToHome) {
             return <Redirect to={`/`}/>
+        } else if (redirectToSignIn) {
+            return <Redirect to={`/signin`}/>
         }
         return (
-            <Grid container style={{justifyContent: 'center', marginTop: '60px'}}>
-                <Grid item xs={12} style={{display: 'flex', flexDirection: 'Column', alignItems: 'center'}}>
+            <Grid container  style={{justifyContent: 'center', marginTop: '60px', padding: '10px'}}>
+                <Grid id="singlePostGridItem" item xs={12}  style={{display: 'flex', flexDirection: 'Column', alignItems: 'center'}}>
                     <Typography variant="h3" style={{padding: "20px 0"}}>
                         {post.title}
                     </Typography>
@@ -115,6 +175,7 @@ class SinglePost extends Component {
                             {this.renderPost(post)}
                         </Typography>
                     )}
+                    <Comment postId={post._id} comments={comments} updateComments={this.updateComments}/>
                 </Grid>
             </Grid>
         );

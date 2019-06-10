@@ -10,12 +10,13 @@ class SinglePost extends Component {
     state = {
         post: '',
         redirectToHome: false,
+        redirectToSignIn: false,
         like: false,
         likes: 0
     };
 
-    checkLike = (likes) => {
-        const userId = isAuthenticated().user._id;
+    checkLike = likes => {
+        const userId = isAuthenticated() && isAuthenticated().user._id;
         let match = likes.indexOf(userId) !== -1;
         return match
     };
@@ -38,6 +39,12 @@ class SinglePost extends Component {
 
 
     likeToggle = () => {
+        if (!isAuthenticated()) {
+            this.setState({
+                redirectToSignIn: true
+            });
+            return false
+        }
         let callApi = this.state.like ? unlike : like;
         const userId = isAuthenticated().user._id;
         const postId = this.state.post._id;
@@ -139,9 +146,12 @@ class SinglePost extends Component {
     };
 
     render() {
-        const {post, redirectToHome} = this.state;
+        const {post, redirectToHome, redirectToSignIn} = this.state;
+
         if (redirectToHome) {
             return <Redirect to={`/`}/>
+        } else if (redirectToSignIn) {
+            return <Redirect to={`/signin`}/>
         }
         return (
             <Grid container style={{justifyContent: 'center', marginTop: '60px'}}>

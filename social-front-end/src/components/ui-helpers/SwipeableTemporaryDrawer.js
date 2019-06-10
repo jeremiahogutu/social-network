@@ -229,6 +229,12 @@ function SwipeableTemporaryDrawer() {
                                     </NavLink>
                                     <NavLink
                                         style={{color: '#fff'}}
+                                        to="/post/create"
+                                        activeStyle={{fontWeight: "bold", color: "#006494"}}>
+                                        <Button color="inherit">Create Post</Button>
+                                    </NavLink>
+                                    <NavLink
+                                        style={{color: '#fff'}}
                                         to="/signin"
                                         activeStyle={{fontWeight: "bold", color: "#006494"}}>
                                         <Button color="inherit">Sign In</Button>

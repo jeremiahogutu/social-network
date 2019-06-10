@@ -5,6 +5,7 @@ import DefaultPost from "../assets/alpine-lake.jpg";
 import {NavLink, Redirect} from "react-router-dom";
 import {isAuthenticated} from "../auth";
 import {ThumbUp, ThumbUpAltOutlined} from '@material-ui/icons';
+import Comment from "./Comment";
 
 class SinglePost extends Component {
     state = {
@@ -12,7 +13,8 @@ class SinglePost extends Component {
         redirectToHome: false,
         redirectToSignIn: false,
         like: false,
-        likes: 0
+        likes: 0,
+        comments: []
     };
 
     checkLike = likes => {
@@ -30,13 +32,18 @@ class SinglePost extends Component {
                 this.setState({
                     post: data,
                     likes: data.likes.length,
-                    like: this.checkLike(data.likes)
+                    like: this.checkLike(data.likes),
+                    comments: data.comments
                 })
             }
         })
     };
 
-
+    updateComments = comments => {
+        this.setState({
+            comments
+        })
+    };
 
     likeToggle = () => {
         if (!isAuthenticated()) {
@@ -146,7 +153,7 @@ class SinglePost extends Component {
     };
 
     render() {
-        const {post, redirectToHome, redirectToSignIn} = this.state;
+        const {post, redirectToHome, redirectToSignIn, comments} = this.state;
 
         if (redirectToHome) {
             return <Redirect to={`/`}/>
@@ -166,6 +173,7 @@ class SinglePost extends Component {
                             {this.renderPost(post)}
                         </Typography>
                     )}
+                    <Comment postId={post._id} comments={comments} updateComments={this.updateComments}/>
                 </Grid>
             </Grid>
         );

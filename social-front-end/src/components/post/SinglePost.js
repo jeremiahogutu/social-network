@@ -4,6 +4,7 @@ import {singlePost, remove, like, unlike} from "./apiPost";
 import DefaultPost from "../assets/alpine-lake.jpg";
 import {NavLink, Redirect} from "react-router-dom";
 import {isAuthenticated} from "../auth";
+import {ThumbUp, ThumbUpAltOutlined} from '@material-ui/icons';
 
 class SinglePost extends Component {
     state = {
@@ -92,9 +93,16 @@ class SinglePost extends Component {
                             alt={post.title}
                         />
                     </div>
-                    <Typography variant="h3" color="textSecondary" onClick={this.likeToggle}>
-                        {likes} Like
-                    </Typography>
+                    {like ? (
+                        <Typography variant="body1" color="textSecondary" onClick={this.likeToggle} style={{display: 'flex', alignSelf: 'flex-start', paddingBottom: '15px'}}>
+                            <ThumbUp color="primary" style={{marginRight: '10px'}}/> {likes} Like
+                        </Typography>
+                    ) : (
+                        <Typography variant="body1" color="textSecondary" onClick={this.likeToggle} style={{display: 'flex', alignSelf: 'flex-start', paddingBottom: '15px'}}>
+                            <ThumbUpAltOutlined style={{marginRight: '10px'}}/>{' '}{likes} Like
+                        </Typography>
+                    )}
+
                     <Typography variant="body2" color="textSecondary" component="p" style={{maxWidth: '900px'}}>
                         {post.body}
                     </Typography>

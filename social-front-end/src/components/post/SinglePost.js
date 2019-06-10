@@ -41,7 +41,9 @@ class SinglePost extends Component {
 
     updateComments = comments => {
         this.setState({
-            comments
+            comments,
+            redirectToHome: false,
+            redirectToSignIn: false,
         })
     };
 

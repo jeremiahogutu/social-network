@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {
-    Avatar, Button,
+    Avatar, Box, Button, CardActions,
     Divider,
     Grid,
     List,
@@ -10,7 +10,7 @@ import {
     TextField,
     Typography
 } from "@material-ui/core";
-import {comment, uncomment} from "./apiPost";
+import {comment, remove, uncomment} from "./apiPost";
 import {isAuthenticated} from "../auth";
 import {NavLink} from "react-router-dom";
 import DefaultProfile from "../user/profile.jpg";
@@ -18,36 +18,76 @@ import DefaultProfile from "../user/profile.jpg";
 
 class Comment extends Component {
     state = {
-        text: ''
+        text: '',
+        error: ''
     };
 
     handleChange = event => {
+        this.setState({error: ""});
         this.setState({
             text: event.target.value
         })
     };
 
+    isValid = () => {
+        const {text} = this.state;
+        if (!text.length > 0 || text.length > 150) {
+            this.setState({
+                error: 'Comments should not be empty and less than 150 characters long'
+            });
+            return false
+        }
+        return true
+    };
+
     addComment = e => {
         e.preventDefault();
+        if (!isAuthenticated()) {
+            this.setState({
+                error: "Please signin to leave a comment"
+            });
+            return false
+        }
+        if (this.isValid()) {
+            const userId = isAuthenticated().user._id;
+            const token = isAuthenticated().token;
+            const postId = this.props.postId;
+
+            comment(userId, token, postId, {text: this.state.text}).then(data => {
+                if (data.error) {
+                    console.log(data.error)
+                } else {
+                    this.setState({text: ''});
+                    this.props.updateComments(data.comments)
+                }
+            })
+        }
+    };
+
+    deleteComment = (comment) => {
         const userId = isAuthenticated().user._id;
         const token = isAuthenticated().token;
         const postId = this.props.postId;
 
-        comment(userId, token, postId, {text: this.state.text})
-            .then(data => {
-                if (data.error) {
-                    console.log(data.error)
-                } else {
-                    this.setState({
-                        text: ''
-                    });
-                    this.props.updateComments(data.comments)
-                }
-            })
+        uncomment(userId, token, postId, comment).then(data => {
+            if (data.error) {
+                console.log(data.error)
+            } else {
+                this.props.updateComments(data.comments)
+            }
+        })
+    };
+
+    deleteConfirmed = (comment) => {
+        let answer = window.confirm("Are you sure you want to delete your comment?");
+        if (answer) {
+            this.deleteComment(comment)
+        }
     };
 
     render() {
         const {comments} = this.props;
+        const {error} = this.state;
         return (
             <Grid container style={{justifyContent: 'center', marginTop: '60px'}}>
                 <Grid item xs={12} style={{display: 'flex', flexDirection: 'Column', alignItems: 'center'}}>
@@ -70,19 +110,28 @@ class Comment extends Component {
                                     shrink: true,
                                 }}
                             />
+
+                            {/*<input type="text" value={this.state.text} onChange={this.handleChange}/>*/}
                         </div>
                         <Button
                             variant="contained"
                             size="large"
-                            style={{backgroundColor: '#2196f3', color: '#fff', marginTop: '15px', alignSelf: 'flex-start'}}
+                            style={{
+                                backgroundColor: '#2196f3',
+                                color: '#fff',
+                                marginTop: '15px',
+                                alignSelf: 'flex-start'
+                            }}
                             type="submit"
                         >
                             Post
                         </Button>
                     </form>
-                    {/*{JSON.stringify(comments)}*/}
+                    <Typography component="div" variant="body1"
+                                style={{display: error ? "block" : "none", textAlign: 'center'}}>
+                        <Box color="error.main" style={{display: error ? "" : "none"}}>{error}</Box>
+                    </Typography>
                     <h3>{comments.length} Comments</h3>
-                    {/*<hr/>*/}
                     {comments.map((comment, i) => (
                         <List key={i} style={{width: '100%'}}>
                             <NavLink to={`/user/${comment.postedBy._id}`}
@@ -115,8 +164,20 @@ class Comment extends Component {
                                                         {' '}{comment.postedBy.name}{' '}
                                                     </NavLink>
                                                     on {new Date(comment.created).toDateString()}
+
+                                                    <span>
+                                                        {isAuthenticated().user && isAuthenticated().user._id === comment.postedBy._id && (
+                                                            <>
+                                                                <Button size="small" color="secondary"
+                                                                        onClick={() => this.deleteConfirmed(comment)}>
+                                                                    Remove
+                                                                </Button>
+                                                            </>
+                                                        )}
+                                                    </span>
                                                 </Typography>
                                             </React.Fragment>
+
                                         }
                                     />
                                 </ListItem>

@@ -92,7 +92,7 @@ class SinglePost extends Component {
                 <CardContent style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
                     <div style={{padding: '10px 0 26px', alignSelf: 'center'}}>
                         <img
-                            style={{maxHeight: '450px', display: 'flex'}}
+                            style={{maxHeight: '450px', display: 'flex', width: '100%'}}
                             src={`${process.env.REACT_APP_API_URL}/post/photo/${post._id}`}
                             onError={i => {
                                 i.target.src = `${DefaultPost}`
@@ -110,7 +110,7 @@ class SinglePost extends Component {
                         </Typography>
                     )}
 
-                    <Typography variant="body2" color="textSecondary" component="p" style={{maxWidth: '900px'}}>
+                    <Typography variant="body2" color="textSecondary" component="p" >
                         {post.body}
                     </Typography>
                 </CardContent>
@@ -154,8 +154,8 @@ class SinglePost extends Component {
             return <Redirect to={`/signin`}/>
         }
         return (
-            <Grid container style={{justifyContent: 'center', marginTop: '60px'}}>
-                <Grid item xs={12} style={{display: 'flex', flexDirection: 'Column', alignItems: 'center'}}>
+            <Grid container  style={{justifyContent: 'center', marginTop: '60px', padding: '10px'}}>
+                <Grid id="singlePostGridItem" item xs={12}  style={{display: 'flex', flexDirection: 'Column', alignItems: 'center'}}>
                     <Typography variant="h3" style={{padding: "20px 0"}}>
                         {post.title}
                     </Typography>

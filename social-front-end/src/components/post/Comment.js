@@ -163,7 +163,7 @@ class Comment extends Component {
                                             <Typography variant="body2" color="textSecondary" component="p">
                                                 posted by:
                                                 <NavLink to={`${comment.postedBy._id}`}
-                                                         style={{textDecoration: "none"}}>
+                                                         style={{textDecoration: "none", outline: 'none'}}>
                                                     {' '}{comment.postedBy.name}{' '}
                                                 </NavLink>
                                                 on {new Date(comment.created).toDateString()}
@@ -189,6 +189,7 @@ class Comment extends Component {
                                                             <NavLink
                                                                 to={`/post/edit/${postId}`}
                                                                 className="btn btn-raised btn-warning btn-sm mr-5"
+                                                                style={{textDecoration: "none", outline: 'none'}}
                                                             >
                                                                 <Button size="small" color="primary">
                                                                     Update Post

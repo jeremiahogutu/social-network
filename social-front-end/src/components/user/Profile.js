@@ -7,7 +7,7 @@ import DeleteUser from "./DeleteUser";
 import DefaultProfile from "./profile.jpg";
 import ProfileTabs from "./ProfileTabs";
 import {listByUser} from "../post/apiPost";
-import {Button, Card, Grid} from "@material-ui/core";
+import {Button, Card, Grid, Typography} from "@material-ui/core";
 import "./user.css"
 
 // import FollowButton from "./FollowButton";
@@ -162,6 +162,29 @@ class Profile extends Component {
                                 }
                             </div>
                         )}
+                        <div>
+                            {isAuthenticated().user &&
+                            isAuthenticated().user.role === "admin" && (
+                                <div className="card mt-5">
+                                    <div className="card-body">
+                                        <h5 className="card-title">
+                                            Admin
+                                        </h5>
+                                        <Typography variant="body2" color="textSecondary" component="p">
+                                            Edit/Delete as an Admin
+                                        </Typography>
+                                        <NavLink
+                                            to={`/user/edit/${user._id}`}>
+                                            <Button variant="contained" size="medium"
+                                                    style={{backgroundColor: '#2196f3', color: '#fff', width: '150px', marginTop: '10px'}}>
+                                                Edit Profile
+                                            </Button>
+                                        </NavLink>
+                                        <DeleteUser userId={user._id}/>
+                                    </div>
+                                </div>
+                            )}
+                        </div>
                     </Grid>
                     <Grid item xs={12} className='profileAboutTabs'>
                         <p>{user.about}</p>

@@ -11,3 +11,5 @@ nodeapi/.env
 /es6-restructuring.js
 /es6-spread-operator.js
 /class-constructer-super.js
+
+social-front-end/\.env

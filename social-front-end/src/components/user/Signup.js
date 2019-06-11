@@ -47,7 +47,7 @@ class Signup extends Component {
 
 
 
-    signUpForm = (name, email, password, error) => (
+    signUpForm = (name, email, password, error, signupSuccess) => (
         <Grid container style={{justifyContent: 'center', width: '100%'}}>
             <Grid item xs style={{justifyContent: 'center'}}>
                 <Card style={{margin: "30px auto", width: '330px', borderRadius: 0}}>
@@ -64,6 +64,9 @@ class Signup extends Component {
                         <Box color="error.main" style={{display: error ? "" : "none"}}>{error}</Box>
                     </Typography>
                     <form style={{width: '100%'}}>
+                        <Typography component="div" variant="body1"  style={{display: signupSuccess ? "flex" : "none", justifyContent: 'center', padding: '20px 20px'}}>
+                            <Box color="text.primary">New account is successfully created. Please{" "} <NavLink to='/signin'>{" "} Sign in</NavLink></Box>
+                        </Typography>
                         <div style={{margin: '0 15px 0'}}>
                             <TextField
                                 id="standard-name"
@@ -119,13 +122,11 @@ class Signup extends Component {
         const {name, email, password, error, signUpSuccess} = this.state;
         return (
             <Grid style={{display: 'flex', justifyContent: 'center'}}>
-                <Typography component="div" variant="body1"  style={{display: signUpSuccess ? "flex" : "none", justifyContent: 'center', padding: '20px 0'}}>
-                    <Box color="error.main" style={{display: error ? "" : "none"}}>New account is successfully created. Please{" "} <NavLink to='/signin'>{" "} Sign in</NavLink></Box>
-                </Typography>
+
                 {/*<div className="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone" style={{display: signUpSuccess ? "flex" : "none", justifyContent: 'center', padding: '20px 0'}}>New account is successfully created. Please{" "} <NavLink to='/signin'>{" "} Sign in</NavLink></div>*/}
                 <Grid container xl={12} md={12} style={{justifyContent: 'center', marginTop: '60px'}}>
                     <Grid item xs={12}>
-                        {this.signUpForm(name, email, password, error)}
+                        {this.signUpForm(name, email, password, error, signUpSuccess)}
                     </Grid>
                 </Grid>
             </Grid>

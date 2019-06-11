@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {
-    Avatar, Box, Button, CardActions,
+    Avatar, Box, Button,
     Divider,
     Grid,
     List,
@@ -10,7 +10,7 @@ import {
     TextField,
     Typography
 } from "@material-ui/core";
-import {comment, remove, uncomment} from "./apiPost";
+import {comment, uncomment} from "./apiPost";
 import {isAuthenticated} from "../auth";
 import {NavLink} from "react-router-dom";
 import DefaultProfile from "../user/profile.jpg";

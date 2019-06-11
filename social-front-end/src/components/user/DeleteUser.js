@@ -20,7 +20,9 @@ class DeleteUser extends Component {
                     console.log(data.error)
                 } else {
                     // signout user
-                    signout(() => console.log('User is deleted'))
+                    if (isAuthenticated().user.role === "subscriber") {
+                        signout(() => console.log('User is deleted'))
+                    }
                     // redirect
                     this.setState({
                         redirect: true
@@ -38,7 +40,11 @@ class DeleteUser extends Component {
 
     render() {
         if (this.state.redirect) {
-            return <Redirect to='/'/>
+            if (isAuthenticated().user.role === "subscriber") {
+                return <Redirect to='/'/>
+            } else {
+                return <Redirect to='/admin'/>
+            }
         }
         return (
             <Button variant="contained" size="medium" color="secondary" onClick={this.deleteConfirmed} style={{width: '150px', marginTop: '10px'}}>

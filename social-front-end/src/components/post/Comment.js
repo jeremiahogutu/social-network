@@ -86,7 +86,7 @@ class Comment extends Component {
     };
 
     render() {
-        const {comments} = this.props;
+        const {comments, postId} = this.props;
         const {error} = this.state;
         return (
             <Grid container style={{justifyContent: 'center', marginTop: '60px'}}>
@@ -177,6 +177,32 @@ class Comment extends Component {
                                                     </Button>
                                                 </>
                                             )}
+                                            <div>
+                                                {isAuthenticated().user &&
+                                                isAuthenticated().user.role === "admin" && (
+                                                    <div className="card mt-5">
+                                                        <div className="card-body">
+                                                            <h5 className="card-title">Admin</h5>
+                                                            <p className="mb-2 text-danger">
+                                                                Edit/Delete as an Admin
+                                                            </p>
+                                                            <NavLink
+                                                                to={`/post/edit/${postId}`}
+                                                                className="btn btn-raised btn-warning btn-sm mr-5"
+                                                            >
+                                                                <Button size="small" color="primary">
+                                                                    Update Post
+                                                                </Button>
+                                                            </NavLink>
+                                                            <Button size="small" color="secondary"
+                                                                onClick={() => this.deleteConfirmed(comment)}
+                                                            >
+                                                                    Delete Post
+                                                            </Button>
+                                                        </div>
+                                                    </div>
+                                                )}
+                                            </div>
                                         </React.Fragment>
                                     }
                                 />

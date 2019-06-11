@@ -58,13 +58,13 @@ class Posts extends Component {
                             <Typography variant="body2" color="textSecondary" component="p"
                                         style={{padding: "45px 16px 0"}}>
                                 posted by:
-                                <NavLink to={`${posterId}`} style={{textDecoration: "none"}}>
+                                <NavLink to={`${posterId}`} style={{textDecoration: "none", outline: 'none'}}>
                                     {' '}{posterName}{' '}
                                 </NavLink>
                                 on {new Date(post.created).toDateString()}
                             </Typography>
                             <CardActions>
-                                <NavLink to={`/post/${post._id}`}>
+                                <NavLink to={`/post/${post._id}`} style={{textDecoration: "none", outline: 'none'}}>
                                     <Button size="small" color="primary">
                                         Read More
                                     </Button>

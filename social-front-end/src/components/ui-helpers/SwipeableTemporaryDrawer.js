@@ -78,7 +78,7 @@ function SwipeableTemporaryDrawer() {
         >
             <Divider/>
             {isAuthenticated() && (
-                <NavLink style={{textDecoration: "none", color: "#757575", flexGrow: 1}}
+                <NavLink style={{textDecoration: "none", outline: 'none', color: "#757575", flexGrow: 1}}
                          to={`/user/${isAuthenticated().user._id}`}
                          activeStyle={{fontWeight: "bold", color: "#006494"}}>
                     <Typography variant="h5" style={{flexGrow: 1, margin: '20px 0 20px 20px'}}>
@@ -97,7 +97,7 @@ function SwipeableTemporaryDrawer() {
             <List component="nav" aria-label="Main mailbox folders">
                 {!isAuthenticated() && (
                     <>
-                        <NavLink style={{color: '#212121', textDecoration: 'none'}}
+                        <NavLink style={{color: '#212121', textDecoration: 'none', outline: 'none'}}
                                  to="/"
                                  activeStyle={{fontWeight: "bold", color: "#006494"}}
                                  exact={true}>
@@ -109,7 +109,7 @@ function SwipeableTemporaryDrawer() {
                             </ListItem>
                         </NavLink>
                         <NavLink
-                            style={{color: '#212121', textDecoration: 'none'}}
+                            style={{color: '#212121', textDecoration: 'none', outline: 'none'}}
                             to="/signin"
                             activeStyle={{fontWeight: "bold", color: "#006494"}}>
                             <ListItem button>
@@ -120,7 +120,7 @@ function SwipeableTemporaryDrawer() {
                             </ListItem>
                         </NavLink>
                         <NavLink
-                            style={{color: '#212121', textDecoration: 'none'}}
+                            style={{color: '#212121', textDecoration: 'none', outline: 'none'}}
                             to="/signup"
                             activeStyle={{fontWeight: "bold", color: "#006494"}}>
                             <ListItem button>
@@ -135,7 +135,7 @@ function SwipeableTemporaryDrawer() {
                 {isAuthenticated() && (
                     <div>
                         <NavLink
-                            style={{color: '#212121', textDecoration: 'none'}}
+                            style={{color: '#212121', textDecoration: 'none', outline: 'none'}}
                             to="/"
                             activeStyle={{fontWeight: "bold", color: "#006494"}}
                             exact={true}>
@@ -147,7 +147,7 @@ function SwipeableTemporaryDrawer() {
                             </ListItem>
                         </NavLink>
                         <NavLink
-                            style={{color: '#212121', textDecoration: 'none'}}
+                            style={{color: '#212121', textDecoration: 'none', outline: 'none'}}
                             to="/users"
                             activeStyle={{fontWeight: "bold", color: "#006494"}}>
                             <ListItem button>
@@ -158,7 +158,7 @@ function SwipeableTemporaryDrawer() {
                             </ListItem>
                         </NavLink>
                         <NavLink
-                            style={{color: '#212121', textDecoration: 'none'}}
+                            style={{color: '#212121', textDecoration: 'none', outline: 'none'}}
                             to="/findpeople"
                             activeStyle={{fontWeight: "bold", color: "#006494"}}>
                             <ListItem button>
@@ -169,7 +169,7 @@ function SwipeableTemporaryDrawer() {
                             </ListItem>
                         </NavLink>
                         <NavLink
-                            style={{color: '#212121', textDecoration: 'none'}}
+                            style={{color: '#212121', textDecoration: 'none', outline: 'none'}}
                             to="/post/create"
                             activeStyle={{fontWeight: "bold", color: "#006494"}}>
                             <ListItem button>
@@ -222,7 +222,7 @@ function SwipeableTemporaryDrawer() {
                             {isAuthenticated() && isAuthenticated().user.role === "admin" && (
                                 <React.Fragment>
                                     <NavLink
-                                        style={{color: '#fff'}}
+                                        style={{color: '#fff', textDecoration: 'none', outline: 'none'}}
                                         to="/admin"
                                         activeStyle={{fontWeight: "bold", color: "#006494"}}>
                                         <Button color="inherit">Admin</Button>
@@ -231,26 +231,26 @@ function SwipeableTemporaryDrawer() {
                             )}
                             {!isAuthenticated() && (
                                 <React.Fragment>
-                                    <NavLink style={{color: '#fff'}}
+                                    <NavLink style={{color: '#fff', textDecoration: 'none', outline: 'none'}}
                                              to="/"
                                              activeStyle={{fontWeight: "bold", color: "#006494"}}
                                              exact={true}>
                                         <Button color="inherit">Home</Button>
                                     </NavLink>
                                     <NavLink
-                                        style={{color: '#fff'}}
+                                        style={{color: '#fff', textDecoration: 'none', outline: 'none'}}
                                         to="/post/create"
                                         activeStyle={{fontWeight: "bold", color: "#006494"}}>
                                         <Button color="inherit">Create Post</Button>
                                     </NavLink>
                                     <NavLink
-                                        style={{color: '#fff'}}
+                                        style={{color: '#fff', textDecoration: 'none', outline: 'none'}}
                                         to="/signin"
                                         activeStyle={{fontWeight: "bold", color: "#006494"}}>
                                         <Button color="inherit">Sign In</Button>
                                     </NavLink>
                                     <NavLink
-                                        style={{color: '#fff'}}
+                                        style={{color: '#fff', textDecoration: 'none', outline: 'none'}}
                                         to="/signup"
                                         activeStyle={{fontWeight: "bold", color: "#006494"}}>
                                         <Button color="inherit">Sign Up</Button>
@@ -259,26 +259,26 @@ function SwipeableTemporaryDrawer() {
                             )}
                             {isAuthenticated() && (
                                 <React.Fragment>
-                                    <NavLink style={{color: '#fff'}}
+                                    <NavLink style={{color: '#fff', textDecoration: 'none', outline: 'none'}}
                                              to="/"
                                              activeStyle={{fontWeight: "bold", color: "#006494"}}
                                              exact={true}>
                                         <Button color="inherit">Home</Button>
                                     </NavLink>
                                     <NavLink
-                                        style={{color: '#fff'}}
+                                        style={{color: '#fff', textDecoration: 'none', outline: 'none'}}
                                         to="/users"
                                         activeStyle={{fontWeight: "bold", color: "#006494"}}>
                                         <Button color="inherit">Users</Button>
                                     </NavLink>
                                     <NavLink
-                                        style={{color: '#fff'}}
+                                        style={{color: '#fff', textDecoration: 'none', outline: 'none'}}
                                         to="/findpeople"
                                         activeStyle={{fontWeight: "bold", color: "#006494"}}>
                                         <Button color="inherit">Find People</Button>
                                     </NavLink>
                                     <NavLink
-                                        style={{color: '#fff'}}
+                                        style={{color: '#fff', textDecoration: 'none', outline: 'none'}}
                                         to="/post/create"
                                         activeStyle={{fontWeight: "bold", color: "#006494"}}>
                                         <Button color="inherit">Create Post</Button>

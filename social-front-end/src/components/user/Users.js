@@ -64,7 +64,7 @@ class Users extends Component {
                         </CardContent>
                     </CardActionArea>
                     <CardActions>
-                        <NavLink to={`/user/${user._id}`}>
+                        <NavLink to={`/user/${user._id}`} style={{textDecoration: 'none', outline: 'none'}} >
                             <Button variant="contained" size="large"
                                     style={{backgroundColor: '#2196f3', color: '#fff'}}>
                                 View Profile

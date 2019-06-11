@@ -129,14 +129,14 @@ class Profile extends Component {
                         {isAuthenticated().user && isAuthenticated().user._id === user._id ? (
                             <div style={{display: 'flex', justifyContent: 'space-between', marginTop: '24px', flexWrap: 'wrap'}}>
                                 <NavLink
-                                    to={`/user/edit/${user._id}`}>
+                                    to={`/user/edit/${user._id}`} style={{textDecoration: 'none', outline: 'none'}}>
                                     <Button variant="contained" size="medium"
                                             style={{backgroundColor: '#2196f3', color: '#fff', width: '150px', marginTop: '10px'}}>
                                         Edit Profile
                                     </Button>
                                 </NavLink>
                                 <NavLink
-                                    to={`/post/create`}>
+                                    to={`/post/create`} style={{textDecoration: 'none', outline: 'none'}}>
                                     <Button variant="contained" size="medium"
                                             style={{backgroundColor: '#2196f3', color: '#fff', width: '150px', marginTop: '10px'}}>
                                         Create Post
@@ -174,7 +174,7 @@ class Profile extends Component {
                                             Edit/Delete as an Admin
                                         </Typography>
                                         <NavLink
-                                            to={`/user/edit/${user._id}`}>
+                                            to={`/user/edit/${user._id}`} style={{textDecoration: 'none', outline: 'none'}}>
                                             <Button variant="contained" size="medium"
                                                     style={{backgroundColor: '#2196f3', color: '#fff', width: '150px', marginTop: '10px'}}>
                                                 Edit Profile

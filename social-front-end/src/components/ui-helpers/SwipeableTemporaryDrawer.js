@@ -290,7 +290,7 @@ function SwipeableTemporaryDrawer() {
                                             background: "transparent",
                                             border: "none"
                                         }}
-                                        onClick={() => signout(() => window.location.href = "http://localhost:3000/")}>Sign
+                                        onClick={() => signout(() => window.location.href = "/")}>Sign
                                         Out
                                     </Button>
                                 </React.Fragment>

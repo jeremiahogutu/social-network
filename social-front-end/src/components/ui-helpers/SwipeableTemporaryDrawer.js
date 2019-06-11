@@ -219,8 +219,18 @@ function SwipeableTemporaryDrawer() {
                             </NavLink>
                         )}
                         <div id="mainNavLinks">
+                            {isAuthenticated() && isAuthenticated().user.role === "admin" && (
+                                <React.Fragment>
+                                    <NavLink
+                                        style={{color: '#fff'}}
+                                        to="/admin"
+                                        activeStyle={{fontWeight: "bold", color: "#006494"}}>
+                                        <Button color="inherit">Admin</Button>
+                                    </NavLink>
+                                </React.Fragment>
+                            )}
                             {!isAuthenticated() && (
-                                <div>
+                                <React.Fragment>
                                     <NavLink style={{color: '#fff'}}
                                              to="/"
                                              activeStyle={{fontWeight: "bold", color: "#006494"}}
@@ -245,10 +255,10 @@ function SwipeableTemporaryDrawer() {
                                         activeStyle={{fontWeight: "bold", color: "#006494"}}>
                                         <Button color="inherit">Sign Up</Button>
                                     </NavLink>
-                                </div>
+                                </React.Fragment>
                             )}
                             {isAuthenticated() && (
-                                <div>
+                                <React.Fragment>
                                     <NavLink style={{color: '#fff'}}
                                              to="/"
                                              activeStyle={{fontWeight: "bold", color: "#006494"}}
@@ -283,7 +293,7 @@ function SwipeableTemporaryDrawer() {
                                         onClick={() => signout(() => window.location.href = "http://localhost:3000/")}>Sign
                                         Out
                                     </Button>
-                                </div>
+                                </React.Fragment>
                             )}
                         </div>
                     </Toolbar>

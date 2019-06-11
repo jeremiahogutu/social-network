@@ -125,20 +125,20 @@ class SinglePost extends Component {
                 </CardContent>
                 <Typography variant="body2" color="textSecondary" component="p" style={{padding: "0 16px"}}>
                     posted by:
-                    <NavLink to={`${posterId}`} style={{textDecoration: "none"}}>
+                    <NavLink to={`${posterId}`} style={{textDecoration: "none", outline: 'none'}}>
                         {' '}{posterName}{' '}
                     </NavLink>
                     on {new Date(post.created).toDateString()}
                 </Typography>
                 <CardActions>
-                    <NavLink to={`/`}>
+                    <NavLink to={`/`} style={{textDecoration: "none", outline: 'none'}}>
                         <Button size="small" color="primary">
                             Back to posts
                         </Button>
                     </NavLink>
                     {isAuthenticated().user && isAuthenticated().user._id === post.postedBy._id &&
                     <React.Fragment>
-                        <NavLink to={`/post/edit/${post._id}`}>
+                        <NavLink to={`/post/edit/${post._id}`} style={{textDecoration: "none", outline: 'none'}}>
                             <Button size="small" color="primary">
                                 Update post
                             </Button>

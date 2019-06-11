@@ -65,7 +65,7 @@ class Signup extends Component {
                     </Typography>
                     <form style={{width: '100%'}}>
                         <Typography component="div" variant="body1"  style={{display: signupSuccess ? "flex" : "none", justifyContent: 'center', padding: '20px 20px'}}>
-                            <Box color="text.primary">New account is successfully created. Please{" "} <NavLink to='/signin'>{" "} Sign in</NavLink></Box>
+                            <Box color="text.primary">New account is successfully created. Please{" "} <NavLink to='/signin' style={{textDecoration: "none", outline: 'none'}}>{" "} Sign in</NavLink></Box>
                         </Typography>
                         <div style={{margin: '0 15px 0'}}>
                             <TextField

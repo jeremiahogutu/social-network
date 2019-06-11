@@ -57,7 +57,7 @@ class FindPeople extends Component {
             {users.map((user, i) => (
                 <Card key={i} className="userCard">
                     <CardActionArea>
-                        <NavLink to={`/user/${user._id}`}>
+                        <NavLink to={`/user/${user._id}`} style={{textDecoration: 'none', outline: 'none'}}>
                             <CardMedia
                                 style={{height: 300}}
                                 title={user.name}
@@ -82,7 +82,7 @@ class FindPeople extends Component {
                         </CardContent>
                     </CardActionArea>
                     <CardActions>
-                        <NavLink to={`/user/${user._id}`}>
+                        <NavLink to={`/user/${user._id}`} style={{textDecoration: 'none', outline: 'none'}}>
                             <Button variant="contained" size="large"
                                     style={{backgroundColor: '#2196f3', color: '#fff'}}>
                                 View Profile
